@@ -12,7 +12,7 @@ const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(mySaga);
 
-registerScreens();
+registerScreens(store);
 
 interface IProps {}
 
@@ -61,7 +61,7 @@ class App extends React.PureComponent<IProps> {
                 children: [
                   {
                     component: {
-                      name: 'FeedScreen',
+                      name: 'CalendarScreen',
                       passProps: {
                         text: 'This is tab 2'
                       }
@@ -70,7 +70,47 @@ class App extends React.PureComponent<IProps> {
                 ],
                 options: {
                   bottomTab: {
-                    title: 'Tab1',
+                    title: 'Kalendar',
+                    icon: require('../res/images/one.png')
+                  }
+                }
+              }
+            },
+            {
+              stack: {
+                children: [
+                  {
+                    component: {
+                      name: 'WorkoutScreen',
+                      passProps: {
+                        text: 'This is tab 2'
+                      }
+                    }
+                  }
+                ],
+                options: {
+                  bottomTab: {
+                    title: 'Workout',
+                    icon: require('../res/images/one.png')
+                  }
+                }
+              }
+            },
+            {
+              stack: {
+                children: [
+                  {
+                    component: {
+                      name: 'AchievementScreen',
+                      passProps: {
+                        text: 'This is tab 2'
+                      }
+                    }
+                  }
+                ],
+                options: {
+                  bottomTab: {
+                    title: 'Erfolge',
                     icon: require('../res/images/one.png')
                   }
                 }

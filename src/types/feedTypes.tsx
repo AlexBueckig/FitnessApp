@@ -1,6 +1,10 @@
 import * as constants from '../constants/feedConstants';
 
-export type posts = Array<{ key: string; text: string }>;
+export interface IPost {
+  key: string;
+  text: string;
+}
+export type posts = IPost[];
 
 export interface IFeedState {
   posts: posts;

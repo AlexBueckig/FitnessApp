@@ -14,5 +14,7 @@ export const mapDispatchToProps = (dispatch: Dispatch<FeedAction>) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  undefined,
+  { withRef: true }
 )(FeedScreen);
