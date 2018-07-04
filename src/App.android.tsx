@@ -3,9 +3,9 @@ import { Navigation } from 'react-native-navigation';
 import { applyMiddleware, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
-import rootReducer from './reducers/index';
-import mySaga from './sagas/index';
-import { registerScreens } from './screens/index';
+import { registerScreens } from './containers/';
+import rootReducer from './reducers/';
+import mySaga from './sagas/';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
@@ -41,8 +41,9 @@ class App extends React.PureComponent<IProps> {
                           title: {
                             text: 'Feed'
                           },
-                          visible: false,
-                          drawBehind: true
+                          visible: true,
+                          drawBehind: true,
+                          hideOnScroll: true
                         }
                       }
                     }
@@ -50,8 +51,10 @@ class App extends React.PureComponent<IProps> {
                 ],
                 options: {
                   bottomTab: {
-                    title: 'Feed',
-                    icon: require('../res/images/one.png')
+                    text: 'Feed',
+                    icon: require('../res/images/one.png'),
+                    iconColor: 'red',
+                    selectedIconColor: 'blue'
                   }
                 }
               }
@@ -70,8 +73,10 @@ class App extends React.PureComponent<IProps> {
                 ],
                 options: {
                   bottomTab: {
-                    title: 'Kalendar',
-                    icon: require('../res/images/one.png')
+                    text: 'Kalendar',
+                    icon: require('../res/images/one.png'),
+                    iconColor: 'red',
+                    selectedIconColor: 'blue'
                   }
                 }
               }
@@ -90,8 +95,10 @@ class App extends React.PureComponent<IProps> {
                 ],
                 options: {
                   bottomTab: {
-                    title: 'Workout',
-                    icon: require('../res/images/one.png')
+                    text: 'Workout',
+                    icon: require('../res/images/one.png'),
+                    iconColor: 'red',
+                    selectedIconColor: 'blue'
                   }
                 }
               }
@@ -110,13 +117,20 @@ class App extends React.PureComponent<IProps> {
                 ],
                 options: {
                   bottomTab: {
-                    title: 'Erfolge',
-                    icon: require('../res/images/one.png')
+                    text: 'Erfolge',
+                    icon: require('../res/images/one.png'),
+                    iconColor: 'red',
+                    selectedIconColor: 'blue'
                   }
                 }
               }
             }
-          ]
+          ],
+          options: {
+            bottomTabs: {
+              titleDisplayMode: 'alwaysShow'
+            }
+          }
         }
       }
     });
