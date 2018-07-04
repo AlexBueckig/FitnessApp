@@ -1,5 +1,7 @@
 import * as constants from '../constants/feedConstants';
 
+/* Post Types */
+
 export interface IPost {
   key: string;
   text: string;

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Animated, FlatList, Text, View } from 'react-native';
-import styles from '../styles/styles';
+import styles from '../styles/';
 import { IGetFeed, IPost, posts as postType } from '../types/feedTypes';
 
 interface IProps {
@@ -29,10 +29,10 @@ export default class FeedScreen extends PureComponent<IProps, IState> {
 
   public render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.layout.main}>
         <Animated.Image
           style={[
-            styles.backgroundImage,
+            styles.layout.backgroundImage,
             {
               opacity: this.state.scrollY.interpolate({
                 inputRange: [0, 250],
@@ -51,12 +51,16 @@ export default class FeedScreen extends PureComponent<IProps, IState> {
           source={require('../../res/images/bg2.jpg')}
         />
         <AnimatedFlatList
-          ListHeaderComponent={() => <View style={styles.header} />}
+          ListHeaderComponent={() => <View style={styles.layout.spacer} />}
           data={this.props.posts}
           renderItem={(item: { item: IPost }) => {
             return (
-              <View style={styles.card}>
-                <Text style={styles.cardTitle}>{item.item.text}</Text>
+              <View style={styles.layout.container}>
+                <View style={styles.layout.roundView} />
+                <View style={styles.layout.card}>
+                  <Text style={styles.typography.title}>{item.item.text}</Text>
+                  <Text style={styles.typography.body}>Das ist ein Beispieltext!</Text>
+                </View>
               </View>
             );
           }}
