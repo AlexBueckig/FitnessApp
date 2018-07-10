@@ -1,13 +1,13 @@
 import { takeLatest } from 'redux-saga';
 import { call, put } from 'redux-saga/effects';
 
-import api from '../api/';
+import api from '../../api/';
+import { IGetWorkoutById, ISaveWorkout } from '../../types/workoutTypes';
 import * as constants from '../constants/workoutConstants';
-import { IGetWorkoutById, ISaveWorkout } from '../types/workoutTypes';
 
 export function* getWorkoutsSaga() {
   try {
-    const workouts = yield call(api.feed.posts);
+    const workouts = yield call(api.wger.private.get.workout);
     yield put({ type: constants.GET_WORKOUTS_SUCCESS, workouts });
   } catch (error) {
     yield put({ type: constants.GET_WORKOUTS_FAILURE, error });

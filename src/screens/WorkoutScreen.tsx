@@ -2,18 +2,44 @@ import React, { PureComponent } from 'react';
 import { Alert, Button, FlatList, Text, TouchableHighlight, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import { Navigation } from 'react-native-navigation';
 import styles from '../styles';
+import { IGetWorkouts, IWorkout, IWorkouts } from '../types/workoutTypes';
 
-interface IWorkoutItem {
-  key: string;
-  value: string;
+interface IProps {
+  workouts: IWorkouts;
+  getWorkouts: () => IGetWorkouts;
+  componentId: string;
 }
 
-export default class WorkoutScreen extends PureComponent {
+export default class WorkoutScreen extends PureComponent<IProps> {
+  public componentDidMount() {
+    this.props.getWorkouts();
+  }
+
   public render() {
     return (
       <View style={styles.layout.main}>
-        <TouchableHighlight style={styles.layout.addButtonPosition}>
+        <TouchableHighlight
+          style={styles.layout.addButtonPosition}
+          onPress={() =>
+            Navigation.push(this.props.componentId, {
+              component: {
+                name: 'WorkoutScreen.Add',
+                passProps: {
+                  id: 0
+                }
+              },
+              options: {
+                topBar: {
+                  title: {
+                    text: 'Workout hinzufügen'
+                  }
+                }
+              }
+            })
+          }
+        >
           <View style={styles.layout.addButton}>
             <Icon name="add" size={24} color="#ffffff" />
           </View>
@@ -21,17 +47,11 @@ export default class WorkoutScreen extends PureComponent {
         <View style={{ marginHorizontal: 16 }}>
           <Text style={styles.typography.headline}>WorkoutScreen</Text>
           <FlatList
-            data={[
-              { key: 'a', value: 'test1' },
-              { key: 'b', value: 'test2' },
-              { key: 'c', value: 'test3' },
-              { key: 'd', value: 'test4' },
-              { key: 'e', value: 'test5' }
-            ]}
+            data={this.props.workouts.results}
             ItemSeparatorComponent={() => (
               <View style={{ backgroundColor: '#eeeeee', height: 1, width: '100%', marginVertical: 5 }} />
             )}
-            keyExtractor={(item: IWorkoutItem) => item.key}
+            keyExtractor={item => item.id.toString()}
             ListEmptyComponent={() => (
               <View>
                 <Text style={styles.typography.body}>Du hast noch keine Trainigspläne angelegt. </Text>
@@ -40,9 +60,11 @@ export default class WorkoutScreen extends PureComponent {
                 </Text>
               </View>
             )}
-            renderItem={(item: { item: IWorkoutItem }) => (
+            renderItem={(item: { item: IWorkout }) => (
               <View style={{ flexDirection: 'row', alignItems: 'center', borderRadius: 5, backgroundColor: 'grey' }}>
-                <Text style={[styles.typography.subheader, { flex: 1, paddingLeft: 16 }]}>{item.item.value}</Text>
+                <Text style={[styles.typography.subheader, { flex: 1, paddingLeft: 16 }]}>
+                  {item.item.comment ? item.item.comment : item.item.creation_date}
+                </Text>
                 <Button title="Bearbeiten" onPress={() => undefined} />
                 <Text> </Text>
                 <Button

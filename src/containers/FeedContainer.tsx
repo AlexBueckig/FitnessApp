@@ -1,5 +1,5 @@
 import { connect, Dispatch } from 'react-redux';
-import { getFeed } from '../actions/feedActions';
+import { getFeed } from '../redux/actions/feedActions';
 import FeedScreen from '../screens/FeedScreen';
 import IStoreState from '../types';
 import { FeedAction } from '../types/feedTypes';

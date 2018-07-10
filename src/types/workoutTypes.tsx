@@ -1,16 +1,27 @@
-import * as constants from '../constants/workoutConstants';
+import * as constants from '../redux/constants/workoutConstants';
 
 /* WorkoutTypes */
+export interface IWorkoutState {
+  currentWorkout: number;
+  workouts: IWorkouts;
+  error?: string;
+}
+
 export interface IExercise {
   exerciseId: number;
 }
 
 export interface IWorkout {
-  name: string;
-  exercises: IExercise[];
+  comment?: string;
+  id: number;
+  creation_date?: string;
 }
 
-export type IWorkouts = IWorkout[];
+export interface IWorkouts {
+  count: number;
+  results: IWorkout[];
+  comment?: string;
+}
 
 /* Action Types */
 export interface IGetWorkouts {
@@ -19,7 +30,7 @@ export interface IGetWorkouts {
 
 export interface IGetWorkoutsSuccess {
   type: constants.GET_WORKOUTS_SUCCESS;
-  workouts: IWorkout[];
+  workouts: IWorkouts;
 }
 
 export interface IGetWorkoutsFailure {

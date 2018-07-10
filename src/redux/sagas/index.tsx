@@ -1,8 +1,8 @@
 import { all } from 'redux-saga/effects';
 
 import { feedSagas } from './feedSagas';
+import { workoutSagas } from './workoutSagas';
 
 export default function* rootSaga() {
-  // [...feedSagas, ...barSagas]
-  yield all([...feedSagas]);
+  yield all([...feedSagas, ...workoutSagas]);
 }

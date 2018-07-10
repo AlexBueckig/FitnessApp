@@ -1,5 +1,5 @@
+import { FeedAction, IFeedState } from '../../types/feedTypes';
 import * as constants from '../constants/feedConstants';
-import { FeedAction, IFeedState } from '../types/feedTypes';
 
 export default (state: IFeedState = { posts: [], error: '' }, action: FeedAction): IFeedState => {
   switch (action.type) {

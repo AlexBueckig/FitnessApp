@@ -5,6 +5,7 @@ import AchievementScreen from '../screens/AchievementScreen';
 import CalendarScreen from '../screens/CalendarScreen';
 import SecondScreen from '../screens/SecondScreen';
 import FeedContainer from './FeedContainer';
+import WorkoutAddContainer from './WorkoutAddContainer';
 import WorkoutContainer from './WorkoutContainer';
 
 // @ts-ignore
@@ -17,6 +18,7 @@ const registerScreens = (store: Store<IStoreState>) => {
   Navigation.registerComponent('CalendarScreen', () => CalendarScreen);
   Navigation.registerComponent('AchievementScreen', () => AchievementScreen);
   Navigation.registerComponent('WorkoutScreen', () => reduxHOC(WorkoutContainer, store));
+  Navigation.registerComponent('WorkoutScreen.Add', () => reduxHOC(WorkoutAddContainer, store));
 };
 
 export { registerScreens };

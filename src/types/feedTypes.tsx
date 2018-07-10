@@ -1,4 +1,4 @@
-import * as constants from '../constants/feedConstants';
+import * as constants from '../redux/constants/feedConstants';
 
 /* Post Types */
 

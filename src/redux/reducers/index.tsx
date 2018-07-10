@@ -1,0 +1,9 @@
+import { combineReducers, Reducer } from 'redux';
+import IStoreState from '../../types';
+
+import FeedReducer from './FeedReducer';
+import WorkoutReducer from './WorkoutReducer';
+
+const rootReducer: Reducer<IStoreState> = combineReducers({ feed: FeedReducer, workouts: WorkoutReducer });
+
+export default rootReducer;

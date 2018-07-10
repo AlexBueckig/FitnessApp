@@ -1,5 +1,5 @@
+import { IGetFeed, posts as postType } from '../../types/feedTypes';
 import * as constants from '../constants/feedConstants';
-import { IGetFeed, posts as postType } from '../types/feedTypes';
 
 export function getFeed(): IGetFeed {
   return {

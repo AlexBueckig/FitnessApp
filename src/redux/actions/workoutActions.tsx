@@ -1,4 +1,3 @@
-import * as constants from '../constants/workoutConstants';
 import {
   IGetWorkoutById,
   IGetWorkoutByIdFailure,
@@ -6,9 +5,13 @@ import {
   IGetWorkouts,
   IGetWorkoutsFailure,
   IGetWorkoutsSuccess,
+  ISaveWorkout,
+  ISaveWorkoutFailure,
+  ISaveWorkoutSuccess,
   IWorkout,
   IWorkouts
-} from '../types/workoutTypes';
+} from '../../types/workoutTypes';
+import * as constants from '../constants/workoutConstants';
 
 export function getWorkouts(): IGetWorkouts {
   return {
@@ -47,6 +50,27 @@ export function getWorkoutByIdSuccess(workout: IWorkout): IGetWorkoutByIdSuccess
 export function getWorkoutByIdFailure(error: string): IGetWorkoutByIdFailure {
   return {
     type: constants.GET_WORKOUT_BY_ID_FAILURE,
+    error
+  };
+}
+
+export function saveWorkout(workout: IWorkout): ISaveWorkout {
+  return {
+    type: constants.SAVE_WORKOUT,
+    workout
+  };
+}
+
+export function saveWorkoutSuccess(workout: IWorkout): ISaveWorkoutSuccess {
+  return {
+    type: constants.SAVE_WORKOUT_SUCCESS,
+    workout
+  };
+}
+
+export function saveWorkoutFailure(error: string): ISaveWorkoutFailure {
+  return {
+    type: constants.SAVE_WORKOUT_FAILURE,
     error
   };
 }
