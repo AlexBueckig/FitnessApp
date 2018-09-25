@@ -1,5 +1,6 @@
 import Realm from 'realm';
-import { IDay, IExercise, ISet, ISetting } from '../../../../types/workoutTypes';
+import { IDay } from '../../../../types/dayTypes';
+import { IExercise, ISet, ISetting } from '../../../../types/workoutTypes';
 
 export class Exercise {
   public static schema: Realm.ObjectSchema = {
@@ -59,10 +60,10 @@ export class Day {
 
   public id: number;
   public description: string;
-  public day: Date;
+  public day: number[];
   public sets: ISet[];
 
-  constructor(id: number, description: string, day: Date, sets: ISet[]) {
+  constructor(id: number, description: string, day: number[], sets: ISet[]) {
     this.id = id;
     this.description = description;
     this.day = day;

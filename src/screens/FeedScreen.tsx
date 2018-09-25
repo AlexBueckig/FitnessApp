@@ -26,7 +26,6 @@ export default class FeedScreen extends PureComponent<IProps, IState> {
   }
 
   public componentDidAppear() {
-    console.log('ComponentDidAppear');
     this.props.getPosts();
   }
 

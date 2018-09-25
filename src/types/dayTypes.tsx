@@ -15,8 +15,8 @@ export interface IDays {
 export interface IDay {
   id: number;
   description: string;
-  day?: number[];
-  sets?: ISet[];
+  day: number[];
+  sets: ISet[];
 }
 
 /* Day Actions */
