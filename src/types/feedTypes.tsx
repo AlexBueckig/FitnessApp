@@ -6,10 +6,9 @@ export interface IPost {
   key: string;
   text: string;
 }
-export type posts = IPost[];
 
 export interface IFeedState {
-  posts: posts;
+  posts: IPost[];
   error: string;
 }
 
@@ -20,7 +19,7 @@ export interface IGetFeed {
 
 export interface IGetFeedSuccess {
   type: constants.GET_FEED_SUCCESS;
-  posts: posts;
+  posts: IPost[];
 }
 
 export interface IGetFeedFailure {

@@ -1,15 +1,18 @@
-import { connect, Dispatch } from 'react-redux';
-import { getWorkouts } from '../redux/actions/workoutActions';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { deleteWorkout, getWorkouts } from '../redux/actions/workoutActions';
 import WorkoutScreen from '../screens/WorkoutScreen';
 import IStoreState from '../types';
-import { IWorkoutsAction } from '../types/workoutTypes';
+import { IDeleteWorkoutAction, IGetWorkoutsAction } from '../types/workoutTypes';
 
 export const mapStateToProps = (state: IStoreState) => ({
-  workouts: state.workouts.workouts
+  workouts: state.workoutsState.workouts,
+  isFetching: state.workoutsState.isFetching
 });
 
-export const mapDispatchToProps = (dispatch: Dispatch<IWorkoutsAction>) => ({
-  getWorkouts: () => dispatch(getWorkouts())
+export const mapDispatchToProps = (dispatch: Dispatch<IGetWorkoutsAction | IDeleteWorkoutAction>) => ({
+  getWorkouts: () => dispatch(getWorkouts()),
+  deleteWorkout: (id: number) => dispatch(deleteWorkout(id))
 });
 
 export default connect(

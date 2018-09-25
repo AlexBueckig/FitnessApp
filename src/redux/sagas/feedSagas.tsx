@@ -1,5 +1,4 @@
-import { takeLatest } from 'redux-saga';
-import { call, put } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 
 import api from '../../api/';
 import * as constants from '../constants/feedConstants';

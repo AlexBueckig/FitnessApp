@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
 import { Animated, FlatList, Text, View } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 import styles from '../styles/';
-import { IGetFeed, IPost, posts as postType } from '../types/feedTypes';
+import { IGetFeed, IPost } from '../types/feedTypes';
 
 interface IProps {
-  posts: postType;
+  posts: IPost[];
   componentId?: string;
   getPosts: () => IGetFeed;
 }
@@ -21,9 +22,11 @@ export default class FeedScreen extends PureComponent<IProps, IState> {
     this.state = {
       scrollY: new Animated.Value(0)
     };
+    Navigation.events().bindComponent(this);
   }
 
-  public componentDidMount() {
+  public componentDidAppear() {
+    console.log('ComponentDidAppear');
     this.props.getPosts();
   }
 

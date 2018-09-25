@@ -1,11 +1,12 @@
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import { getFeed } from '../redux/actions/feedActions';
 import FeedScreen from '../screens/FeedScreen';
 import IStoreState from '../types';
 import { FeedAction } from '../types/feedTypes';
 
 export const mapStateToProps = (state: IStoreState) => ({
-  posts: state.feed.posts
+  posts: state.feedState.posts
 });
 
 export const mapDispatchToProps = (dispatch: Dispatch<FeedAction>) => ({

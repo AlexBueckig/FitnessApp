@@ -4,19 +4,23 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "clean": "react-native-clean-project"
   },
   "dependencies": {
-    "react": "16.3.1",
-    "react-native": "^0.55.4",
+    "formik": "^1.0.0-beta.6",
+    "react": "^16.4.1",
+    "react-native": "0.55",
     "react-native-calendars": "^1.19.3",
-    "react-native-navigation": "^2.0.2396",
+    "react-native-elements": "^1.0.0-beta5",
+    "react-native-navigation": "^2.0.2556",
     "react-native-svg": "^6.3.1",
     "react-native-vector-icons": "^4.6.0",
     "react-redux": "^5.0.7",
     "realm": "^2.12.0",
     "redux": "^4.0.0",
-    "redux-saga": "^0.16.0"
+    "redux-saga": "^0.16.0",
+    "yup": "^0.25.1"
   },
   "devDependencies": {
     "@types/jest": "23.1.1",
@@ -25,8 +29,9 @@
     "@types/react-native-vector-icons": "^4.6.1",
     "@types/react-redux": "^6.0.2",
     "@types/react-test-renderer": "16.0.1",
+    "@types/yup": "^0.24.7",
     "babel-jest": "23.0.1",
-    "babel-preset-react-native": "4.0.0",
+    "babel-preset-react-native": "4",
     "jest": "23.1.0",
     "prettier": "^1.13.5",
     "react-native-typescript-transformer": "1.2.10",

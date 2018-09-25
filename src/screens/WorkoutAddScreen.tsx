@@ -1,5 +1,10 @@
-import React, { PureComponent } from 'react';
-import { TextInput, View } from 'react-native';
+import { Formik, FormikProps } from 'formik';
+import React, { Fragment, PureComponent } from 'react';
+import { View } from 'react-native';
+import { Button } from 'react-native-elements';
+import { Navigation } from 'react-native-navigation';
+import TextInput from '../components/Input';
+import styles from '../styles';
 import { IGetWorkoutById, ISaveWorkout, IWorkout } from '../types/workoutTypes';
 
 interface IProps {
@@ -7,34 +12,78 @@ interface IProps {
   saveWorkout: (workout: IWorkout) => ISaveWorkout;
   workout: IWorkout;
   id: number;
+  isFetching: boolean;
 }
 
-interface IState {
-  workout: IWorkout;
+interface IMyFormValues {
+  comment: string;
 }
 
-class WorkoutAddScreen extends PureComponent<IProps, IState> {
-  public constructor(props: IProps) {
+class WorkoutAddScreen extends PureComponent<IProps> {
+  constructor(props: IProps) {
     super(props);
-    if (this.props.workout) {
-      this.state = { workout: this.props.workout };
-    } else {
-      this.state = {
-        workout: { id: this.props.id, comment: '' }
-      };
+    Navigation.events().bindComponent(this);
+  }
+  static get options() {
+    return {
+      topBar: {
+        title: { text: 'Trainingsplan' },
+        rightButtons: [
+          {
+            id: 'saveWorkoutButton',
+            icon: require('../../res/images/one.png')
+          }
+        ]
+      }
+    };
+  }
+
+  public onNavigationButtonPressed(buttonId: string) {
+    switch (buttonId) {
+      case 'saveWorkoutButton':
+        // this.props.saveWorkout({ ...this.props.workout, comment: this.props.values });
+        break;
+      default:
+        break;
     }
   }
 
-  public onChange(value: string) {
-    this.setState({ workout: { ...this.state.workout, comment: value } });
+  public componentDidAppear() {
+    this.props.getWorkoutById(this.props.id);
   }
 
   public render() {
     return (
-      <View>
-        <TextInput placeholder={'name'} onChangeText={this.onChange.bind(this)} value={this.state.workout.comment} />
+      <View style={styles.layout.main}>
+        <Formik
+          initialValues={{ comment: this.props.workout.comment }}
+          onSubmit={this.handleSubmit.bind(this)}
+          render={(props: FormikProps<IMyFormValues>) => (
+            <Fragment>
+              <TextInput
+                label="comment"
+                name="comment"
+                value={props.values.comment}
+                onChange={props.setFieldValue}
+                onTouch={props.setFieldTouched}
+                // error={props.touched.comment && props.errors.comment}
+              />
+              <Button
+                title="Submit"
+                onPress={props.submitForm}
+                disabled={!props.isValid || props.isSubmitting}
+                loading={props.isSubmitting}
+              />
+            </Fragment>
+          )}
+          enableReinitialize={true}
+        />
       </View>
     );
+  }
+
+  public handleSubmit(values: IMyFormValues) {
+    this.props.saveWorkout({ ...this.props.workout, comment: values.comment });
   }
 }
 

@@ -1,4 +1,4 @@
-import { IGetFeed, posts as postType } from '../../types/feedTypes';
+import { IGetFeed, IPost } from '../../types/feedTypes';
 import * as constants from '../constants/feedConstants';
 
 export function getFeed(): IGetFeed {
@@ -7,7 +7,7 @@ export function getFeed(): IGetFeed {
   };
 }
 
-export const getFeedSuccess = (posts: postType) => ({
+export const getFeedSuccess = (posts: IPost[]) => ({
   type: constants.GET_FEED_SUCCESS,
   posts
 });
