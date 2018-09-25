@@ -1,4 +1,5 @@
 import * as constants from '../redux/constants/workoutConstants';
+import { IDay } from './dayTypes';
 
 /* WorkoutTypes */
 export interface IWorkoutState {
@@ -17,13 +18,6 @@ export interface IWorkout {
   id: number;
   creation_date: Date;
   days: IDay[];
-}
-
-export interface IDay {
-  id: number;
-  description: string;
-  day?: number[];
-  sets?: ISet[];
 }
 
 export interface ISet {
@@ -51,6 +45,8 @@ export interface IWorkouts {
 }
 
 /* Action Types */
+
+/* Workout Actions */
 export interface IGetWorkouts {
   type: constants.GET_WORKOUTS;
 }

@@ -88,7 +88,7 @@ class App extends React.PureComponent<IProps> {
                 children: [
                   {
                     component: {
-                      name: 'WorkoutScreen',
+                      name: 'WorkoutMenuScreen',
                       passProps: {
                         text: 'This is tab 2'
                       }
