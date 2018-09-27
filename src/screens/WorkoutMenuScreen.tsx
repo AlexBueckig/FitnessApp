@@ -22,6 +22,7 @@ export default class WorkoutMenuScreen extends PureComponent<IProps> {
       <View>
         <Button onPress={this.onPress.bind(this, 'WorkoutScreen')} title="WorkoutScreen" />
         <Button onPress={this.onPress.bind(this, 'DayScreen')} title="DayScreen" />
+        <Button onPress={this.onPress.bind(this, 'ExerciseScreen')} title="ExerciseScreen" />
       </View>
     );
   }

@@ -1,5 +1,6 @@
 import * as constants from '../redux/constants/workoutConstants';
 import { IDay } from './dayTypes';
+import { IExercise } from './exerciseTypes';
 
 /* WorkoutTypes */
 export interface IWorkoutState {
@@ -7,10 +8,6 @@ export interface IWorkoutState {
   workouts: IWorkouts;
   error?: string;
   isFetching: boolean;
-}
-
-export interface IExercise {
-  exerciseId: number;
 }
 
 export interface IWorkout {
@@ -22,10 +19,10 @@ export interface IWorkout {
 
 export interface ISet {
   id: number;
-  order: number;
   sets: number;
-  exercises: number[];
+  exercise: IExercise;
   settings: ISetting[];
+  exerciseday: IDay;
 }
 
 export interface ISetting {
@@ -37,6 +34,7 @@ export interface ISetting {
   order: number;
   reps: number;
   weight: number;
+  set: ISet;
 }
 
 export interface IWorkouts {
