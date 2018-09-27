@@ -1,9 +1,11 @@
 import { Formik, FormikProps } from 'formik';
 import React, { Fragment, PureComponent } from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
+import CategoryPicker from '../components/CategoryPicker';
 import TextInput from '../components/Input';
+import MuscleCheckboxGroup from '../components/MuscleCheckboxGroup';
 import styles from '../styles';
 import { IExercise, IGetExerciseById, ISaveExercise } from '../types/exerciseTypes';
 
@@ -17,6 +19,9 @@ interface IProps {
 
 interface IMyFormValues {
   name: string;
+  category: string;
+  description: string;
+  muscles: string;
 }
 
 class WorkoutAddScreen extends PureComponent<IProps> {
@@ -55,20 +60,36 @@ class WorkoutAddScreen extends PureComponent<IProps> {
 
   public render() {
     return (
-      <View style={styles.layout.main}>
+      <ScrollView style={styles.layout.main}>
         <Formik
-          initialValues={{ name: this.props.exercise.name }}
+          initialValues={{
+            name: this.props.exercise.name,
+            category: this.props.exercise.category || '',
+            description: this.props.exercise.description || '',
+            muscles: JSON.stringify(this.props.exercise.muscles || [])
+          }}
           onSubmit={this.handleSubmit.bind(this)}
           render={(props: FormikProps<IMyFormValues>) => (
             <Fragment>
               <TextInput
-                label="comment"
-                name="comment"
+                label="name"
+                name="name"
                 value={props.values.name}
                 onChange={props.setFieldValue}
                 onTouch={props.setFieldTouched}
                 // error={props.touched.comment && props.errors.comment}
               />
+              <TextInput
+                label="description"
+                name="description"
+                placeholder="optional"
+                value={props.values.description}
+                onChange={props.setFieldValue}
+                onTouch={props.setFieldTouched}
+                // error={props.touched.comment && props.errors.comment}
+              />
+              <CategoryPicker name="category" selectedValue={props.values.category} onChange={props.setFieldValue} />
+              <MuscleCheckboxGroup name="muscles" data={props.values.muscles} onChange={props.setFieldValue} />
               <Button
                 title="Submit"
                 onPress={props.submitForm}
@@ -79,7 +100,7 @@ class WorkoutAddScreen extends PureComponent<IProps> {
           )}
           enableReinitialize={true}
         />
-      </View>
+      </ScrollView>
     );
   }
 

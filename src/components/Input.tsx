@@ -6,6 +6,7 @@ interface IProps {
   value: string;
   name: string;
   label: string;
+  placeholder?: string;
   error?: string;
   onChange: (name: string, text: string) => void;
   onTouch: (name: string) => void;
@@ -13,7 +14,7 @@ interface IProps {
 
 class TextInput extends PureComponent<IProps> {
   public render() {
-    const { label, error, value } = this.props;
+    const { label, error, value, placeholder } = this.props;
     return (
       <View style={styles.root}>
         <Input
@@ -21,7 +22,7 @@ class TextInput extends PureComponent<IProps> {
           errorMessage={error}
           onChangeText={this.handleChange}
           onBlur={this.handleTouch}
-          placeholder={label}
+          placeholder={placeholder || label}
           value={value}
         />
       </View>
