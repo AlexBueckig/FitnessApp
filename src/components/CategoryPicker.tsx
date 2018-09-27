@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import { Picker, StyleSheet, View } from 'react-native';
+import { Picker, StyleSheet, Text, View } from 'react-native';
+import styles from '../styles';
 
 interface IProps {
   name: string;
@@ -11,7 +12,8 @@ class CategoryPicker extends PureComponent<IProps> {
   public render() {
     const { selectedValue } = this.props;
     return (
-      <View style={styles.root}>
+      <View style={styles1.root}>
+        <Text style={styles.typography.label}>kategorie</Text>
         <Picker selectedValue={selectedValue} onValueChange={this.handleChange}>
           <Picker.Item label="---" value="" />
           <Picker.Item label="Arme" value="Arme" />
@@ -27,12 +29,11 @@ class CategoryPicker extends PureComponent<IProps> {
   }
 
   private handleChange = (value: string) => {
-    console.log(value);
     this.props.onChange(this.props.name, value);
   };
 }
 
-const styles = StyleSheet.create({
+const styles1 = StyleSheet.create({
   root: {
     width: '90%',
     alignSelf: 'center'
