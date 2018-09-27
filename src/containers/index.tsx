@@ -8,6 +8,7 @@ import SecondScreen from '../screens/SecondScreen';
 import WorkoutMenuScreen from '../screens/WorkoutMenuScreen';
 import IStoreState from '../types';
 import DayAddContainer from './DayAddContainer';
+import DayContainer from './DayContainer';
 import FeedContainer from './FeedContainer';
 import WorkoutAddContainer from './WorkoutAddContainer';
 import WorkoutContainer from './WorkoutContainer';
@@ -20,5 +21,6 @@ export const registerScreens = (store: Store<IStoreState>) => {
   Navigation.registerComponentWithRedux('FeedScreen', () => FeedContainer, Provider, store);
   Navigation.registerComponentWithRedux('WorkoutScreen', () => WorkoutContainer, Provider, store);
   Navigation.registerComponentWithRedux('WorkoutScreen.Add', () => WorkoutAddContainer, Provider, store);
+  Navigation.registerComponentWithRedux('DayScreen', () => DayContainer, Provider, store);
   Navigation.registerComponentWithRedux('DayScreen.Add', () => DayAddContainer, Provider, store);
 };

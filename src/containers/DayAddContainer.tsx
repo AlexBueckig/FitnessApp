@@ -1,17 +1,18 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { saveDay } from '../redux/actions/dayActions';
+import { getDayById, saveDay } from '../redux/actions/dayActions';
 import DayAddScreen from '../screens/DayAddScreen';
 import IStoreState from '../types';
-import { IDay, ISaveDay } from '../types/dayTypes';
+import { IDay, IGetDayById, ISaveDay } from '../types/dayTypes';
 
 export const mapStateToProps = (state: IStoreState) => ({
-  workout: state.workoutsState.currentWorkout,
-  isFetching: state.workoutsState.isFetching
+  day: state.daysState.currentDay,
+  isFetching: state.daysState.isFetching
 });
 
-export const mapDispatchToProps = (dispatch: Dispatch<ISaveDay>) => ({
-  saveDay: (day: IDay) => dispatch(saveDay(day))
+export const mapDispatchToProps = (dispatch: Dispatch<ISaveDay | IGetDayById>) => ({
+  saveDay: (day: IDay) => dispatch(saveDay(day)),
+  getDayById: (id: number) => dispatch(getDayById(id))
 });
 
 export default connect(

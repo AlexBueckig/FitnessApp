@@ -3,6 +3,7 @@ import { ISet } from './workoutTypes';
 
 export interface IDayState {
   days: IDays;
+  currentDay: IDay;
   error?: string;
   isFetching: boolean;
 }
@@ -17,6 +18,7 @@ export interface IDay {
   description: string;
   day: number[];
   sets: ISet[];
+  training?: number;
 }
 
 /* Day Actions */

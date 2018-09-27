@@ -11,7 +11,7 @@ export const getDays = async () => {
       schema: [Workout.schema, Day.schema, Set.schema, Setting.schema, Exercise.schema],
       schemaVersion: SCHEMA_VERSION
     });
-    const days = JSON.parse(JSON.stringify(realm.objects('Workout')));
+    const days = JSON.parse(JSON.stringify(realm.objects('Day')));
     const daysCopy: IDay[] = [];
     Object.keys(days).forEach(key => daysCopy.push(days[key]));
     realm.close();
