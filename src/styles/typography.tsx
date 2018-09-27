@@ -12,7 +12,8 @@ const typography = StyleSheet.create({
   body: { fontSize: 14, fontFamily: 'sans-serif', color: fontColor, opacity: opacityPrimary },
   menu: { fontSize: 14, fontFamily: 'sans-serif-medium', color: fontColor, opacity: opacityPrimary },
   caption: { fontSize: 12, fontFamily: 'sans-serif', color: fontColor, opacity: 1 },
-  button: { fontSize: 14, fontFamily: 'sans-serif-medium', color: fontColor, opacity: opacityPrimary }
+  button: { fontSize: 14, fontFamily: 'sans-serif-medium', color: fontColor, opacity: opacityPrimary },
+  label: { color: '#86939e', fontSize: 16, fontFamily: 'sans-serif', fontWeight: 'bold' }
 });
 
 export default typography;
