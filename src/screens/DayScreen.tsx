@@ -1,9 +1,8 @@
 import React, { PureComponent } from 'react';
-import { Alert, Button, FlatList, TouchableHighlight, View } from 'react-native';
+import { Alert, Button, FlatList, View } from 'react-native';
 import { Text } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
 import { Navigation } from 'react-native-navigation';
+import AddButton from '../components/AddButton';
 import { ListEmptyComponent, ListItemSeperator } from '../components/ListComponents';
 import styles from '../styles';
 import { IDays, IDeleteDay, IGetDays } from '../types/dayTypes';
@@ -40,11 +39,7 @@ export default class DayScreen extends PureComponent<IProps> {
   public render() {
     return (
       <View style={styles.layout.main}>
-        <TouchableHighlight style={styles.layout.addButtonPosition} onPress={this.onPress.bind(this, 0)}>
-          <View style={styles.layout.addButton}>
-            <Icon name="add" size={24} color="#ffffff" />
-          </View>
-        </TouchableHighlight>
+        <AddButton onPress={this.onPress.bind(this, 0)} />
         <View style={{ marginHorizontal: 16 }}>
           <Text style={styles.typography.headline}>DayScreen</Text>
           <FlatList
