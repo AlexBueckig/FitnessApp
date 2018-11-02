@@ -18,6 +18,7 @@ export function* getExerciseByIdSaga(action: IGetExerciseById) {
     const exercise = yield call(api.realm.exercise.getExerciseById, action.id);
     yield put({ type: constants.GET_EXERCISE_BY_ID_SUCCESS, exercise });
   } catch (error) {
+    console.log(error);
     yield put({ type: constants.GET_EXERCISE_BY_ID_FAILURE, error });
   }
 }
