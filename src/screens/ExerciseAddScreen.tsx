@@ -1,11 +1,11 @@
 import { Formik, FormikProps } from 'formik';
-import React, { Fragment, PureComponent } from 'react';
-import { ScrollView } from 'react-native';
-import { Button } from 'react-native-elements';
+import React, { PureComponent } from 'react';
+import { ScrollView, View } from 'react-native';
+import { Button, Text } from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import CategoryPicker from '../components/CategoryPicker';
 import TextInput from '../components/Input';
-import MuscleCheckboxGroup from '../components/MuscleCheckboxGroup';
 import styles from '../styles';
 import { IExercise, IGetExerciseById, ISaveExercise } from '../types/exerciseTypes';
 
@@ -21,7 +21,7 @@ interface IMyFormValues {
   name: string;
   category: string;
   description: string;
-  muscles: string;
+  muscles: number[];
 }
 
 class WorkoutAddScreen extends PureComponent<IProps> {
@@ -59,6 +59,68 @@ class WorkoutAddScreen extends PureComponent<IProps> {
   }
 
   public render() {
+    const muscleGroups = [
+      {
+        name: 'Anterior deltoid',
+        id: 2
+      },
+      {
+        name: 'Biceps brachii (Armbeuger)',
+        id: 1
+      },
+      {
+        name: 'Biceps femoris (Beinbeuger)',
+        id: 11
+      },
+      {
+        name: 'Brachialis (Oberarmmuskel)',
+        id: 13
+      },
+      {
+        name: 'Gastrocnemius (Waden)',
+        id: 7
+      },
+      {
+        name: 'Gluteus maximus (Po)',
+        id: 8
+      },
+      {
+        name: 'Latissimus dorsi (breiter Rückenmuskel)',
+        id: 12
+      },
+      {
+        name: 'Obliquus externus abdominis (schräger Bauchmuskel)',
+        id: 14
+      },
+      {
+        name: 'Pectoralis major (Brustmuskel)',
+        id: 4
+      },
+      {
+        name: 'Quadriceps femoris (Oberschenkelstrecker)',
+        id: 10
+      },
+      {
+        name: 'Rectus abdominis (Bauchmuskel)',
+        id: 6
+      },
+      {
+        name: 'Serratus anterior',
+        id: 3
+      },
+      {
+        name: 'Soleus',
+        id: 15
+      },
+      {
+        name: 'Trapezius',
+        id: 9
+      },
+      {
+        name: 'Triceps brachii (Armstrecker)',
+        id: 5
+      }
+    ];
     return (
       <ScrollView style={styles.layout.main}>
         <Formik
@@ -66,11 +128,11 @@ class WorkoutAddScreen extends PureComponent<IProps> {
             name: this.props.exercise.name,
             category: this.props.exercise.category || '',
             description: this.props.exercise.description || '',
-            muscles: JSON.stringify(this.props.exercise.muscles || [])
+            muscles: this.props.exercise.muscles || []
           }}
           onSubmit={this.handleSubmit.bind(this)}
           render={(props: FormikProps<IMyFormValues>) => (
-            <Fragment>
+            <View>
               <TextInput
                 label="name"
                 name="name"
@@ -89,14 +151,30 @@ class WorkoutAddScreen extends PureComponent<IProps> {
                 // error={props.touched.comment && props.errors.comment}
               />
               <CategoryPicker name="category" selectedValue={props.values.category} onChange={props.setFieldValue} />
-              <MuscleCheckboxGroup name="muscles" data={props.values.muscles} onChange={props.setFieldValue} />
+              <View
+                style={{
+                  width: '90%',
+                  alignSelf: 'center'
+                }}
+              >
+                <Text style={styles.typography.label}>Muskelgruppe(n)</Text>
+                <SectionedMultiSelect
+                  items={muscleGroups}
+                  selectedItems={props.values.muscles}
+                  onSelectedItemsChange={(selectedItems: number[]) => {
+                    props.setFieldValue('muscles', selectedItems);
+                  }}
+                  uniqueKey="id"
+                  hideSearch={true}
+                />
+              </View>
               <Button
                 title="Submit"
                 onPress={props.submitForm}
                 disabled={!props.isValid || props.isSubmitting}
                 loading={props.isSubmitting}
               />
-            </Fragment>
+            </View>
           )}
           enableReinitialize={true}
         />
