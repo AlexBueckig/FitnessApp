@@ -24,12 +24,7 @@ interface IMyFormValues {
   muscles: number[];
 }
 
-class WorkoutAddScreen extends PureComponent<IProps> {
-  constructor(props: IProps) {
-    super(props);
-    Navigation.events().bindComponent(this);
-  }
-
+class ExerciseAddScreen extends PureComponent<IProps> {
   static get options() {
     return {
       topBar: {
@@ -42,6 +37,73 @@ class WorkoutAddScreen extends PureComponent<IProps> {
         ]
       }
     };
+  }
+
+  private muscleGroups = [
+    {
+      name: 'Anterior deltoid',
+      id: 2
+    },
+    {
+      name: 'Biceps brachii (Armbeuger)',
+      id: 1
+    },
+    {
+      name: 'Biceps femoris (Beinbeuger)',
+      id: 11
+    },
+    {
+      name: 'Brachialis (Oberarmmuskel)',
+      id: 13
+    },
+    {
+      name: 'Gastrocnemius (Waden)',
+      id: 7
+    },
+    {
+      name: 'Gluteus maximus (Po)',
+      id: 8
+    },
+    {
+      name: 'Latissimus dorsi (breiter Rückenmuskel)',
+      id: 12
+    },
+    {
+      name: 'Obliquus externus abdominis (schräger Bauchmuskel)',
+      id: 14
+    },
+    {
+      name: 'Pectoralis major (Brustmuskel)',
+      id: 4
+    },
+    {
+      name: 'Quadriceps femoris (Oberschenkelstrecker)',
+      id: 10
+    },
+    {
+      name: 'Rectus abdominis (Bauchmuskel)',
+      id: 6
+    },
+    {
+      name: 'Serratus anterior',
+      id: 3
+    },
+    {
+      name: 'Soleus',
+      id: 15
+    },
+    {
+      name: 'Trapezius',
+      id: 9
+    },
+    {
+      name: 'Triceps brachii (Armstrecker)',
+      id: 5
+    }
+  ];
+  constructor(props: IProps) {
+    super(props);
+    Navigation.events().bindComponent(this);
   }
 
   public onNavigationButtonPressed(buttonId: string) {
@@ -59,68 +121,6 @@ class WorkoutAddScreen extends PureComponent<IProps> {
   }
 
   public render() {
-    const muscleGroups = [
-      {
-        name: 'Anterior deltoid',
-        id: 2
-      },
-      {
-        name: 'Biceps brachii (Armbeuger)',
-        id: 1
-      },
-      {
-        name: 'Biceps femoris (Beinbeuger)',
-        id: 11
-      },
-      {
-        name: 'Brachialis (Oberarmmuskel)',
-        id: 13
-      },
-      {
-        name: 'Gastrocnemius (Waden)',
-        id: 7
-      },
-      {
-        name: 'Gluteus maximus (Po)',
-        id: 8
-      },
-      {
-        name: 'Latissimus dorsi (breiter Rückenmuskel)',
-        id: 12
-      },
-      {
-        name: 'Obliquus externus abdominis (schräger Bauchmuskel)',
-        id: 14
-      },
-      {
-        name: 'Pectoralis major (Brustmuskel)',
-        id: 4
-      },
-      {
-        name: 'Quadriceps femoris (Oberschenkelstrecker)',
-        id: 10
-      },
-      {
-        name: 'Rectus abdominis (Bauchmuskel)',
-        id: 6
-      },
-      {
-        name: 'Serratus anterior',
-        id: 3
-      },
-      {
-        name: 'Soleus',
-        id: 15
-      },
-      {
-        name: 'Trapezius',
-        id: 9
-      },
-      {
-        name: 'Triceps brachii (Armstrecker)',
-        id: 5
-      }
-    ];
     return (
       <ScrollView style={styles.layout.main}>
         <Formik
@@ -134,15 +134,16 @@ class WorkoutAddScreen extends PureComponent<IProps> {
           render={(props: FormikProps<IMyFormValues>) => (
             <View>
               <TextInput
-                label="name"
+                label="Name"
                 name="name"
+                placeholder="Name der Übung"
                 value={props.values.name}
                 onChange={props.setFieldValue}
                 onTouch={props.setFieldTouched}
                 // error={props.touched.comment && props.errors.comment}
               />
               <TextInput
-                label="description"
+                label="Beschreibung"
                 name="description"
                 placeholder="optional"
                 value={props.values.description}
@@ -152,7 +153,7 @@ class WorkoutAddScreen extends PureComponent<IProps> {
               />
               <CategoryPicker name="category" selectedValue={props.values.category} onChange={props.setFieldValue} />
               <MultiPicker
-                items={muscleGroups}
+                items={this.muscleGroups}
                 name="muscles"
                 label="Muskelgruppe(n)"
                 onChange={props.setFieldValue}
@@ -177,4 +178,4 @@ class WorkoutAddScreen extends PureComponent<IProps> {
   }
 }
 
-export default WorkoutAddScreen;
+export default ExerciseAddScreen;
