@@ -1,11 +1,11 @@
 import { Formik, FormikProps } from 'formik';
 import React, { PureComponent } from 'react';
 import { ScrollView, View } from 'react-native';
-import { Button, Text } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
-import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import CategoryPicker from '../components/CategoryPicker';
 import TextInput from '../components/Input';
+import MultiPicker from '../components/MultiPicker';
 import styles from '../styles';
 import { IExercise, IGetExerciseById, ISaveExercise } from '../types/exerciseTypes';
 
@@ -151,23 +151,13 @@ class WorkoutAddScreen extends PureComponent<IProps> {
                 // error={props.touched.comment && props.errors.comment}
               />
               <CategoryPicker name="category" selectedValue={props.values.category} onChange={props.setFieldValue} />
-              <View
-                style={{
-                  width: '90%',
-                  alignSelf: 'center'
-                }}
-              >
-                <Text style={styles.typography.label}>Muskelgruppe(n)</Text>
-                <SectionedMultiSelect
-                  items={muscleGroups}
-                  selectedItems={props.values.muscles}
-                  onSelectedItemsChange={(selectedItems: number[]) => {
-                    props.setFieldValue('muscles', selectedItems);
-                  }}
-                  uniqueKey="id"
-                  hideSearch={true}
-                />
-              </View>
+              <MultiPicker
+                items={muscleGroups}
+                name="muscles"
+                label="Muskelgruppe(n)"
+                onChange={props.setFieldValue}
+                selectedItems={props.values.muscles}
+              />
               <Button
                 title="Submit"
                 onPress={props.submitForm}
