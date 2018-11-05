@@ -9,8 +9,8 @@ const layout = StyleSheet.create({
   },
   container: {
     marginHorizontal: 16,
-    flex: 1,
-    flexDirection: 'row'
+    width: '90%',
+    alignSelf: 'center'
   },
   backgroundImage: {
     width: Screen.width,
@@ -58,6 +58,16 @@ const layout = StyleSheet.create({
     alignItems: 'center',
     elevation: 4,
     backgroundColor: 'green'
+  },
+  button: {
+    borderRadius: 24,
+    borderWidth: 5,
+    borderColor: 'green',
+    height: 36,
+    minWidth: 150,
+    backgroundColor: 'transparent',
+    alignContent: 'center',
+    margin: 10
   }
 });
 

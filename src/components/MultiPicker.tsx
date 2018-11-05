@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import styles from '../styles';
 
@@ -31,7 +31,7 @@ class MultiPicker extends PureComponent<IProps, IState> {
   public render() {
     const { items, label } = this.props;
     return (
-      <View style={styles1.root}>
+      <View style={styles.layout.container}>
         <Text style={styles.typography.label}>{label}</Text>
         <SectionedMultiSelect
           items={items}
@@ -49,12 +49,5 @@ class MultiPicker extends PureComponent<IProps, IState> {
     this.setState({ selectedItems: values });
   };
 }
-
-const styles1 = StyleSheet.create({
-  root: {
-    width: '90%',
-    alignSelf: 'center'
-  }
-});
 
 export default MultiPicker;
