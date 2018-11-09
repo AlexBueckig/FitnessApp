@@ -9,7 +9,10 @@ export class Exercise {
     primaryKey: 'id',
     properties: {
       id: 'int',
-      exerciseId: 'int'
+      name: 'string',
+      description: 'string',
+      category: 'string',
+      muscles: 'int[]'
     }
   };
 
@@ -17,12 +20,14 @@ export class Exercise {
   public name: string;
   public description: string;
   public category: string;
+  public muscles: number[];
 
-  constructor(id: number, name: string, description = '', category = '') {
+  constructor(id: number, name: string, description?: string, category?: string, muscles?: number[]) {
     this.id = id;
     this.name = name;
-    this.description = description;
-    this.category = category;
+    this.description = description || '';
+    this.category = category || '';
+    this.muscles = muscles || [];
   }
 }
 
