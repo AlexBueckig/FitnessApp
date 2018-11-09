@@ -28,7 +28,7 @@ export const saveExercise = async (exercise: IExercise) => {
       schema: [Exercise.schema],
       schemaVersion: SCHEMA_VERSION
     });
-    const test = new Exercise(exercise.id, exercise.name);
+    const test = new Exercise(exercise.id, exercise.name, exercise.description, exercise.category, exercise.muscles);
     if (exercise.id === 0) {
       const maxId = Number(realm.objects('Exercise').max('id')) + 1 || 1;
       test.id = maxId;
@@ -66,7 +66,7 @@ export const deleteExercise = async (id: number) => {
 
 export const getExerciseById = async (id: number) => {
   try {
-    const exercise: IExercise = { id: 0, description: '', name: '' };
+    const exercise: IExercise = { id: 0, description: '', name: '', muscles: [], category: '' };
     if (id !== 0) {
       const realm = await Realm.open({
         schema: [Exercise.schema],
@@ -75,13 +75,15 @@ export const getExerciseById = async (id: number) => {
       const exerciseCopy = JSON.parse(
         JSON.stringify(realm.objects<Exercise>(Exercise.schema.name).filtered('id = ' + id))
       );
-      exercise.id = exerciseCopy.id;
-      exercise.description = exerciseCopy.description;
-      exercise.name = exerciseCopy.name;
+      exercise.id = exerciseCopy[0].id;
+      exercise.description = exerciseCopy[0].description || '';
+      exercise.name = exerciseCopy[0].name || '';
+      exercise.category = exerciseCopy[0].category || '';
+      exercise.muscles = Object.keys(exerciseCopy[0].muscles).map(key => exerciseCopy[0].muscles[key]);
     }
     return exercise;
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 

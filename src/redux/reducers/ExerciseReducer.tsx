@@ -3,7 +3,7 @@ import * as constants from '../constants/exerciseConstants';
 
 const initialState = {
   exercises: { count: 0, results: [] },
-  currentExercise: { id: 0, description: '', name: '' },
+  currentExercise: { id: 0, description: '', name: '', category: '', muscles: [] },
   error: '',
   isFetching: false
 };

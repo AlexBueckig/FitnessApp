@@ -11,10 +11,14 @@ import { IExercise, IGetExerciseById, ISaveExercise } from '../types/exerciseTyp
 
 interface IProps {
   getExerciseById: (id: number) => IGetExerciseById;
-  saveWorkout: (exercise: IExercise) => ISaveExercise;
+  saveExercise: (exercise: IExercise) => ISaveExercise;
   exercise: IExercise;
   id: number;
   isFetching: boolean;
+}
+
+interface IState {
+  muscles: number[];
 }
 
 interface IMyFormValues {
@@ -24,15 +28,15 @@ interface IMyFormValues {
   muscles: number[];
 }
 
-class ExerciseAddScreen extends PureComponent<IProps> {
+class ExerciseAddScreen extends PureComponent<IProps, IState> {
   static get options() {
     return {
       topBar: {
         title: { text: 'Übung' },
         rightButtons: [
           {
-            id: 'saveWorkoutButton',
-            icon: require('../../res/images/one.png')
+            id: 'saveExerciseButton',
+            icon: require('../../res/icons/baseline_check_black_18dp.png')
           }
         ]
       }
@@ -101,6 +105,7 @@ class ExerciseAddScreen extends PureComponent<IProps> {
       id: 5
     }
   ];
+
   constructor(props: IProps) {
     super(props);
     Navigation.events().bindComponent(this);
@@ -157,7 +162,7 @@ class ExerciseAddScreen extends PureComponent<IProps> {
                 name="muscles"
                 label="Muskelgruppe(n)"
                 onChange={props.setFieldValue}
-                selectedItems={props.values.muscles}
+                selectedItems={Object.assign(props.values.muscles)}
               />
               <Button
                 title="Submit"
@@ -174,7 +179,7 @@ class ExerciseAddScreen extends PureComponent<IProps> {
   }
 
   public handleSubmit(values: IMyFormValues) {
-    this.props.saveWorkout({ ...this.props.exercise, name: values.name });
+    this.props.saveExercise({ id: this.props.id, ...values });
   }
 }
 

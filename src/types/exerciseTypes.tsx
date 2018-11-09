@@ -17,7 +17,7 @@ export interface IExercise {
   name: string;
   description?: string;
   muscles?: number[];
-  muscles_scondary?: string[];
+  muscles_secondary?: number[];
   category?: string; // ICategory
 }
 
