@@ -21,6 +21,13 @@ interface IState {
 }
 
 class MultiPicker extends PureComponent<IProps, IState> {
+  public static getDerivedStateFromProps(nextProps: IProps, prevState: IState) {
+    if (prevState.selectedItems.length !== nextProps.selectedItems.length) {
+      return { selectedItems: nextProps.selectedItems };
+    }
+    return null;
+  }
+
   constructor(props: IProps) {
     super(props);
     this.state = {
