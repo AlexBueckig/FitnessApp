@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { Navigation } from 'react-native-navigation';
 import { applyMiddleware, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
@@ -18,13 +18,30 @@ registerScreens(store);
 
 interface IProps {}
 
-class App extends React.PureComponent<IProps> {
+class App extends PureComponent<IProps> {
   constructor(props: IProps) {
     super(props);
     this.startApp();
   }
 
   public startApp() {
+    Navigation.setDefaultOptions({
+      topBar: {
+        title: { color: 'white' },
+        buttonColor: 'white',
+        backButton: {
+          color: 'white'
+        },
+        background: { color: '#14C788' }
+      },
+      bottomTabs: {
+        titleDisplayMode: 'alwaysShow'
+      },
+      bottomTab: {
+        iconColor: 'grey',
+        selectedIconColor: '#14C788'
+      }
+    });
     Navigation.setRoot({
       root: {
         bottomTabs: {
@@ -43,9 +60,7 @@ class App extends React.PureComponent<IProps> {
                           title: {
                             text: 'Feed'
                           },
-                          visible: true,
-                          drawBehind: true,
-                          hideOnScroll: true
+                          drawBehind: true
                         }
                       }
                     }
@@ -54,9 +69,7 @@ class App extends React.PureComponent<IProps> {
                 options: {
                   bottomTab: {
                     text: 'Feed',
-                    icon: require('../res/images/one.png'),
-                    iconColor: 'red',
-                    selectedIconColor: 'blue'
+                    icon: require('../res/images/one.png')
                   }
                 }
               }
@@ -76,9 +89,7 @@ class App extends React.PureComponent<IProps> {
                 options: {
                   bottomTab: {
                     text: 'Kalendar',
-                    icon: require('../res/images/one.png'),
-                    iconColor: 'red',
-                    selectedIconColor: 'blue'
+                    icon: require('../res/images/one.png')
                   }
                 }
               }
@@ -98,9 +109,7 @@ class App extends React.PureComponent<IProps> {
                 options: {
                   bottomTab: {
                     text: 'Workout',
-                    icon: require('../res/images/one.png'),
-                    iconColor: 'red',
-                    selectedIconColor: 'blue'
+                    icon: require('../res/images/one.png')
                   }
                 }
               }
@@ -120,19 +129,12 @@ class App extends React.PureComponent<IProps> {
                 options: {
                   bottomTab: {
                     text: 'Erfolge',
-                    icon: require('../res/images/one.png'),
-                    iconColor: 'red',
-                    selectedIconColor: 'blue'
+                    icon: require('../res/images/one.png')
                   }
                 }
               }
             }
-          ],
-          options: {
-            bottomTabs: {
-              titleDisplayMode: 'alwaysShow'
-            }
-          }
+          ]
         }
       }
     });
