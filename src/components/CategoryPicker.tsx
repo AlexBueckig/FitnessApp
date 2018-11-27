@@ -4,25 +4,23 @@ import styles from '../styles';
 
 interface IProps {
   name: string;
+  title: string;
   selectedValue: string;
   onChange: (name: string, text: string) => void;
+  categories: string[];
 }
 
 class CategoryPicker extends PureComponent<IProps> {
   public render() {
-    const { selectedValue } = this.props;
+    const { selectedValue, title } = this.props;
     return (
       <View style={styles1.root}>
-        <Text style={styles.typography.label}>kategorie</Text>
+        <Text style={styles.typography.label}>{title}</Text>
         <Picker selectedValue={selectedValue} onValueChange={this.handleChange}>
           <Picker.Item label="---" value="" />
-          <Picker.Item label="Arme" value="Arme" />
-          <Picker.Item label="Bauch" value="Bauch" />
-          <Picker.Item label="Beine" value="Beine" />
-          <Picker.Item label="Brust" value="Brust" />
-          <Picker.Item label="Rücken" value="Rücken" />
-          <Picker.Item label="Schultern" value="Schultern" />
-          <Picker.Item label="Waden" value="Waden" />
+          {this.props.categories.map((category, index) => (
+            <Picker.Item key={index} value={category} label={category} />
+          ))}
         </Picker>
       </View>
     );
