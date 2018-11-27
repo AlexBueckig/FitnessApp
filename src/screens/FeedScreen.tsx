@@ -57,7 +57,7 @@ export default class FeedScreen extends PureComponent<IProps, IState> {
           data={this.props.posts}
           renderItem={(item: { item: IPost }) => {
             return (
-              <View style={styles.layout.container}>
+              <View style={[styles.layout.container, styles.layout.flexrow]}>
                 <View style={styles.layout.roundView} />
                 <View style={styles.layout.card}>
                   <Text style={styles.typography.title}>{item.item.text}</Text>
