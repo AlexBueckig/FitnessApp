@@ -1,11 +1,9 @@
-import { Formik, FormikProps } from 'formik';
+import { Formik } from 'formik';
 import React, { PureComponent } from 'react';
-import { ScrollView, View } from 'react-native';
-import { Button } from 'react-native-elements';
+import { ScrollView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import CategoryPicker from '../components/CategoryPicker';
-import TextInput from '../components/Input';
-import MultiPicker from '../components/MultiPicker';
+import * as yup from 'yup';
+import ExerciseForm from '../components/ExerciseForm';
 import styles from '../styles';
 import { IExercise, IGetExerciseById, ISaveExercise } from '../types/exerciseTypes';
 
@@ -28,6 +26,15 @@ interface IMyFormValues {
   muscles: number[];
 }
 
+const validationSchema = yup.object().shape({
+  name: yup
+    .string()
+    .required()
+    .min(3)
+    .max(255),
+  category: yup.string().required()
+});
+
 class ExerciseAddScreen extends PureComponent<IProps, IState> {
   static get options() {
     return {
@@ -35,85 +42,25 @@ class ExerciseAddScreen extends PureComponent<IProps, IState> {
         title: { text: 'Übung' },
         rightButtons: [
           {
-            id: 'saveExerciseButton',
-            icon: require('../../res/icons/baseline_check_black_18dp.png')
+            id: 'deleteExerciseButton',
+            text: 'DELETE',
+            color: 'white'
           }
         ]
       }
     };
   }
 
-  private muscleGroups = [
-    {
-      name: 'Anterior deltoid',
-      id: 2
-    },
-    {
-      name: 'Biceps brachii (Armbeuger)',
-      id: 1
-    },
-    {
-      name: 'Biceps femoris (Beinbeuger)',
-      id: 11
-    },
-    {
-      name: 'Brachialis (Oberarmmuskel)',
-      id: 13
-    },
-    {
-      name: 'Gastrocnemius (Waden)',
-      id: 7
-    },
-    {
-      name: 'Gluteus maximus (Po)',
-      id: 8
-    },
-    {
-      name: 'Latissimus dorsi (breiter Rückenmuskel)',
-      id: 12
-    },
-    {
-      name: 'Obliquus externus abdominis (schräger Bauchmuskel)',
-      id: 14
-    },
-    {
-      name: 'Pectoralis major (Brustmuskel)',
-      id: 4
-    },
-    {
-      name: 'Quadriceps femoris (Oberschenkelstrecker)',
-      id: 10
-    },
-    {
-      name: 'Rectus abdominis (Bauchmuskel)',
-      id: 6
-    },
-    {
-      name: 'Serratus anterior',
-      id: 3
-    },
-    {
-      name: 'Soleus',
-      id: 15
-    },
-    {
-      name: 'Trapezius',
-      id: 9
-    },
-    {
-      name: 'Triceps brachii (Armstrecker)',
-      id: 5
-    }
-  ];
-
   constructor(props: IProps) {
     super(props);
     Navigation.events().bindComponent(this);
   }
 
-  public onNavigationButtonPressed(buttonId: string) {
-    switch (buttonId) {
-      case 'saveExerciseButton':
+  public navigationButtonPressed(id: { buttonId: string; componentId: string }) {
+    console.log(id);
+    switch (id.buttonId) {
+      case 'deleteExerciseButton':
+        console.log('DeleteButton pressed');
         // this.props.saveWorkout({ ...this.props.workout, comment: this.props.values });
         break;
       default:
@@ -136,43 +83,9 @@ class ExerciseAddScreen extends PureComponent<IProps, IState> {
             muscles: this.props.exercise.muscles || []
           }}
           onSubmit={this.handleSubmit.bind(this)}
-          render={(props: FormikProps<IMyFormValues>) => (
-            <View>
-              <TextInput
-                label="Name"
-                name="name"
-                placeholder="Name der Übung"
-                value={props.values.name}
-                onChange={props.setFieldValue}
-                onTouch={props.setFieldTouched}
-                // error={props.touched.comment && props.errors.comment}
-              />
-              <TextInput
-                label="Beschreibung"
-                name="description"
-                placeholder="optional"
-                value={props.values.description}
-                onChange={props.setFieldValue}
-                onTouch={props.setFieldTouched}
-                // error={props.touched.comment && props.errors.comment}
-              />
-              <CategoryPicker name="category" selectedValue={props.values.category} onChange={props.setFieldValue} />
-              <MultiPicker
-                items={this.muscleGroups}
-                name="muscles"
-                label="Muskelgruppe(n)"
-                onChange={props.setFieldValue}
-                selectedItems={Object.assign(props.values.muscles)}
-              />
-              <Button
-                title="Submit"
-                onPress={props.submitForm}
-                disabled={!props.isValid || props.isSubmitting}
-                loading={props.isSubmitting}
-              />
-            </View>
-          )}
+          render={ExerciseForm}
           enableReinitialize={true}
+          validationSchema={validationSchema}
         />
       </ScrollView>
     );
