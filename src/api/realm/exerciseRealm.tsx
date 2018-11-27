@@ -1,6 +1,5 @@
-import { Alert } from 'react-native';
 import Realm from 'realm';
-import { IExercise } from '../../types/exerciseTypes';
+import { IExercise, IExerciseByCategory } from '../../types/exerciseTypes';
 import { SCHEMA_VERSION } from './';
 import { Exercise } from './schemas/workout/WorkoutSchema';
 
@@ -11,14 +10,32 @@ export const getExercises = async () => {
       schemaVersion: SCHEMA_VERSION
     });
     const exercises = JSON.parse(JSON.stringify(realm.objects('Exercise')));
-    const exercisesCopy: IExercise[] = [];
-    Object.keys(exercises).forEach(key => exercisesCopy.push(exercises[key]));
+    const exercisesByCategory: IExerciseByCategory[] = [];
+    let exercisesCount = 0;
+    Object.keys(exercises).forEach(key => {
+      let found = false;
+      /* Search if entry already exists, otherwise create new one */
+      exercisesByCategory.forEach(item => {
+        if (item.title === exercises[key].category) {
+          item.data.push(exercises[key]);
+          found = true;
+          exercisesCount++;
+        }
+      });
+      if (!found) {
+        exercisesByCategory.push({ title: exercises[key].category, data: [exercises[key]] });
+        exercisesCount++;
+      }
+    });
     realm.close();
-    return { count: exercisesCopy.length, results: exercisesCopy };
+    /* Sort categories alphabetically */
+    exercisesByCategory.sort((a, b) => {
+      return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
+    });
+    return { count: exercisesCount, results: exercisesByCategory };
   } catch (error) {
     console.log(error);
-    Alert.alert(error);
-    return error;
+    throw error;
   }
 };
 
@@ -43,8 +60,7 @@ export const saveExercise = async (exercise: IExercise) => {
     realm.close();
     return exercise;
   } catch (error) {
-    console.log(error);
-    return error;
+    throw error;
   }
 };
 
@@ -60,7 +76,7 @@ export const deleteExercise = async (id: number) => {
     });
     return id;
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 
