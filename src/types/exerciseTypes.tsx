@@ -9,7 +9,12 @@ export interface IExerciseState {
 
 export interface IExercises {
   count: number;
-  results: IExercise[];
+  results: IExerciseByCategory[];
+}
+
+export interface IExerciseByCategory {
+  title: string;
+  data: IExercise[];
 }
 
 export interface IExercise {
@@ -18,7 +23,7 @@ export interface IExercise {
   description?: string;
   muscles?: number[];
   muscles_secondary?: number[];
-  category?: string; // ICategory
+  category?: string;
 }
 
 /* Exercise Actions */
