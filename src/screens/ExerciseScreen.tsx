@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
-import { Alert, Button, FlatList, View } from 'react-native';
-import { Text } from 'react-native-elements';
+import { SectionList, View } from 'react-native';
+import { Divider, ListItem, Text } from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
 import AddButton from '../components/AddButton';
-import { ListEmptyComponent, ListItemSeperator } from '../components/ListComponents';
+import { ListEmptyComponent } from '../components/ListComponents';
 import styles from '../styles';
 import { IDeleteExercise, IExercises, IGetExercises } from '../types/exerciseTypes';
 
@@ -16,6 +16,14 @@ interface IProps {
 }
 
 export default class ExerciseScreen extends PureComponent<IProps> {
+  static get options() {
+    return {
+      topBar: {
+        title: { text: 'Meine Übungen' }
+      }
+    };
+  }
+
   constructor(props: IProps) {
     super(props);
     Navigation.events().bindComponent(this);
@@ -25,7 +33,38 @@ export default class ExerciseScreen extends PureComponent<IProps> {
     this.props.getExercises();
   }
 
-  public onPress(id: number) {
+  public render() {
+    return (
+      <View style={styles.layout.main}>
+        <AddButton onPress={this.onPress.bind(this, 0)} />
+        <SectionList
+          sections={this.props.exercises.results}
+          renderItem={({ item }) => (
+            <ListItem key={item.id} title={item.name} chevron={true} onPress={this.onPress.bind(this, item.id)} />
+          )}
+          ItemSeparatorComponent={Divider}
+          renderSectionHeader={({ section: { title } }) => (
+            <Text
+              style={{
+                fontSize: 16,
+                backgroundColor: '#14C788',
+                color: 'white',
+                textAlign: 'center',
+                elevation: 1
+              }}
+            >
+              {title}
+            </Text>
+          )}
+          keyExtractor={item => item.id}
+          ListEmptyComponent={ListEmptyComponent}
+          SectionSeparatorComponent={Divider}
+        />
+      </View>
+    );
+  }
+
+  private onPress(id: number) {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'ExerciseScreen.Add',
@@ -34,49 +73,5 @@ export default class ExerciseScreen extends PureComponent<IProps> {
         }
       }
     });
-  }
-
-  public render() {
-    return (
-      <View style={styles.layout.main}>
-        <AddButton onPress={this.onPress.bind(this, 0)} />
-        <View style={{ marginHorizontal: 16 }}>
-          <Text style={styles.typography.headline}>ExerciseScreen</Text>
-          <FlatList
-            data={this.props.exercises.results}
-            ItemSeparatorComponent={ListItemSeperator}
-            keyExtractor={item => item.id.toString()}
-            ListEmptyComponent={ListEmptyComponent(this.props.isFetching)}
-            renderItem={({ item }) => (
-              <View style={{ flexDirection: 'row', alignItems: 'center', borderRadius: 5, backgroundColor: 'grey' }}>
-                <Text style={[styles.typography.subheader, { flex: 1, paddingLeft: 16 }]}>
-                  {item.name ? item.name : item.description}
-                </Text>
-                <Button
-                  title="Bearbeiten"
-                  // icon={<Icon name="edit" size={28} color="white" />}
-                  onPress={this.onPress.bind(this, item.id)}
-                />
-                <Text> </Text>
-                <Button
-                  // icon={<Icon name="delete" size={28} color="white" />}
-                  title="Löschen"
-                  onPress={() =>
-                    Alert.alert(
-                      'Löschen',
-                      `Möchtest du ${item.name ? item.name : item.description} wirklich löschen?`,
-                      [
-                        { text: 'Abbrechen', onPress: () => undefined, style: 'cancel' },
-                        { text: 'OK', onPress: () => this.props.deleteExercise(item.id) }
-                      ]
-                    )
-                  }
-                />
-              </View>
-            )}
-          />
-        </View>
-      </View>
-    );
   }
 }
