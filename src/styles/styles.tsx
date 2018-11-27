@@ -12,6 +12,9 @@ const layout = StyleSheet.create({
     width: '90%',
     alignSelf: 'center'
   },
+  flexrow: {
+    flexDirection: 'row'
+  },
   backgroundImage: {
     width: Screen.width,
     height: (Screen.width / 750) * 800,
@@ -57,7 +60,7 @@ const layout = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 4,
-    backgroundColor: 'green'
+    backgroundColor: '#14C788'
   },
   button: {
     borderRadius: 24,

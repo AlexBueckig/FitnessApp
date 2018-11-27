@@ -14,7 +14,9 @@ const typography = StyleSheet.create({
   menu: { fontSize: 14, fontFamily: 'sans-serif-medium', color: fontColor, opacity: opacityPrimary },
   caption: { fontSize: 12, fontFamily: 'sans-serif', color: fontColor, opacity: 1 },
   button: { fontSize: 14, fontFamily: 'sans-serif-medium', color: fontColorButton, opacity: opacityPrimary },
-  label: { color: '#86939e', fontSize: 16, fontFamily: 'sans-serif', fontWeight: 'bold' }
+  label: { color: '#86939e', fontSize: 16, fontFamily: 'sans-serif', fontWeight: 'bold' },
+  cardTitle: { fontSize: 24, color: '#FFFFFF', fontFamily: 'sans-serif', elevation: 1, textAlign: 'center' },
+  cardBody: { fontSize: 16, color: '#FFFFFF', fontFamily: 'sans-serif', textAlign: 'center', elevation: 1 }
 });
 
 export default typography;
