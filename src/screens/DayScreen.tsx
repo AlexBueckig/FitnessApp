@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
-import { Alert, Button, FlatList, View } from 'react-native';
-import { Text } from 'react-native-elements';
+import { FlatList, ListRenderItemInfo, View } from 'react-native';
+import { Divider, ListItem } from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
 import AddButton from '../components/AddButton';
-import { ListEmptyComponent, ListItemSeperator } from '../components/ListComponents';
+import { ListEmptyComponent } from '../components/ListComponents';
 import styles from '../styles';
-import { IDays, IDeleteDay, IGetDays } from '../types/dayTypes';
+import { IDay, IDays, IDeleteDay, IGetDays } from '../types/dayTypes';
 
 interface IProps {
   days: IDays;
@@ -16,6 +16,14 @@ interface IProps {
 }
 
 export default class DayScreen extends PureComponent<IProps> {
+  static get options() {
+    return {
+      topBar: {
+        title: { text: 'Tagespläne' }
+      }
+    };
+  }
+
   constructor(props: IProps) {
     super(props);
     Navigation.events().bindComponent(this);
@@ -25,7 +33,22 @@ export default class DayScreen extends PureComponent<IProps> {
     this.props.getDays();
   }
 
-  public onPress(id: number) {
+  public render() {
+    return (
+      <View style={styles.layout.main}>
+        <FlatList
+          data={this.props.days.results}
+          ItemSeparatorComponent={Divider}
+          keyExtractor={this.keyExtractor}
+          ListEmptyComponent={ListEmptyComponent}
+          renderItem={this.renderItem.bind(this)}
+        />
+        <AddButton onPress={this.onPress.bind(this, 0)} />
+      </View>
+    );
+  }
+
+  private onPress(id: number) {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'DayScreen.Add',
@@ -36,41 +59,13 @@ export default class DayScreen extends PureComponent<IProps> {
     });
   }
 
-  public render() {
+  private renderItem({ item }: ListRenderItemInfo<IDay>) {
     return (
-      <View style={styles.layout.main}>
-        <AddButton onPress={this.onPress.bind(this, 0)} />
-        <View style={{ marginHorizontal: 16 }}>
-          <Text style={styles.typography.headline}>DayScreen</Text>
-          <FlatList
-            data={this.props.days.results}
-            ItemSeparatorComponent={ListItemSeperator}
-            keyExtractor={item => item.id.toString()}
-            ListEmptyComponent={ListEmptyComponent(this.props.isFetching)}
-            renderItem={({ item }) => (
-              <View style={{ flexDirection: 'row', alignItems: 'center', borderRadius: 5, backgroundColor: 'grey' }}>
-                <Text style={[styles.typography.subheader, { flex: 1, paddingLeft: 16 }]}>{item.description}</Text>
-                <Button
-                  title="Bearbeiten"
-                  // icon={<Icon name="edit" size={28} color="white" />}
-                  onPress={this.onPress.bind(this, item.id)}
-                />
-                <Text> </Text>
-                <Button
-                  // icon={<Icon name="delete" size={28} color="white" />}
-                  title="Löschen"
-                  onPress={() =>
-                    Alert.alert('Löschen', `Möchtest du ${item.description} wirklich löschen?`, [
-                      { text: 'Abbrechen', onPress: () => undefined, style: 'cancel' },
-                      { text: 'OK', onPress: () => this.props.deleteDay(item.id) }
-                    ])
-                  }
-                />
-              </View>
-            )}
-          />
-        </View>
-      </View>
+      <ListItem key={item.id} title={item.description} chevron={true} onPress={this.onPress.bind(this, item.id)} />
     );
+  }
+
+  private keyExtractor(item: IDay) {
+    return item.id.toString();
   }
 }

@@ -1,12 +1,12 @@
 import { FieldArray, Formik, FormikProps } from 'formik';
 import React, { Fragment, PureComponent } from 'react';
-import { Text, View } from 'react-native';
+import { Alert, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
 import TextInput from '../components/Input';
 // import { ListEmptyComponent, ListItemSeperator } from '../components/ListComponents';
 
-import { IDay, IGetDayById, ISaveDay } from '../types/dayTypes';
+import { IDay, IDeleteDay, IGetDayById, ISaveDay } from '../types/dayTypes';
 import { ISet } from '../types/workoutTypes';
 
 import styles from '../styles';
@@ -14,6 +14,7 @@ import styles from '../styles';
 interface IProps {
   getDayById: (id: number) => IGetDayById;
   saveDay: (day: IDay) => ISaveDay;
+  deleteDay: (id: number) => IDeleteDay;
   day: IDay;
   id: number;
   isFetching: boolean;
@@ -25,6 +26,21 @@ interface IMyFormValues {
 }
 
 export default class DayAddScreen extends PureComponent<IProps> {
+  static get options() {
+    return {
+      topBar: {
+        title: { text: 'Trainingsplan' },
+        rightButtons: [
+          {
+            id: 'deleteDayButton',
+            text: 'LÖSCHEN',
+            color: 'white'
+          }
+        ]
+      }
+    };
+  }
+
   constructor(props: IProps) {
     super(props);
     Navigation.events().bindComponent(this);
@@ -32,6 +48,27 @@ export default class DayAddScreen extends PureComponent<IProps> {
 
   public componentDidAppear() {
     this.props.getDayById(this.props.id);
+  }
+
+  public navigationButtonPressed(id: { buttonId: string; componentId: string }) {
+    switch (id.buttonId) {
+      case 'deleteDayButton':
+        Alert.alert('Löschen bestätigen', 'Willst du diesen Tag wirklich löschen?', [
+          { text: 'Abbrechen', onPress: undefined, style: 'cancel' },
+          {
+            text: 'OK',
+            onPress: () => {
+              if (this.props.id !== 0) {
+                this.props.deleteDay(this.props.id);
+              }
+              Navigation.pop(id.componentId);
+            }
+          }
+        ]);
+        break;
+      default:
+        break;
+    }
   }
 
   public render() {
@@ -57,7 +94,7 @@ export default class DayAddScreen extends PureComponent<IProps> {
                     {props.values.sets.length > 0 &&
                       props.values.sets.map((set, index) => {
                         return (
-                          <View>
+                          <View key={index}>
                             <Text>test {index}</Text>
                           </View>
                         );
