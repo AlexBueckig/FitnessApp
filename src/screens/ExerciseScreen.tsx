@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
-import { SectionList, View } from 'react-native';
+import { SectionList, SectionListData, SectionListRenderItemInfo, View } from 'react-native';
 import { Divider, ListItem, Text } from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
 import AddButton from '../components/AddButton';
 import { ListEmptyComponent } from '../components/ListComponents';
 import styles from '../styles';
-import { IDeleteExercise, IExercises, IGetExercises } from '../types/exerciseTypes';
+import { IDeleteExercise, IExercise, IExerciseByCategory, IExercises, IGetExercises } from '../types/exerciseTypes';
 
 interface IProps {
   exercises: IExercises;
@@ -33,38 +33,8 @@ export default class ExerciseScreen extends PureComponent<IProps> {
     this.props.getExercises();
   }
 
-  public render() {
-    return (
-      <View style={styles.layout.main}>
-        <AddButton onPress={this.onPress.bind(this, 0)} />
-        <SectionList
-          sections={this.props.exercises.results}
-          renderItem={({ item }) => (
-            <ListItem key={item.id} title={item.name} chevron={true} onPress={this.onPress.bind(this, item.id)} />
-          )}
-          ItemSeparatorComponent={Divider}
-          renderSectionHeader={({ section: { title } }) => (
-            <Text
-              style={{
-                fontSize: 16,
-                backgroundColor: '#14C788',
-                color: 'white',
-                textAlign: 'center',
-                elevation: 1
-              }}
-            >
-              {title}
-            </Text>
-          )}
-          keyExtractor={item => item.id}
-          ListEmptyComponent={ListEmptyComponent}
-          SectionSeparatorComponent={Divider}
-        />
-      </View>
-    );
-  }
-
-  private onPress(id: number) {
+  public onPress(id: number) {
+    console.log('Button pressed');
     Navigation.push(this.props.componentId, {
       component: {
         name: 'ExerciseScreen.Add',
@@ -73,5 +43,39 @@ export default class ExerciseScreen extends PureComponent<IProps> {
         }
       }
     });
+  }
+
+  public render() {
+    return (
+      <View style={styles.layout.main}>
+        <SectionList
+          sections={this.props.exercises.results}
+          renderItem={this.renderItem.bind(this)}
+          ItemSeparatorComponent={Divider}
+          renderSectionHeader={this.renderSectionHeader}
+          keyExtractor={this.keyExtractor}
+          ListEmptyComponent={ListEmptyComponent}
+          SectionSeparatorComponent={Divider}
+        />
+        <AddButton onPress={this.onPress.bind(this, 0)} />
+      </View>
+    );
+  }
+
+  private renderItem({ item }: SectionListRenderItemInfo<IExercise>) {
+    return <ListItem key={item.id} title={item.name} chevron={true} onPress={this.onPress.bind(this, item.id)} />;
+  }
+
+  private renderSectionHeader(info: { section: SectionListData<IExerciseByCategory> }) {
+    const {
+      section: { title }
+    } = info;
+    return (
+      <Text style={{ fontSize: 16, backgroundColor: '#14C788', color: 'white', textAlign: 'center' }}>{title}</Text>
+    );
+  }
+
+  private keyExtractor(item: IExercise) {
+    return item.id.toString();
   }
 }

@@ -1,15 +1,16 @@
 import { Formik } from 'formik';
 import React, { PureComponent } from 'react';
-import { ScrollView } from 'react-native';
+import { Alert, ScrollView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import * as yup from 'yup';
 import ExerciseForm from '../components/ExerciseForm';
 import styles from '../styles';
-import { IExercise, IGetExerciseById, ISaveExercise } from '../types/exerciseTypes';
+import { IDeleteExercise, IExercise, IGetExerciseById, ISaveExercise } from '../types/exerciseTypes';
 
 interface IProps {
   getExerciseById: (id: number) => IGetExerciseById;
   saveExercise: (exercise: IExercise) => ISaveExercise;
+  deleteExercise: (id: number) => IDeleteExercise;
   exercise: IExercise;
   id: number;
   isFetching: boolean;
@@ -43,7 +44,7 @@ class ExerciseAddScreen extends PureComponent<IProps, IState> {
         rightButtons: [
           {
             id: 'deleteExerciseButton',
-            text: 'DELETE',
+            text: 'LÖSCHEN',
             color: 'white'
           }
         ]
@@ -57,11 +58,20 @@ class ExerciseAddScreen extends PureComponent<IProps, IState> {
   }
 
   public navigationButtonPressed(id: { buttonId: string; componentId: string }) {
-    console.log(id);
     switch (id.buttonId) {
       case 'deleteExerciseButton':
-        console.log('DeleteButton pressed');
-        // this.props.saveWorkout({ ...this.props.workout, comment: this.props.values });
+        Alert.alert('Löschen bestätigen', 'Willst du diese Übung wirklich löschen?', [
+          { text: 'Abbrechen', onPress: undefined, style: 'cancel' },
+          {
+            text: 'OK',
+            onPress: () => {
+              if (this.props.id !== 0) {
+                this.props.deleteExercise(this.props.id);
+              }
+              Navigation.pop(id.componentId);
+            }
+          }
+        ]);
         break;
       default:
         break;
