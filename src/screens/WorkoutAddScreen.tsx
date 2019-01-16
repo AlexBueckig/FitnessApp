@@ -1,15 +1,16 @@
 import { Formik, FormikProps } from 'formik';
 import React, { Fragment, PureComponent } from 'react';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
 import TextInput from '../components/Input';
 import styles from '../styles';
-import { IGetWorkoutById, ISaveWorkout, IWorkout } from '../types/workoutTypes';
+import { IDeleteWorkout, IGetWorkoutById, ISaveWorkout, IWorkout } from '../types/workoutTypes';
 
 interface IProps {
   getWorkoutById: (id: number) => IGetWorkoutById;
   saveWorkout: (workout: IWorkout) => ISaveWorkout;
+  deleteWorkout: (id: number) => IDeleteWorkout;
   workout: IWorkout;
   id: number;
   isFetching: boolean;
@@ -20,28 +21,41 @@ interface IMyFormValues {
 }
 
 class WorkoutAddScreen extends PureComponent<IProps> {
-  constructor(props: IProps) {
-    super(props);
-    Navigation.events().bindComponent(this);
-  }
   static get options() {
     return {
       topBar: {
         title: { text: 'Trainingsplan' },
         rightButtons: [
           {
-            id: 'saveWorkoutButton',
-            icon: require('../../res/images/one.png')
+            id: 'deleteWorkoutButton',
+            text: 'LÖSCHEN',
+            color: 'white'
           }
         ]
       }
     };
   }
 
-  public onNavigationButtonPressed(buttonId: string) {
-    switch (buttonId) {
-      case 'saveWorkoutButton':
-        // this.props.saveWorkout({ ...this.props.workout, comment: this.props.values });
+  constructor(props: IProps) {
+    super(props);
+    Navigation.events().bindComponent(this);
+  }
+
+  public navigationButtonPressed(id: { buttonId: string; componentId: string }) {
+    switch (id.buttonId) {
+      case 'deleteWorkoutButton':
+        Alert.alert('Löschen bestätigen', 'Willst du diesen Plan wirklich löschen?', [
+          { text: 'Abbrechen', onPress: undefined, style: 'cancel' },
+          {
+            text: 'OK',
+            onPress: () => {
+              if (this.props.id !== 0) {
+                this.props.deleteWorkout(this.props.id);
+              }
+              Navigation.pop(id.componentId);
+            }
+          }
+        ]);
         break;
       default:
         break;
