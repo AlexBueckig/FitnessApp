@@ -42,6 +42,7 @@ class App extends PureComponent<IProps> {
         selectedIconColor: '#14C788'
       }
     });
+
     Navigation.setRoot({
       root: {
         bottomTabs: {
