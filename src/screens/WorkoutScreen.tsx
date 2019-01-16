@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
-import { Alert, Button, FlatList, View } from 'react-native';
-import { Text } from 'react-native-elements';
+import { FlatList, ListRenderItemInfo, View } from 'react-native';
+import { Divider, ListItem } from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
 import AddButton from '../components/AddButton';
-import { ListEmptyComponent, ListItemSeperator } from '../components/ListComponents';
+import { ListEmptyComponent } from '../components/ListComponents';
 import styles from '../styles';
-import { IDeleteWorkout, IGetWorkouts, IWorkouts } from '../types/workoutTypes';
+import { IDeleteWorkout, IGetWorkouts, IWorkout, IWorkouts } from '../types/workoutTypes';
 
 interface IProps {
   workouts: IWorkouts;
@@ -16,6 +16,14 @@ interface IProps {
 }
 
 export default class WorkoutScreen extends PureComponent<IProps> {
+  static get options() {
+    return {
+      topBar: {
+        title: { text: 'Trainingspläne' }
+      }
+    };
+  }
+
   constructor(props: IProps) {
     super(props);
     Navigation.events().bindComponent(this);
@@ -39,44 +47,23 @@ export default class WorkoutScreen extends PureComponent<IProps> {
   public render() {
     return (
       <View style={styles.layout.main}>
+        <FlatList
+          data={this.props.workouts.results}
+          ItemSeparatorComponent={Divider}
+          keyExtractor={this.keyExtractor}
+          ListEmptyComponent={ListEmptyComponent}
+          renderItem={this.renderItem.bind(this)}
+        />
         <AddButton onPress={this.onPress.bind(this, 0)} />
-        <View style={{ marginHorizontal: 16 }}>
-          <Text style={styles.typography.headline}>WorkoutScreen</Text>
-          <FlatList
-            data={this.props.workouts.results}
-            ItemSeparatorComponent={ListItemSeperator}
-            keyExtractor={item => item.id.toString()}
-            ListEmptyComponent={ListEmptyComponent(this.props.isFetching)}
-            renderItem={({ item }) => (
-              <View style={{ flexDirection: 'row', alignItems: 'center', borderRadius: 5, backgroundColor: 'grey' }}>
-                <Text style={[styles.typography.subheader, { flex: 1, paddingLeft: 16 }]}>
-                  {item.comment ? item.comment : item.creation_date}
-                </Text>
-                <Button
-                  title="Bearbeiten"
-                  // icon={<Icon name="edit" size={28} color="white" />}
-                  onPress={this.onPress.bind(this, item.id)}
-                />
-                <Text> </Text>
-                <Button
-                  // icon={<Icon name="delete" size={28} color="white" />}
-                  title="Löschen"
-                  onPress={() =>
-                    Alert.alert(
-                      'Löschen',
-                      `Möchtest du ${item.comment ? item.comment : item.creation_date} wirklich löschen?`,
-                      [
-                        { text: 'Abbrechen', onPress: () => undefined, style: 'cancel' },
-                        { text: 'OK', onPress: () => this.props.deleteWorkout(item.id) }
-                      ]
-                    )
-                  }
-                />
-              </View>
-            )}
-          />
-        </View>
       </View>
     );
+  }
+
+  private renderItem({ item }: ListRenderItemInfo<IWorkout>) {
+    return <ListItem key={item.id} title={item.comment} chevron={true} onPress={this.onPress.bind(this, item.id)} />;
+  }
+
+  private keyExtractor(item: IWorkout) {
+    return item.id.toString();
   }
 }
