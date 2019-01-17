@@ -16,7 +16,7 @@ interface IProps {
 }
 
 export default class DayScreen extends PureComponent<IProps> {
-  static get options() {
+  public static options() {
     return {
       topBar: {
         title: { text: 'Tagespläne' }

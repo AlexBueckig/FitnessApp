@@ -16,7 +16,7 @@ interface IProps {
 }
 
 export default class WorkoutScreen extends PureComponent<IProps> {
-  static get options() {
+  public static options() {
     return {
       topBar: {
         title: { text: 'Trainingspläne' }

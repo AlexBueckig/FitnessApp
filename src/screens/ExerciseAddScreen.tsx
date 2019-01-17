@@ -37,7 +37,7 @@ const validationSchema = yup.object().shape({
 });
 
 class ExerciseAddScreen extends PureComponent<IProps, IState> {
-  static get options() {
+  public static options() {
     return {
       topBar: {
         title: { text: 'Übung' },
