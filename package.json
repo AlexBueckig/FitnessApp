@@ -9,7 +9,7 @@
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug"
   },
   "dependencies": {
-    "formik": "^1.0.0-beta.6",
+    "formik": "^1.4.2",
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
     "react": "^16.6.1",
