@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Input } from 'react-native-elements';
 
 interface IProps {
@@ -16,16 +16,15 @@ class TextInput extends PureComponent<IProps> {
   public render() {
     const { label, error, value, placeholder } = this.props;
     return (
-      <View style={styles.root}>
-        <Input
-          label={label}
-          errorMessage={error}
-          onChangeText={this.handleChange}
-          onBlur={this.handleTouch}
-          placeholder={placeholder || label}
-          value={value}
-        />
-      </View>
+      <Input
+        label={label}
+        errorMessage={error}
+        onChangeText={this.handleChange}
+        onBlur={this.handleTouch}
+        placeholder={placeholder || label}
+        value={value}
+        inputStyle={inputStyle}
+      />
     );
   }
 
@@ -38,11 +37,6 @@ class TextInput extends PureComponent<IProps> {
   };
 }
 
-const styles = StyleSheet.create({
-  root: {
-    width: '90%',
-    alignSelf: 'center'
-  }
-});
-
 export default TextInput;
+
+const inputStyle = StyleSheet.create({});
