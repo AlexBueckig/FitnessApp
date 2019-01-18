@@ -1,10 +1,7 @@
-import { Formik } from 'formik';
 import React, { PureComponent } from 'react';
 import { Alert, ScrollView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import * as yup from 'yup';
 import ExerciseForm from '../components/ExerciseForm';
-import styles from '../styles';
 import { IDeleteExercise, IExercise, IGetExerciseById, ISaveExercise } from '../types/exerciseTypes';
 
 interface IProps {
@@ -19,22 +16,6 @@ interface IProps {
 interface IState {
   muscles: number[];
 }
-
-interface IMyFormValues {
-  name: string;
-  category: string;
-  description: string;
-  muscles: number[];
-}
-
-const validationSchema = yup.object().shape({
-  name: yup
-    .string()
-    .required()
-    .min(3)
-    .max(255),
-  category: yup.string().required()
-});
 
 class ExerciseAddScreen extends PureComponent<IProps, IState> {
   public static options() {
@@ -84,25 +65,17 @@ class ExerciseAddScreen extends PureComponent<IProps, IState> {
 
   public render() {
     return (
-      <ScrollView style={styles.layout.main}>
-        <Formik
-          initialValues={{
-            name: this.props.exercise.name,
-            category: this.props.exercise.category || '',
-            description: this.props.exercise.description || '',
-            muscles: this.props.exercise.muscles || []
-          }}
-          onSubmit={this.handleSubmit.bind(this)}
-          render={ExerciseForm}
-          enableReinitialize={true}
-          validationSchema={validationSchema}
+      <ScrollView>
+        <ExerciseForm
+          id={this.props.exercise.id}
+          name={this.props.exercise.name || ''}
+          category={this.props.exercise.category || ''}
+          description={this.props.exercise.description || ''}
+          muscles={this.props.exercise.muscles || []}
+          submit={this.props.saveExercise}
         />
       </ScrollView>
     );
-  }
-
-  public handleSubmit(values: IMyFormValues) {
-    this.props.saveExercise({ id: this.props.id, ...values });
   }
 }
 
