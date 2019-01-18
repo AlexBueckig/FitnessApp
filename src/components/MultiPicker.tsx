@@ -14,6 +14,7 @@ interface IProps {
   label: string;
   items: IItem[];
   onChange: (name: string, items: number[]) => void;
+  onBlur: (name: string) => void;
 }
 
 interface IState {
@@ -43,9 +44,10 @@ class MultiPicker extends PureComponent<IProps, IState> {
         <SectionedMultiSelect
           items={items}
           selectedItems={this.state.selectedItems}
-          onSelectedItemsChange={this.handleChange.bind(this)}
+          onSelectedItemsChange={this.handleChange}
           uniqueKey="id"
           hideSearch={true}
+          onConfirm={this.handleBlur}
         />
       </View>
     );
@@ -54,6 +56,10 @@ class MultiPicker extends PureComponent<IProps, IState> {
   private handleChange = (values: number[]) => {
     this.props.onChange(this.props.name, values);
     this.setState({ selectedItems: values });
+  };
+
+  private handleBlur = () => {
+    this.props.onBlur(this.props.name);
   };
 }
 
