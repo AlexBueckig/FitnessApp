@@ -3,9 +3,9 @@ import { Navigation } from 'react-native-navigation';
 import { applyMiddleware, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
-import { registerScreens } from './containers/';
-import rootReducer from './redux/reducers/';
-import mySaga from './redux/sagas/';
+import { registerScreens } from './containers';
+import rootReducer from './redux/reducers';
+import mySaga from './redux/sagas';
 
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
