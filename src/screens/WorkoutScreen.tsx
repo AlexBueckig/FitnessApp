@@ -60,7 +60,14 @@ export default class WorkoutScreen extends PureComponent<IProps> {
   }
 
   private renderItem({ item }: ListRenderItemInfo<IWorkout>) {
-    return <ListItem key={item.id} title={item.comment} chevron={true} onPress={this.onPress.bind(this, item.id)} />;
+    return (
+      <ListItem
+        key={item.id}
+        title={item.comment}
+        chevron={{ name: 'chevron-right', size: 26 }}
+        onPress={this.onPress.bind(this, item.id)}
+      />
+    );
   }
 
   private keyExtractor(item: IWorkout) {

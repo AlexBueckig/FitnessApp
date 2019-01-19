@@ -61,7 +61,12 @@ export default class DayScreen extends PureComponent<IProps> {
 
   private renderItem({ item }: ListRenderItemInfo<IDay>) {
     return (
-      <ListItem key={item.id} title={item.description} chevron={true} onPress={this.onPress.bind(this, item.id)} />
+      <ListItem
+        key={item.id}
+        title={item.description}
+        chevron={{ name: 'chevron-right', size: 26 }}
+        onPress={this.onPress.bind(this, item.id)}
+      />
     );
   }
 

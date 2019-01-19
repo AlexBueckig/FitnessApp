@@ -63,7 +63,14 @@ export default class ExerciseScreen extends PureComponent<IProps> {
   }
 
   private renderItem({ item }: SectionListRenderItemInfo<IExercise>) {
-    return <ListItem key={item.id} title={item.name} chevron={true} onPress={this.onPress.bind(this, item.id)} />;
+    return (
+      <ListItem
+        key={item.id}
+        title={item.name}
+        chevron={{ name: 'chevron-right', size: 26 }}
+        onPress={this.onPress.bind(this, item.id)}
+      />
+    );
   }
 
   private renderSectionHeader(info: { section: SectionListData<IExerciseByCategory> }) {
