@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-import { Animated, FlatList, Text, View } from 'react-native';
+import { FlatList, Image, View } from 'react-native';
+import { Divider, ListItem, Text } from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
 import styles from '../styles/';
 import { IGetFeed, IPost } from '../types/feedTypes';
@@ -10,18 +11,17 @@ interface IProps {
   getPosts: () => IGetFeed;
 }
 
-interface IState {
-  scrollY: Animated.Value;
-}
+export default class FeedScreen extends PureComponent<IProps> {
+  public static options() {
+    return {
+      topBar: {
+        title: { text: 'Home' }
+      }
+    };
+  }
 
-const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-
-export default class FeedScreen extends PureComponent<IProps, IState> {
   constructor(props: IProps) {
     super(props);
-    this.state = {
-      scrollY: new Animated.Value(0)
-    };
     Navigation.events().bindComponent(this);
   }
 
@@ -32,52 +32,21 @@ export default class FeedScreen extends PureComponent<IProps, IState> {
   public render() {
     return (
       <View style={styles.layout.main}>
-        <Animated.Image
-          style={[
-            styles.layout.backgroundImage,
-            {
-              opacity: this.state.scrollY.interpolate({
-                inputRange: [0, 250],
-                outputRange: [1, 0]
-              }),
-              transform: [
-                {
-                  scale: this.state.scrollY.interpolate({
-                    inputRange: [-200, 0, 1],
-                    outputRange: [1.4, 1, 1]
-                  })
-                }
-              ]
-            }
-          ]}
-          source={require('../../res/images/bg2.jpg')}
-        />
-        <AnimatedFlatList
-          ListHeaderComponent={() => <View style={styles.layout.spacer} />}
+        <Image source={require('../../res/images/bg2.jpg')} style={{ height: 256 }} />
+        <FlatList
+          ListHeaderComponent={() => <Text style={{ margin: 16 }}>Test</Text>}
           data={this.props.posts}
           renderItem={(item: { item: IPost }) => {
             return (
-              <View style={[styles.layout.container, styles.layout.flexrow]}>
-                <View style={styles.layout.roundView} />
-                <View style={styles.layout.card}>
-                  <Text style={styles.typography.title}>{item.item.text}</Text>
-                  <Text style={styles.typography.body}>Das ist ein Beispieltext!</Text>
-                </View>
-              </View>
+              <ListItem
+                title={`Montag, ${item.item.key}. Januar`}
+                subtitle="2er Split - Oberkörper"
+                chevron={{ name: 'chevron-right', size: 26 }}
+              />
             );
           }}
-          keyExtractor={(item: IPost) => item.key}
-          scrollEventThrottle={16}
-          onScroll={Animated.event(
-            [
-              {
-                nativeEvent: { contentOffset: { y: this.state.scrollY } }
-              }
-            ],
-            {
-              useNativeDriver: true
-            }
-          )}
+          ItemSeparatorComponent={Divider}
+          keyExtractor={(item: IPost) => JSON.stringify(item.key)}
         />
       </View>
     );
