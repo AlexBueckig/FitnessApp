@@ -27,7 +27,7 @@ class App extends PureComponent<IProps> {
   public startApp() {
     Navigation.setDefaultOptions({
       topBar: {
-        title: { color: 'white' },
+        title: { color: 'white', alignment: 'center' },
         buttonColor: 'white',
         backButton: {
           color: 'white'
