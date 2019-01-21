@@ -3,6 +3,7 @@ import { Alert, ScrollView } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import ExerciseForm from '../components/ExerciseForm';
 import { IDeleteExercise, IExercise, IGetExerciseById, ISaveExercise } from '../types/exerciseTypes';
+import { iconsMap } from '../utils/AppIcons';
 
 interface IProps {
   getExerciseById: (id: number) => IGetExerciseById;
@@ -26,7 +27,8 @@ class ExerciseAddScreen extends PureComponent<IProps, IState> {
           {
             id: 'deleteExerciseButton',
             text: 'LÖSCHEN',
-            color: 'white'
+            color: 'white',
+            icon: iconsMap.delete
           }
         ]
       }

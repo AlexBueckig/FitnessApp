@@ -4,7 +4,7 @@ import { Alert, Text, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
 import TextInput from '../components/Input';
-// import { ListEmptyComponent, ListItemSeperator } from '../components/ListComponents';
+import { iconsMap } from '../utils/AppIcons';
 
 import { IDay, IDeleteDay, IGetDayById, ISaveDay } from '../types/dayTypes';
 import { ISet } from '../types/workoutTypes';
@@ -34,7 +34,8 @@ export default class DayAddScreen extends PureComponent<IProps> {
           {
             id: 'deleteDayButton',
             text: 'LÖSCHEN',
-            color: 'white'
+            color: 'white',
+            icon: iconsMap.delete
           }
         ]
       }
