@@ -1,11 +1,10 @@
-import { Formik, FormikProps } from 'formik';
-import React, { Fragment, PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { Alert, View } from 'react-native';
-import { Button } from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
-import TextInput from '../components/Input';
+import WorkoutAddForm from '../components/WorkoutAddForm';
 import styles from '../styles';
 import { IDeleteWorkout, IGetWorkoutById, ISaveWorkout, IWorkout } from '../types/workoutTypes';
+import { iconsMap } from '../utils/AppIcons';
 
 interface IProps {
   getWorkoutById: (id: number) => IGetWorkoutById;
@@ -14,10 +13,6 @@ interface IProps {
   workout: IWorkout;
   id: number;
   isFetching: boolean;
-}
-
-interface IMyFormValues {
-  comment: string;
 }
 
 class WorkoutAddScreen extends PureComponent<IProps> {
@@ -29,7 +24,8 @@ class WorkoutAddScreen extends PureComponent<IProps> {
           {
             id: 'deleteWorkoutButton',
             text: 'LÖSCHEN',
-            color: 'white'
+            color: 'white',
+            icon: iconsMap.delete
           }
         ]
       }
@@ -69,36 +65,14 @@ class WorkoutAddScreen extends PureComponent<IProps> {
   public render() {
     return (
       <View style={styles.layout.main}>
-        <Formik
-          initialValues={{ comment: this.props.workout.comment }}
-          onSubmit={this.handleSubmit.bind(this)}
-          render={(props: FormikProps<IMyFormValues>) => (
-            <Fragment>
-              <TextInput
-                label="comment"
-                name="comment"
-                value={props.values.comment}
-                onChange={props.setFieldValue}
-                onTouch={props.setFieldTouched}
-                // error={props.touched.comment && props.errors.comment}
-              />
-              <Button
-                title="Submit"
-                onPress={props.submitForm}
-                disabled={!props.isValid || props.isSubmitting}
-                loading={props.isSubmitting}
-              />
-            </Fragment>
-          )}
-          enableReinitialize={true}
-        />
+        <WorkoutAddForm workout={this.props.workout} handleSubmit={this.handleSubmit} />
       </View>
     );
   }
 
-  public handleSubmit(values: IMyFormValues) {
-    this.props.saveWorkout({ ...this.props.workout, comment: values.comment });
-  }
+  public handleSubmit = (values: IWorkout) => {
+    this.props.saveWorkout({ ...values });
+  };
 }
 
 export default WorkoutAddScreen;
