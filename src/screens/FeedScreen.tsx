@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
-import { FlatList, Image, View } from 'react-native';
+import { Dimensions, FlatList, ImageBackground, ScrollView, View } from 'react-native';
 import { Divider, ListItem, Text } from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
-import styles from '../styles/';
 import { IGetFeed, IPost } from '../types/feedTypes';
 
 interface IProps {
@@ -31,10 +30,27 @@ export default class FeedScreen extends PureComponent<IProps> {
 
   public render() {
     return (
-      <View style={styles.layout.main}>
-        <Image source={require('../../res/images/bg2.jpg')} style={{ height: 256 }} />
+      <ScrollView>
+        <ImageBackground
+          source={require('../../res/images/athlet-ausbildung-ausrustungen-305239.jpg')}
+          style={{ height: 200, width: Dimensions.get('window').width }}
+          resizeMode={'cover'}
+        >
+          <View
+            style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', flex: 1, justifyContent: 'center', paddingHorizontal: 32 }}
+          >
+            <Text style={{ color: '#EEEEEE', fontSize: 22, lineHeight: 36, fontStyle: 'italic' }}>
+              "If you have dreams it is your responsibility to make them happen."
+            </Text>
+            <Text style={{ color: '#CCCCCC', alignSelf: 'flex-end', marginRight: 32 }}>- Bel Pesce</Text>
+          </View>
+        </ImageBackground>
         <FlatList
-          ListHeaderComponent={() => <Text style={{ margin: 16 }}>Test</Text>}
+          ListHeaderComponent={() => (
+            <Text style={{ padding: 16, backgroundColor: '#53D0A4', color: 'white', fontSize: 16 }}>
+              Meine kommenden Workouts
+            </Text>
+          )}
           data={this.props.posts}
           renderItem={(item: { item: IPost }) => {
             return (
@@ -48,7 +64,7 @@ export default class FeedScreen extends PureComponent<IProps> {
           ItemSeparatorComponent={Divider}
           keyExtractor={(item: IPost) => JSON.stringify(item.key)}
         />
-      </View>
+      </ScrollView>
     );
   }
 }
