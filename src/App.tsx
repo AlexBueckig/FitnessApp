@@ -27,7 +27,7 @@ class App extends PureComponent<IProps> {
   public startApp() {
     Navigation.setDefaultOptions({
       topBar: {
-        title: { color: 'white', alignment: 'center' },
+        title: { color: 'white', alignment: 'center', fontSize: 22 },
         buttonColor: 'white',
         backButton: {
           color: 'white'
@@ -60,8 +60,7 @@ class App extends PureComponent<IProps> {
                         topBar: {
                           title: {
                             text: 'Feed'
-                          },
-                          drawBehind: true
+                          }
                         }
                       }
                     }
@@ -70,26 +69,6 @@ class App extends PureComponent<IProps> {
                 options: {
                   bottomTab: {
                     text: 'Feed',
-                    icon: require('../res/images/one.png')
-                  }
-                }
-              }
-            },
-            {
-              stack: {
-                children: [
-                  {
-                    component: {
-                      name: 'CalendarScreen',
-                      passProps: {
-                        text: 'This is tab 2'
-                      }
-                    }
-                  }
-                ],
-                options: {
-                  bottomTab: {
-                    text: 'Kalendar',
                     icon: require('../res/images/one.png')
                   }
                 }
