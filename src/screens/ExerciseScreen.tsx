@@ -34,7 +34,6 @@ export default class ExerciseScreen extends PureComponent<IProps> {
   }
 
   public onPress(id: number) {
-    console.log('Button pressed');
     Navigation.push(this.props.componentId, {
       component: {
         name: 'ExerciseScreen.Add',
