@@ -3,6 +3,7 @@ import { Navigation } from 'react-native-navigation';
 import { applyMiddleware, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
+import realm from './api/realm/schemas';
 import { registerScreens } from './containers';
 import rootReducer from './redux/reducers';
 import mySaga from './redux/sagas';
@@ -23,6 +24,10 @@ class App extends PureComponent<IProps> {
     super(props);
     this.startApp();
   }
+
+  public componentWillUnmount = () => {
+    realm.close();
+  };
 
   public startApp() {
     Navigation.setDefaultOptions({
