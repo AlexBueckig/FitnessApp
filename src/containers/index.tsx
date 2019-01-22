@@ -16,9 +16,6 @@ import WorkoutContainer from './WorkoutContainer';
 export const registerScreens = (store: Store<IStoreState>) => {
   Navigation.registerComponent('WorkoutMenuScreen', () => WorkoutMenuScreen);
   Navigation.registerComponent('AchievementScreen', () => AchievementScreen);
-  // Navigation.registerComponent('SecondScreen', () => SecondScreen);
-  // Navigation.registerComponent('CalendarScreen', () => CalendarScreen);
-  // Navigation.registerComponent('buttons.delete', () => DeleteButton);
   Navigation.registerComponentWithRedux('FeedScreen', () => FeedContainer, Provider, store);
   Navigation.registerComponentWithRedux('WorkoutScreen', () => WorkoutContainer, Provider, store);
   Navigation.registerComponentWithRedux('WorkoutScreen.Add', () => WorkoutAddContainer, Provider, store);
