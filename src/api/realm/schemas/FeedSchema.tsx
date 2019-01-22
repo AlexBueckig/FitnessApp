@@ -1,4 +1,4 @@
-const FeedSchema = {
+export const Feed = {
   name: 'Feed',
   primaryKey: 'id',
   properties: {
@@ -7,5 +7,3 @@ const FeedSchema = {
     id: 'int'
   }
 };
-
-export default FeedSchema;
