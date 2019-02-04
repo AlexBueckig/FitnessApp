@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
@@ -13,14 +15,26 @@ import FeedContainer from './FeedContainer';
 import WorkoutAddContainer from './WorkoutAddContainer';
 import WorkoutContainer from './WorkoutContainer';
 
+function WrappedComponent(Screen: any, store: Store<IStoreState>) {
+  return function inject(props: any) {
+    const EnhancedComponent = () => (
+      <Provider store={store}>
+        <Screen {...props} />
+      </Provider>
+    );
+
+    return <EnhancedComponent />;
+  };
+}
+
 export const registerScreens = (store: Store<IStoreState>) => {
   Navigation.registerComponent('WorkoutMenuScreen', () => WorkoutMenuScreen);
   Navigation.registerComponent('AchievementScreen', () => AchievementScreen);
-  Navigation.registerComponentWithRedux('FeedScreen', () => FeedContainer, Provider, store);
-  Navigation.registerComponentWithRedux('WorkoutScreen', () => WorkoutContainer, Provider, store);
-  Navigation.registerComponentWithRedux('WorkoutScreen.Add', () => WorkoutAddContainer, Provider, store);
-  Navigation.registerComponentWithRedux('DayScreen', () => DayContainer, Provider, store);
-  Navigation.registerComponentWithRedux('DayScreen.Add', () => DayAddContainer, Provider, store);
-  Navigation.registerComponentWithRedux('ExerciseScreen', () => ExerciseContainer, Provider, store);
-  Navigation.registerComponentWithRedux('ExerciseScreen.Add', () => ExerciseAddContainer, Provider, store);
+  Navigation.registerComponent('FeedScreen', () => WrappedComponent(FeedContainer, store));
+  Navigation.registerComponent('WorkoutScreen', () => WrappedComponent(WorkoutContainer, store));
+  Navigation.registerComponent('WorkoutScreen.Add', () => WrappedComponent(WorkoutAddContainer, store));
+  Navigation.registerComponent('DayScreen', () => WrappedComponent(DayContainer, store));
+  Navigation.registerComponent('DayScreen.Add', () => WrappedComponent(DayAddContainer, store));
+  Navigation.registerComponent('ExerciseScreen', () => WrappedComponent(ExerciseContainer, store));
+  Navigation.registerComponent('ExerciseScreen.Add', () => WrappedComponent(ExerciseAddContainer, store));
 };
