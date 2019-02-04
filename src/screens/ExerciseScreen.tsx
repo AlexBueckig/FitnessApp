@@ -49,7 +49,7 @@ export default class ExerciseScreen extends PureComponent<IProps> {
       <View style={styles.layout.main}>
         <SectionList
           sections={this.props.exercises.results}
-          renderItem={this.renderItem.bind(this)}
+          renderItem={this.renderItem}
           ItemSeparatorComponent={Divider}
           renderSectionHeader={this.renderSectionHeader}
           keyExtractor={this.keyExtractor}
@@ -61,7 +61,7 @@ export default class ExerciseScreen extends PureComponent<IProps> {
     );
   }
 
-  private renderItem({ item }: SectionListRenderItemInfo<IExercise>) {
+  private renderItem = ({ item }: SectionListRenderItemInfo<IExercise>) => {
     return (
       <ListItem
         key={item.id}
@@ -70,7 +70,7 @@ export default class ExerciseScreen extends PureComponent<IProps> {
         onPress={this.onPress.bind(this, item.id)}
       />
     );
-  }
+  };
 
   private renderSectionHeader(info: { section: SectionListData<IExerciseByCategory> }) {
     const {
