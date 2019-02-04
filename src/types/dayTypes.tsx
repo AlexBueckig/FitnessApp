@@ -1,5 +1,5 @@
+import { Set } from '../api/realm/schemas/SetSchema';
 import * as constants from '../redux/constants/dayConstants';
-import { ISet } from './workoutTypes';
 
 export interface IDayState {
   days: IDays;
@@ -17,7 +17,7 @@ export interface IDay {
   id: number;
   description: string;
   day: number[];
-  sets: ISet[];
+  sets: Set[];
   training?: number;
 }
 
