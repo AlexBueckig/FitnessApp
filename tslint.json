@@ -11,7 +11,6 @@
     ],
     "object-literal-sort-keys": false,
     "no-implicit-dependencies": [true, "dev"],
-    "no-any": true,
     "no-null-keyword": false,
     "no-empty-interface": false,
     "no-console": false,
