@@ -1,14 +1,8 @@
-import Realm from 'realm';
 import { IExercise, IExerciseByCategory } from '../../types/exerciseTypes';
-import { SCHEMA_VERSION } from './';
-import { Exercise } from './schemas/workout/WorkoutSchema';
+import realm, { schemas } from './schemas/';
 
 export const getExercises = async () => {
   try {
-    const realm = await Realm.open({
-      schema: [Exercise.schema],
-      schemaVersion: SCHEMA_VERSION
-    });
     const exercises = JSON.parse(JSON.stringify(realm.objects('Exercise')));
     const exercisesByCategory: IExerciseByCategory[] = [];
     let exercisesCount = 0;
@@ -27,7 +21,6 @@ export const getExercises = async () => {
         exercisesCount++;
       }
     });
-    realm.close();
     /* Sort categories alphabetically */
     exercisesByCategory.sort((a, b) => {
       return a.title < b.title ? -1 : a.title > b.title ? 1 : 0;
@@ -41,10 +34,7 @@ export const getExercises = async () => {
 
 export const saveExercise = async (exercise: IExercise) => {
   try {
-    const realm = await Realm.open({
-      schema: [Exercise.schema],
-      schemaVersion: SCHEMA_VERSION
-    });
+    const { Exercise } = schemas;
     const test = new Exercise(exercise.id, exercise.name, exercise.description, exercise.category, exercise.muscles);
     if (exercise.id === 0) {
       const maxId = Number(realm.objects('Exercise').max('id')) + 1 || 1;
@@ -57,7 +47,6 @@ export const saveExercise = async (exercise: IExercise) => {
         realm.create(Exercise.schema.name, exercise, true);
       });
     }
-    realm.close();
     return exercise;
   } catch (error) {
     throw error;
@@ -66,11 +55,8 @@ export const saveExercise = async (exercise: IExercise) => {
 
 export const deleteExercise = async (id: number) => {
   try {
-    const realm = await Realm.open({
-      schema: [Exercise.schema],
-      schemaVersion: SCHEMA_VERSION
-    });
-    const exercise = realm.objects<Exercise>(Exercise.schema.name).filtered('id = ' + id);
+    const { Exercise } = schemas;
+    const exercise = realm.objects<IExercise>(Exercise.schema.name).filtered('id = ' + id);
     realm.write(() => {
       realm.delete(exercise);
     });
@@ -82,14 +68,11 @@ export const deleteExercise = async (id: number) => {
 
 export const getExerciseById = async (id: number) => {
   try {
+    const { Exercise } = schemas;
     const exercise: IExercise = { id: 0, description: '', name: '', muscles: [], category: '' };
     if (id !== 0) {
-      const realm = await Realm.open({
-        schema: [Exercise.schema],
-        schemaVersion: SCHEMA_VERSION
-      });
       const exerciseCopy = JSON.parse(
-        JSON.stringify(realm.objects<Exercise>(Exercise.schema.name).filtered('id = ' + id))
+        JSON.stringify(realm.objects<IExercise>(Exercise.schema.name).filtered('id = ' + id))
       );
       exercise.id = exerciseCopy[0].id;
       exercise.description = exerciseCopy[0].description || '';
