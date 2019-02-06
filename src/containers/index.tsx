@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentClass } from 'react';
 
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
@@ -12,14 +12,16 @@ import DayContainer from './DayContainer';
 import ExerciseAddContainer from './ExerciseAddContainer';
 import ExerciseContainer from './ExerciseContainer';
 import FeedContainer from './FeedContainer';
+import ToastsContainer from './ToastsContainer';
 import WorkoutAddContainer from './WorkoutAddContainer';
 import WorkoutContainer from './WorkoutContainer';
 
-function WrappedComponent(Screen: any, store: Store<IStoreState>) {
+function WrappedComponent(Screen: ComponentClass<any>, store: Store<IStoreState>) {
   return function inject(props: any) {
     const EnhancedComponent = () => (
       <Provider store={store}>
         <Screen {...props} />
+        <ToastsContainer />
       </Provider>
     );
 
