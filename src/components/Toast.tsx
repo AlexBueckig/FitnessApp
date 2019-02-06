@@ -1,4 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
+import { View } from 'react-native';
+import { Button, Text } from 'react-native-elements';
 
 interface IProps {
   onDismiss: (id: number) => void;
@@ -6,13 +8,13 @@ interface IProps {
   message: string;
 }
 
-class Toast extends PureComponent<IProps> {
+class Toast extends Component<IProps> {
   public render() {
     return (
-      <li>
-        <p>{this.props.message}</p>
-        <button onClick={this.onClick}>X</button>
-      </li>
+      <View>
+        <Text>{this.props.message}</Text>
+        <Button title="X" onPress={this.onClick} />
+      </View>
     );
   }
 
