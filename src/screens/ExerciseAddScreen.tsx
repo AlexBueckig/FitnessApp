@@ -74,11 +74,15 @@ class ExerciseAddScreen extends PureComponent<IProps, IState> {
           category={this.props.exercise.category || ''}
           description={this.props.exercise.description || ''}
           muscles={this.props.exercise.muscles || []}
-          submit={this.props.saveExercise}
+          submit={this.submit}
         />
       </ScrollView>
     );
   }
+
+  private submit = (exercise: IExercise) => {
+    this.props.saveExercise(exercise);
+  };
 }
 
 export default ExerciseAddScreen;
