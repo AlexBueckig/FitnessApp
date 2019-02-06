@@ -4,12 +4,12 @@ import { View } from 'react-native';
 import { Button } from 'react-native-elements';
 import * as yup from 'yup';
 
-import { IExercise, ISaveExercise } from '../types/exerciseTypes';
+import { IExercise } from '../types/exerciseTypes';
 import CategoryPicker from './CategoryPicker';
 import TextInput from './Input';
 import MultiPicker from './MultiPicker';
 
-type IProps = IExercise & { submit: (exercise: IExercise) => ISaveExercise };
+type IProps = IExercise & { submit: (exercise: IExercise) => void };
 
 const validationSchema = yup.object().shape({
   name: yup
