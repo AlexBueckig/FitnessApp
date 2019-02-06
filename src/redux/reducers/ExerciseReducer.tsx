@@ -18,10 +18,17 @@ export default (state: IExerciseState = initialState, action: IExerciseAction): 
     case constants.GET_EXERCISES_FAILURE:
       return { ...state, exercises: { count: 0, results: [] }, error: action.error, isFetching: false };
     case constants.DELETE_EXERCISE_SUCCESS:
-      const index = state.exercises.results.findIndex((element: IExercise) => element.id === action.id);
-      const results = state.exercises.results;
-      results.splice(index, 1);
-      return { ...state, exercises: { count: results.length, results } };
+      let count = 0;
+      const results = state.exercises.results.map(element => {
+        const index = element.data.findIndex((ex: IExercise) => ex.id === action.id);
+        const exercises = element.data;
+        if (index !== -1) {
+          exercises.splice(index, 1);
+        }
+        count += exercises.length;
+        return { title: element.title, data: exercises };
+      });
+      return { ...state, exercises: { count, results } };
     case constants.GET_EXERCISE_BY_ID_SUCCESS:
       return { ...state, currentExercise: action.exercise, isFetching: false };
     case constants.GET_EXERCISE_BY_ID_FAILURE:
