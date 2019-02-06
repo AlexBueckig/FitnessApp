@@ -1,4 +1,4 @@
-import React, { ComponentClass } from 'react';
+import React, { ComponentClass, Fragment } from 'react';
 
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
@@ -20,8 +20,10 @@ function WrappedComponent(Screen: ComponentClass<any>, store: Store<IStoreState>
   return function inject(props: any) {
     const EnhancedComponent = () => (
       <Provider store={store}>
-        <Screen {...props} />
-        <ToastsContainer />
+        <Fragment>
+          <Screen {...props} />
+          <ToastsContainer />
+        </Fragment>
       </Provider>
     );
 
