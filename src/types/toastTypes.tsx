@@ -10,7 +10,7 @@ export interface IToast {
 /* Exercise Actions */
 export interface IAddToast {
   type: constants.ADD_TOAST;
-  toast: IToast;
+  message: string;
 }
 
 export interface IRemoveToast {

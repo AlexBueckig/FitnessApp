@@ -1,10 +1,10 @@
-import { IAddToast, IClearToasts, IRemoveToast, IToast } from '../../types/toastTypes';
+import { IAddToast, IClearToasts, IRemoveToast } from '../../types/toastTypes';
 import * as constants from '../constants/toastConstants';
 
-export function addToast(toast: IToast): IAddToast {
+export function addToast(message: string): IAddToast {
   return {
     type: constants.ADD_TOAST,
-    toast
+    message
   };
 }
 
