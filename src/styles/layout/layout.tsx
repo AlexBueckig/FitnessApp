@@ -2,6 +2,8 @@ import { Dimensions, StyleSheet } from 'react-native';
 
 const Screen = Dimensions.get('window');
 
+import toasts from './toast';
+
 const layout = StyleSheet.create({
   main: {
     flex: 1,
@@ -74,4 +76,4 @@ const layout = StyleSheet.create({
   }
 });
 
-export default layout;
+export default { toasts, ...layout };
