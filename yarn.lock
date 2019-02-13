@@ -5304,10 +5304,15 @@ react-fast-compare@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
-react-is@^16.3.1, react-is@^16.6.0, react-is@^16.7.0:
+react-is@^16.3.1, react-is@^16.6.0:
   version "16.8.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.0.tgz#518db476214f3fb0716af9f82dfd420225ae970f"
   integrity sha512-LOy+3La39aduxaPfuj+lCXC5RQ8ukjVPAAsFJ3yQ+DIOLf4eR9OMKeWKF0IzjRyE95xMj5QELwiXGgfQsIJguA==
+
+react-is@^16.7.0:
+  version "16.8.1"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.1.tgz#a80141e246eb894824fb4f2901c0c50ef31d4cdb"
+  integrity sha512-ioMCzVDWvCvKD8eeT+iukyWrBGrA3DiFYkXfBsVYIRdaREZuBjENG+KjrikavCLasozqRWTwFUagU/O4vPpRMA==
 
 react-lifecycles-compat@2.0.0:
   version "2.0.0"
@@ -5342,10 +5347,10 @@ react-native-elements@^1.0.0:
     react-native-ratings "^6.3.0"
     react-native-status-bar-height "^2.2.0"
 
-react-native-navigation@^2.0.2556:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-2.9.0.tgz#52657540728919d0ccd20dfb6aaa6d0d0cd0319f"
-  integrity sha512-y+BXTOAm7C53HDaCRFH0goHhDH8ePEAZTLPjvwqLqP7PKr8SQRvqy4FQmyuIyXTwv8hQmSDYUcF3sicRg1zwCg==
+react-native-navigation@^2.10.0:
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-2.10.0.tgz#91b1155adce4232a7b44f010a6534d3de7e6e707"
+  integrity sha512-nGh38G3xS2y12EWcBrMDaBY/MZfcBFtVXTwVT5VNev58BiYCpobAJ2zqAIkccI4W8GyCm2DKhKPiNpBANTHfIg==
   dependencies:
     hoist-non-react-statics "3.x.x"
     lodash "4.17.x"
@@ -5559,7 +5564,7 @@ readable-stream@^2.0.1, readable-stream@^2.0.6, readable-stream@^2.2.2, readable
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-realm@^2.22.0:
+realm@^2.23.0:
   version "2.23.0"
   resolved "https://registry.yarnpkg.com/realm/-/realm-2.23.0.tgz#e4645a99c39402a912ec66d860678a242655243e"
   integrity sha512-ChCuhoRJR9yefXuC0MTKS6og6NTP9Wyyyubsk3GSXiYhgCf/IJ7E1Jtsoo6/bbpaSe3Q++5YFMnV4hX+KYP2Cg==
