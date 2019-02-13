@@ -8,7 +8,7 @@
     "noEmit": true,
     "noImplicitAny": true,
     "target": "es5",
-    "lib": ["esnext"],
+    "lib": ["es6"],
     "downlevelIteration": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
