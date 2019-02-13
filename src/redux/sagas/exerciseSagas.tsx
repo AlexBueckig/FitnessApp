@@ -3,6 +3,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import api from '../../api/';
 import { IDeleteExercise, IGetExerciseById, ISaveExercise } from '../../types/exerciseTypes';
 import * as constants from '../constants/exerciseConstants';
+import * as toast from '../constants/toastConstants';
 
 export function* getExercisesSaga() {
   try {
@@ -26,6 +27,7 @@ export function* getExerciseByIdSaga(action: IGetExerciseById) {
 export function* saveExerciseSaga(action: ISaveExercise) {
   try {
     const exercise = yield call(api.realm.exercise.saveExercise, action.exercise);
+    yield put({ type: toast.ADD_TOAST, message: 'Workout added successfully' });
     yield put({ type: constants.SAVE_EXERCISE_SUCCESS, exercise });
   } catch (error) {
     yield put({ type: constants.SAVE_EXERCISE_FAILURE, error });
@@ -35,6 +37,7 @@ export function* saveExerciseSaga(action: ISaveExercise) {
 export function* deleteExerciseSaga(action: IDeleteExercise) {
   try {
     const id = yield call(api.realm.exercise.deleteExercise, action.id);
+    yield put({ type: toast.ADD_TOAST, message: 'Workout deleted successfully' });
     yield put({ type: constants.DELETE_EXERCISE_SUCCESS, id });
   } catch (error) {
     yield put({ type: constants.DELETE_EXERCISE_FAILURE });
