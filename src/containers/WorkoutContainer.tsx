@@ -17,7 +17,5 @@ export const mapDispatchToProps = (dispatch: Dispatch<IGetWorkoutsAction | IDele
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
-  undefined,
-  { withRef: true }
+  mapDispatchToProps
 )(WorkoutScreen);

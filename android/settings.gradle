@@ -1,4 +1,4 @@
-rootProject.name = 'FitnessApp'
+rootProject.name = 'fitness'
 
 include ':app'
 include ':react-native-navigation'

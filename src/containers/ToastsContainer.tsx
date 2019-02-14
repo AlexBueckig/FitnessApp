@@ -16,7 +16,5 @@ export const mapDispatchToProps = (dispatch: Dispatch<IToastsAction>) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
-  undefined,
-  { withRef: true }
+  mapDispatchToProps
 )(Toasts);

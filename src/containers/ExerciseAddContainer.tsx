@@ -18,7 +18,5 @@ export const mapDispatchToProps = (dispatch: Dispatch<ISaveExercise | IGetExerci
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
-  undefined,
-  { withRef: true }
+  mapDispatchToProps
 )(ExerciseAddScreen);

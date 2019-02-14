@@ -1,5 +1,116 @@
-import App from './src/App';
+/**
+ * @format
+ * @lint-ignore-every XPLATJSCOPYRIGHT1
+ */
 
-const app = new App({});
+import { Navigation } from 'react-native-navigation';
+import { applyMiddleware, createStore } from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
-export default app;
+import realm from './src/api/realm/schemas';
+import { registerScreens } from './src/containers';
+import rootReducer from './src/redux/reducers';
+import mySaga from './src/redux/sagas';
+
+const sagaMiddleware = createSagaMiddleware();
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
+
+sagaMiddleware.run(mySaga);
+
+registerScreens(store);
+
+Navigation.events().registerAppLaunchedListener(() => {
+  Navigation.setDefaultOptions({
+    topBar: {
+      title: { color: 'white', alignment: 'center', fontSize: 22 },
+      buttonColor: 'white',
+      backButton: {
+        color: 'white'
+      },
+      background: { color: '#14C788' }
+    },
+    bottomTabs: {
+      titleDisplayMode: 'alwaysShow'
+    },
+    bottomTab: {
+      iconColor: 'grey',
+      selectedIconColor: '#14C788'
+    }
+  });
+  Navigation.setRoot({
+    root: {
+      bottomTabs: {
+        children: [
+          {
+            stack: {
+              children: [
+                {
+                  component: {
+                    name: 'FeedScreen',
+                    passProps: {
+                      text: 'This is tab 1'
+                    },
+                    options: {
+                      topBar: {
+                        title: {
+                          text: 'Feed'
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              options: {
+                bottomTab: {
+                  text: 'Feed',
+                  icon: require('./res/images/one.png')
+                }
+              }
+            }
+          },
+          {
+            stack: {
+              children: [
+                {
+                  component: {
+                    name: 'WorkoutMenuScreen',
+                    passProps: {
+                      text: 'This is tab 2'
+                    }
+                  }
+                }
+              ],
+              options: {
+                bottomTab: {
+                  text: 'Workout',
+                  icon: require('./res/images/one.png')
+                }
+              }
+            }
+          },
+          {
+            stack: {
+              children: [
+                {
+                  component: {
+                    name: 'AchievementScreen',
+                    passProps: {
+                      text: 'This is tab 2'
+                    }
+                  }
+                }
+              ],
+              options: {
+                bottomTab: {
+                  text: 'Erfolge',
+                  icon: require('./res/images/one.png')
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  });
+});

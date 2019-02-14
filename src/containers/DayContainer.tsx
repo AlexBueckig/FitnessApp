@@ -17,7 +17,5 @@ export const mapDispatchToProps = (dispatch: Dispatch<IGetDaysAction | IDeleteDa
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
-  undefined,
-  { withRef: true }
+  mapDispatchToProps
 )(DayScreen);
