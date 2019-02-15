@@ -8,20 +8,20 @@ export class Day {
     properties: {
       id: 'int',
       description: 'string',
-      day: 'int[]',
+      days: 'int[]',
       sets: 'Set[]'
     }
   };
 
   public id: number;
   public description: string;
-  public day: number[];
+  public days: number[];
   public sets: Set[];
 
-  constructor(id: number, description: string, day: number[], sets: Set[]) {
+  constructor(id: number, description: string, days: number[], sets: Set[]) {
     this.id = id;
     this.description = description;
-    this.day = day;
+    this.days = days;
     this.sets = sets;
   }
 }

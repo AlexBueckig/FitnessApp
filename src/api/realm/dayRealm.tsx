@@ -20,7 +20,7 @@ export const getDays = async () => {
 
 export const saveDay = async (day: Day) => {
   try {
-    const newDay = new Day(day.id, day.description, day.day, []);
+    const newDay = new Day(day.id, day.description, day.days, []);
     if (day.id === 0) {
       const maxId = Number(realm.objects('Day').max('id')) + 1 || 1;
       newDay.id = maxId;
@@ -59,7 +59,7 @@ export const deleteDay = async (id: number) => {
 
 export const getDayById = async (id: number) => {
   try {
-    const day: IDay = { id: 0, sets: [], day: [], description: '' };
+    const day: IDay = { id: 0, sets: [], days: [], description: '' };
     if (id !== 0) {
       const days = JSON.parse(JSON.stringify(realm.objects<Day>(Day.schema.name).filtered('id = ' + id)));
       const setsCopy: Set[] = [];
@@ -69,6 +69,7 @@ export const getDayById = async (id: number) => {
         });
         day.id = days[key].id;
         day.sets = setsCopy;
+        day.days = Object.values(days[key].days);
         day.description = days[key].description;
       });
     }

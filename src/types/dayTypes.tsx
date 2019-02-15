@@ -16,7 +16,7 @@ export interface IDays {
 export interface IDay {
   id: number;
   description: string;
-  day: number[];
+  days: number[];
   sets: Set[];
   training?: number;
 }
