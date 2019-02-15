@@ -1,9 +1,7 @@
 import React, { ComponentClass, Fragment } from 'react';
-
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-
 import AchievementScreen from '../screens/AchievementScreen';
 import FeedScreen from '../screens/FeedScreen';
 import WorkoutMenuScreen from '../screens/WorkoutMenuScreen';
@@ -47,7 +45,7 @@ export const registerScreens = (store: Store<IStoreState>) => {
     () => WorkoutAddContainer
   );
   Navigation.registerComponent('DayScreen', () => WrappedComponent(DayContainer, store), () => DayContainer);
-  Navigation.registerComponent('DayScreen.Add', () => WrappedComponent(DayAddContainer, store));
+  Navigation.registerComponent('DayScreen.Add', () => WrappedComponent(DayAddContainer, store), () => DayAddContainer);
   Navigation.registerComponent(
     'ExerciseScreen',
     () => WrappedComponent(ExerciseContainer, store),
