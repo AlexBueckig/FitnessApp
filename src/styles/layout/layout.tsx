@@ -1,8 +1,7 @@
 import { Dimensions, StyleSheet } from 'react-native';
+import toasts from './toast';
 
 const Screen = Dimensions.get('window');
-
-import toasts from './toast';
 
 const layout = StyleSheet.create({
   main: {
@@ -10,20 +9,13 @@ const layout = StyleSheet.create({
     backgroundColor: '#f0f0f0'
   },
   container: {
-    marginHorizontal: 16,
-    width: '90%',
-    alignSelf: 'center'
-  },
-  flexrow: {
-    flexDirection: 'row'
+    paddingHorizontal: 16,
+    width: '100%'
   },
   backgroundImage: {
     width: Screen.width,
     height: (Screen.width / 750) * 800,
     position: 'absolute'
-  },
-  spacer: {
-    height: 300
   },
   card: {
     height: 100,
@@ -38,14 +30,6 @@ const layout = StyleSheet.create({
     shadowOpacity: 0.5,
     elevation: 4,
     flex: 1
-  },
-  roundView: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#000000',
-    opacity: 0.54,
-    marginTop: 16
   },
   addButtonPosition: {
     position: 'absolute',
@@ -63,16 +47,6 @@ const layout = StyleSheet.create({
     alignItems: 'center',
     elevation: 4,
     backgroundColor: '#14C788'
-  },
-  button: {
-    borderRadius: 24,
-    borderWidth: 5,
-    borderColor: 'green',
-    height: 36,
-    minWidth: 150,
-    backgroundColor: 'transparent',
-    alignContent: 'center',
-    margin: 10
   }
 });
 
