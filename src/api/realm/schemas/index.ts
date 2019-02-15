@@ -1,5 +1,4 @@
 import Realm from 'realm';
-
 import { Day } from './DaySchema';
 import { Exercise } from './ExerciseSchema';
 import { Feed } from './FeedSchema';
@@ -7,7 +6,7 @@ import { Set } from './SetSchema';
 import { Setting } from './SettingSchema';
 import { Workout } from './WorkoutSchema';
 
-const SCHEMA_VERSION = 12;
+const SCHEMA_VERSION = 15;
 
 const schemas = { Day, Exercise, Set, Setting, Workout, Feed };
 
