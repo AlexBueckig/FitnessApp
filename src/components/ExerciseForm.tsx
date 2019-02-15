@@ -3,11 +3,10 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 import { Button } from 'react-native-elements';
 import * as yup from 'yup';
-
 import { IExercise } from '../types/exerciseTypes';
-import CategoryPicker from './CategoryPicker';
-import TextInput from './Input';
-import MultiPicker from './MultiPicker';
+import CategoryPicker from './FormComponents/CategoryPicker';
+import TextInput from './FormComponents/Input';
+import MultiPicker from './FormComponents/MultiPicker';
 
 type IProps = IExercise & { submit: (exercise: IExercise) => void };
 
@@ -100,16 +99,7 @@ export default class ExerciseForm extends PureComponent<IProps> {
         enableReinitialize={true}
         validationSchema={validationSchema}
       >
-        {({
-          values,
-          errors,
-          setFieldValue,
-          setFieldTouched,
-          touched,
-          isValid,
-          isSubmitting,
-          handleSubmit
-        }: FormikProps<IExercise>) => {
+        {({ values, errors, touched, isSubmitting, handleSubmit }: FormikProps<IExercise>) => {
           return (
             <View style={{ alignItems: 'center' }}>
               <TextInput
@@ -117,8 +107,6 @@ export default class ExerciseForm extends PureComponent<IProps> {
                 name="name"
                 placeholder="Name der Übung"
                 value={values.name}
-                onChange={setFieldValue}
-                onTouch={setFieldTouched}
                 error={touched.name && errors.name ? errors.name : undefined}
               />
               <TextInput
@@ -126,8 +114,6 @@ export default class ExerciseForm extends PureComponent<IProps> {
                 name="description"
                 placeholder="optional"
                 value={values.description || ''}
-                onChange={setFieldValue}
-                onTouch={setFieldTouched}
                 // error={touched.comment && errors.comment}
               />
               <CategoryPicker
@@ -135,16 +121,12 @@ export default class ExerciseForm extends PureComponent<IProps> {
                 name="category"
                 categories={categories}
                 selectedValue={values.category || ''}
-                onChange={setFieldValue}
-                onBlur={setFieldTouched}
                 error={touched.category && errors.category ? errors.category : undefined}
               />
               <MultiPicker
                 items={muscleGroups}
                 name="muscles"
                 label="Muskelgruppe(n)"
-                onChange={setFieldValue}
-                onBlur={setFieldTouched}
                 selectedItems={Object.assign(values.muscles || [])}
               />
               <Button

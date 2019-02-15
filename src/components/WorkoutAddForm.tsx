@@ -3,9 +3,8 @@ import React from 'react';
 import { View } from 'react-native';
 import { Button } from 'react-native-elements';
 import * as yup from 'yup';
-
 import { IWorkout } from '../types/workoutTypes';
-import TextInput from './Input';
+import TextInput from './FormComponents/Input';
 
 const validationSchema = yup.object().shape({
   comment: yup.string().required()
@@ -24,23 +23,12 @@ const WorkoutAddForm = (props: IProps) => {
       enableReinitialize={true}
       validationSchema={validationSchema}
     >
-      {({
-        values,
-        setFieldValue,
-        isSubmitting,
-        isValid,
-        setFieldTouched,
-        submitForm,
-        errors,
-        touched
-      }: FormikProps<IWorkout>) => (
+      {({ values, isSubmitting, isValid, submitForm, errors, touched }: FormikProps<IWorkout>) => (
         <View>
           <TextInput
             label="comment"
             name="comment"
             value={values.comment}
-            onChange={setFieldValue}
-            onTouch={setFieldTouched}
             error={touched.comment && errors.comment ? errors.comment : undefined}
           />
           <Button title="Submit" onPress={submitForm} disabled={!isValid || isSubmitting} loading={isSubmitting} />
