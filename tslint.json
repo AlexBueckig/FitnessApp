@@ -1,0 +1,20 @@
+{
+  "extends": ["tslint:recommended", "tslint-plugin-prettier", "tslint-config-prettier"],
+  "rules": {
+    "prettier": [
+      true,
+      {
+        "singleQuote": true,
+        "printWidth": 120,
+        "tabWidth": 2
+      }
+    ],
+    "object-literal-sort-keys": false,
+    "no-implicit-dependencies": [true, "dev"],
+    "no-null-keyword": false,
+    "no-empty-interface": false,
+    "no-console": false,
+    "variable-name": false,
+    "max-classes-per-file": false
+  }
+}
