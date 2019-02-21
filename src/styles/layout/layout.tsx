@@ -6,7 +6,8 @@ const Screen = Dimensions.get('window');
 const layout = StyleSheet.create({
   main: {
     flex: 1,
-    backgroundColor: '#f0f0f0'
+    // backgroundColor: '#f0f0f0'
+    backgroundColor: '#EEEEEE'
   },
   container: {
     paddingHorizontal: 16,
