@@ -12,9 +12,13 @@ interface IProps {
 
 export default class CardImageBackground extends PureComponent<IProps> {
   public render() {
-    const borderRadius = this.props.borderRadius || 0;
+    const { borderRadius } = this.props;
     return (
-      <ImageBackground source={this.props.image} style={{ minWidth: 167 }} imageStyle={{ borderRadius, marginTop: 16 }}>
+      <ImageBackground
+        source={this.props.image}
+        style={{ minWidth: 167, elevation: 1 }}
+        imageStyle={{ borderRadius, marginTop: 16 }}
+      >
         <Card
           title={this.props.title}
           style={this.props.style || {}}
