@@ -103,25 +103,26 @@ class DayAddForm extends PureComponent<IProps, IState> {
                   {props.exercises && props.exercises.count === 0 && (
                     <Text>Keine Übungen vorhanden, lege welche an!</Text>
                   )}
+                  {values.sets.length > 0 &&
+                    values.sets.map((set, index) => {
+                      if (set.exercise) {
+                        return (
+                          <View
+                            key={`${index}-${JSON.stringify(set)}`}
+                            style={{ flexDirection: 'row', alignItems: 'center' }}
+                          >
+                            <Text style={{ flex: 1 }}>{set.exercise.name}</Text>
+                            <Button style={{ height: 32 }} title="Delete" onPress={() => arrayHelpers.remove(index)} />
+                          </View>
+                        );
+                      } else {
+                        return null;
+                      }
+                    })}
                 </View>
               )}
             />
-            {/*             {values.sets.length > 0 &&
-              values.sets.map((set, index) => {
-                if (set.exercise) {
-                  return (
-                    <View
-                      key={`${index}-${JSON.stringify(set)}`}
-                      style={{ flexDirection: 'row', alignItems: 'center' }}
-                    >
-                      <Text style={{ flex: 1 }}>{set.exercise.name}</Text>
-                      <Button style={{ height: 32 }} title="Delete" onPress={() => arrayHelpers.remove(index)} />
-                    </View>
-                  );
-                } else {
-                  return null;
-                }
-              })} */}
+
             <MultiPicker label="Tage" name="days" items={items} selectedItems={values.days} />
             <Button
               title="Submit"
