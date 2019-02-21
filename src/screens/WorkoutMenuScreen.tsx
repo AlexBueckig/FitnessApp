@@ -39,16 +39,23 @@ export default class WorkoutMenuScreen extends PureComponent<IProps> {
             title="Trainingspläne"
             onPress={this.onPress.bind(this, 'WorkoutScreen')}
             image={this.images[0]}
+            borderRadius={2}
           >
             <Text style={styles.typography.cardBody}>Füge Tagespläne zu Trainingsplänen zusammen</Text>
           </CardImageBackground>
-          <CardImageBackground title="Tagespläne" onPress={this.onPress.bind(this, 'DayScreen')} image={this.images[1]}>
+          <CardImageBackground
+            title="Tagespläne"
+            onPress={this.onPress.bind(this, 'DayScreen')}
+            image={this.images[1]}
+            borderRadius={2}
+          >
             <Text style={styles.typography.cardBody}>Erstelle einzelne, individuelle Tagespläne</Text>
           </CardImageBackground>
           <CardImageBackground
             title="Übungen"
             onPress={this.onPress.bind(this, 'ExerciseScreen')}
             image={this.images[2]}
+            borderRadius={2}
           >
             <Text style={styles.typography.cardBody}>Lege deine eigenen Übungen an</Text>
           </CardImageBackground>

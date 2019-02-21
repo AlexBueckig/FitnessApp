@@ -3,6 +3,7 @@ import { Animated, FlatList } from 'react-native';
 import { Divider, ListItem, Text } from 'react-native-elements';
 import { Navigation } from 'react-native-navigation';
 import ImageQuoteCard from '../components/ImageQuoteCard';
+import styles from '../styles';
 import { IGetFeed, IPost } from '../types/feedTypes';
 
 interface IProps {
@@ -47,6 +48,8 @@ export default class FeedScreen extends PureComponent<IProps, IState> {
               title={`Montag, ${item.item.key}. Januar`}
               subtitle="2er Split - Oberkörper"
               chevron={{ name: 'chevron-right', size: 26 }}
+              titleStyle={styles.typography.listItemTitle}
+              subtitleStyle={styles.typography.listItemSubtitle}
             />
           );
         }}
