@@ -1,22 +1,24 @@
+import { Database } from '@nozbe/watermelondb';
+import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
+import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import ExerciseAddScreen from '../screens/ExerciseAddScreen';
 import { iconsMap } from '../utils/AppIcons';
-import { RootModel } from '../watermelondb';
-import { ISaveExerciseParams } from '../watermelondb/models/Exercise';
+import Exercise, { ISaveExerciseParams } from '../watermelondb/models/Exercise';
 
 interface IProps {
   id: string;
   componentId: string;
-  exercise: undefined;
+  exercise: Exercise;
 }
 
-export default class ExerciseAddContainer extends Component<IProps> {
+export class ExerciseEditContainer extends Component<IProps> {
   public static options() {
     return {
       topBar: {
-        title: { text: 'Übung anlegen' },
+        title: { text: 'Übung bearbeiten' },
         rightButtons: [
           {
             id: 'deleteExerciseButton',
@@ -35,7 +37,7 @@ export default class ExerciseAddContainer extends Component<IProps> {
   }
 
   saveExercise = async (values: ISaveExerciseParams) => {
-    await RootModel.createExercise(values.name, values.description, values.category, values.muscles);
+    await this.props.exercise.updateEntry(values);
   };
 
   render() {
@@ -49,7 +51,8 @@ export default class ExerciseAddContainer extends Component<IProps> {
           { text: 'Abbrechen', onPress: undefined, style: 'cancel' },
           {
             text: 'OK',
-            onPress: () => {
+            onPress: async () => {
+              await this.props.exercise.deleteEntry();
               Navigation.pop(id.componentId);
             }
           }
@@ -60,3 +63,17 @@ export default class ExerciseAddContainer extends Component<IProps> {
     }
   }
 }
+
+const enhance = withObservables(['exercise'], ({ database, id }: { database: Database; id: string }) => {
+  try {
+    return {
+      exercise: database.collections.get<Exercise>('exercises').findAndObserve(id)
+    };
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+const EnhancedExerciseEditContainer = enhance(ExerciseEditContainer);
+
+export default withDatabase(EnhancedExerciseEditContainer);

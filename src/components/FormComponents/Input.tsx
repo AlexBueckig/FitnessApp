@@ -44,7 +44,7 @@ class TextInput extends PureComponent<IProps, IState> {
               inputStyle={{ fontSize: 16 }}
               underlineColorAndroid={error ? 'red' : this.state.isFocused ? 'green' : 'grey'}
               errorMessage={error}
-              errorStyle={{ fontSize: 12, marginTop: -10 }}
+              errorStyle={{ fontSize: 12, marginTop: -8 }}
               inputContainerStyle={{ borderBottomWidth: 0, marginHorizontal: -4 }}
               containerStyle={{ marginBottom: 16, paddingHorizontal: 0 }}
             />

@@ -1,86 +1,34 @@
-import React, { PureComponent } from 'react';
-import { Alert, ScrollView } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+import React, { Component } from 'react';
+import { ScrollView } from 'react-native';
 import ExerciseForm from '../components/ExerciseForm';
-import { IDeleteExercise, IExercise, IGetExerciseById, ISaveExercise } from '../types/exerciseTypes';
-import { iconsMap } from '../utils/AppIcons';
+import Exercise, { ISaveExerciseParams } from '../watermelondb/models/Exercise';
 
 interface IProps {
-  getExerciseById: (id: number) => IGetExerciseById;
-  saveExercise: (exercise: IExercise) => ISaveExercise;
-  deleteExercise: (id: number) => IDeleteExercise;
-  exercise: IExercise;
-  id: number;
-  isFetching: boolean;
+  saveExercise: (exercise: ISaveExerciseParams) => void;
+  exercise: Exercise | undefined;
 }
 
 interface IState {
   muscles: number[];
 }
 
-class ExerciseAddScreen extends PureComponent<IProps, IState> {
-  public static options() {
-    return {
-      topBar: {
-        title: { text: 'Übung' },
-        rightButtons: [
-          {
-            id: 'deleteExerciseButton',
-            text: 'LÖSCHEN',
-            color: 'white',
-            icon: iconsMap.delete
-          }
-        ]
-      }
-    };
-  }
-
-  constructor(props: IProps) {
-    super(props);
-    Navigation.events().bindComponent(this);
-  }
-
-  public navigationButtonPressed(id: { buttonId: string; componentId: string }) {
-    switch (id.buttonId) {
-      case 'deleteExerciseButton':
-        Alert.alert('Löschen bestätigen', 'Willst du diese Übung wirklich löschen?', [
-          { text: 'Abbrechen', onPress: undefined, style: 'cancel' },
-          {
-            text: 'OK',
-            onPress: () => {
-              if (this.props.id !== 0) {
-                this.props.deleteExercise(this.props.id);
-              }
-              Navigation.pop(id.componentId);
-            }
-          }
-        ]);
-        break;
-      default:
-        break;
-    }
-  }
-
-  public componentDidAppear() {
-    this.props.getExerciseById(this.props.id);
-  }
-
+class ExerciseAddScreen extends Component<IProps, IState> {
   public render() {
+    const { exercise } = this.props;
     return (
       <ScrollView>
         <ExerciseForm
-          id={this.props.exercise.id}
-          name={this.props.exercise.name || ''}
-          category={this.props.exercise.category || ''}
-          description={this.props.exercise.description || ''}
-          muscles={this.props.exercise.muscles || []}
+          name={(exercise && exercise.name) || ''}
+          category={(exercise && exercise.category) || ''}
+          description={(exercise && exercise.description) || ''}
+          muscles={(exercise && exercise.muscles) || []}
           submit={this.submit}
         />
       </ScrollView>
     );
   }
 
-  private submit = (exercise: IExercise) => {
+  private submit = (exercise: ISaveExerciseParams) => {
     this.props.saveExercise(exercise);
   };
 }
