@@ -2,48 +2,14 @@ import React, { PureComponent } from 'react';
 import { Alert, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import DayAddForm from '../components/DayAddForm';
-import { IDay, IDeleteDay, IGetDayById, ISaveDay } from '../types/dayTypes';
-import { IExercises, IGetExercises } from '../types/exerciseTypes';
-import { iconsMap } from '../utils/AppIcons';
+import Day, { ISaveDayParams } from '../watermelondb/models/Day';
 
 interface IProps {
-  getDayById: (id: number) => IGetDayById;
-  saveDay: (day: IDay) => ISaveDay;
-  deleteDay: (id: number) => IDeleteDay;
-  getExercises: () => IGetExercises;
-  exercises: IExercises;
-  day: IDay;
-  id: number;
-  isFetching: boolean;
+  saveDay: (day: ISaveDayParams) => void;
+  day: Day | undefined;
 }
 
 export default class DayAddScreen extends PureComponent<IProps> {
-  public static options() {
-    return {
-      topBar: {
-        title: { text: 'Trainingsplan' },
-        rightButtons: [
-          {
-            id: 'deleteDayButton',
-            text: 'LÖSCHEN',
-            color: 'white',
-            icon: iconsMap.delete
-          }
-        ]
-      }
-    };
-  }
-
-  constructor(props: IProps) {
-    super(props);
-    Navigation.events().bindComponent(this);
-  }
-
-  public componentDidAppear() {
-    this.props.getDayById(this.props.id);
-    this.props.getExercises();
-  }
-
   public navigationButtonPressed(id: { buttonId: string; componentId: string }) {
     switch (id.buttonId) {
       case 'deleteDayButton':
@@ -52,9 +18,6 @@ export default class DayAddScreen extends PureComponent<IProps> {
           {
             text: 'OK',
             onPress: () => {
-              if (this.props.id !== 0) {
-                this.props.deleteDay(this.props.id);
-              }
               Navigation.pop(id.componentId);
             }
           }
@@ -65,15 +28,12 @@ export default class DayAddScreen extends PureComponent<IProps> {
     }
   }
 
-  public render() {
+  render() {
+    const { day, saveDay } = this.props;
     return (
-      <View style={{ marginHorizontal: 16 }}>
-        <DayAddForm day={this.props.day} handleSubmit={this.handleSubmit} exercises={this.props.exercises} />
+      <View style={{ padding: 16 }}>
+        <DayAddForm description={(day && day.description) || ''} days={(day && day.days) || []} submit={saveDay} />
       </View>
     );
   }
-
-  public handleSubmit = (values: IDay) => {
-    this.props.saveDay({ ...values });
-  };
 }

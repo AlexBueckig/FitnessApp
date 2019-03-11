@@ -1,13 +1,25 @@
-import React, { SFC } from 'react';
+import withObservables from '@nozbe/with-observables';
+import React, { FC } from 'react';
 import { ListItem } from 'react-native-elements';
-import { IExercise } from '../../types/exerciseTypes';
+import Workout from '../../watermelondb/models/Workout';
 
 interface IProps {
-  item: IExercise;
-  onPress: () => void;
+  workout: Workout;
+  onPress: (id: string) => void;
 }
 
-export const Item: SFC<IProps> = props => {
-  const { item, onPress } = props;
-  return <ListItem key={item.id} title={item.name} chevron={{ name: 'chevron-right', size: 26 }} onPress={onPress} />;
+const RawListItem: FC<IProps> = props => {
+  const { workout } = props;
+  return (
+    <ListItem
+      key={workout.id}
+      title={workout.name}
+      chevron={{ name: 'chevron-right', size: 26 }}
+      onPress={props.onPress.bind(null, workout.id)}
+    />
+  );
 };
+
+const enhance = withObservables(['workout'], ({ workout }: any) => ({ workout: workout.observe() }));
+
+export default enhance(RawListItem);

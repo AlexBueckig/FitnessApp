@@ -1,5 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
-import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
+import { DatabaseProviderProps, withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
@@ -64,15 +63,9 @@ export class ExerciseEditContainer extends Component<IProps> {
   }
 }
 
-const enhance = withObservables(['exercise'], ({ database, id }: { database: Database; id: string }) => {
-  try {
-    return {
-      exercise: database.collections.get<Exercise>('exercises').findAndObserve(id)
-    };
-  } catch (err) {
-    console.log(err);
-  }
-});
+const enhance = withObservables([], ({ database, id }: IProps & DatabaseProviderProps) => ({
+  exercise: database.collections.get<Exercise>('exercises').findAndObserve(id)
+}));
 
 const EnhancedExerciseEditContainer = enhance(ExerciseEditContainer);
 

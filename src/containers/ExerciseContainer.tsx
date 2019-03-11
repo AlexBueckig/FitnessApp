@@ -1,5 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
-import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
+import { DatabaseProviderProps, withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
 import { Navigation } from 'react-native-navigation';
@@ -62,7 +61,7 @@ export class ExerciseContainer extends Component<IProps> {
   };
 }
 
-const enhance = withObservables([], ({ database }: { database: Database }) => ({
+const enhance = withObservables([], ({ database }: DatabaseProviderProps) => ({
   exercises: database.collections
     .get('exercises')
     .query()

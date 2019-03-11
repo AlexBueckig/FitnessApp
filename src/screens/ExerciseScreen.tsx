@@ -10,7 +10,6 @@ import Exercise from '../watermelondb/models/Exercise';
 
 interface IProps {
   exercises: Array<{ title: string; data: Exercise[] }>;
-  isFetching: boolean;
   onPress: (id: string | undefined) => void;
 }
 
