@@ -1,5 +1,5 @@
 import withObservables from '@nozbe/with-observables';
-import React, { SFC } from 'react';
+import React, { FC } from 'react';
 import { ListItem } from 'react-native-elements';
 import Exercise from '../../watermelondb/models/Exercise';
 
@@ -8,13 +8,16 @@ interface IProps {
   onPress: (id: string) => void;
 }
 
-const RawSectionListItem: SFC<IProps> = props => {
+const RawSectionListItem: FC<IProps> = props => {
   const { exercise } = props;
-  const onPress = () => {
-    props.onPress(exercise.id);
-  };
+
   return (
-    <ListItem key={exercise.id} title={exercise.name} chevron={{ name: 'chevron-right', size: 26 }} onPress={onPress} />
+    <ListItem
+      key={exercise.id}
+      title={exercise.name}
+      chevron={{ name: 'chevron-right', size: 26 }}
+      onPress={props.onPress.bind(null, exercise.id)}
+    />
   );
 };
 
