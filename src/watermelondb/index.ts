@@ -1,14 +1,16 @@
 import { Database } from '@nozbe/watermelondb';
 import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
 import React, { createContext } from 'react';
+import Day from './models/Day';
 import Exercise from './models/Exercise';
+import Workout from './models/Workout';
 import schema from './schema';
 
 const adapter = new SQLiteAdapter({ schema });
 
 const database = new Database({
   adapter,
-  modelClasses: [Exercise]
+  modelClasses: [Exercise, Workout, Day]
 });
 
 export class RootModel {
@@ -30,15 +32,16 @@ export class RootModel {
     }, 'Add Exercise Action');
   };
 
-  /*   static createWorkout = async (name: string) => {
+  static createWorkout = async (name: string, active: boolean = false) => {
     const workoutCollection = await database.collections.get<Workout>('workouts');
-    database.action(async () => {
+    return await database.action(async () => {
       const newWorkout = await workoutCollection.create(workout => {
         workout.name = name;
+        workout.active = active;
       });
       return newWorkout;
     }, 'Add Workout Action');
-  }; */
+  };
 }
 
 const { Provider: ModelProvider, Consumer: ModelConsumer }: React.Context<typeof RootModel> = createContext(RootModel);

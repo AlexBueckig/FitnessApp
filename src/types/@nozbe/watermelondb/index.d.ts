@@ -1,10 +1,5 @@
 type ColumnType = 'string' | 'boolean' | 'number';
 
-declare enum AssociationType {
-  'belongs_to' = 'belongs_to',
-  'has_many' = 'has_many'
-}
-
 declare module '@nozbe/watermelondb' {
   import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
   import { Observable } from 'rxjs';
@@ -101,8 +96,8 @@ declare module '@nozbe/watermelondb' {
     destroyAllPermanently(): Promise<void>;
   }
 
-  type BelongsToAssociation = { type: 'belongs_to'; key: string };
-  type HasManyAssociation = { type: 'has_many'; foreignKey: string };
+  type BelongsToAssociation = { type: string; key: string };
+  type HasManyAssociation = { type: string; foreignKey: string };
   type AssociationInfo = BelongsToAssociation | HasManyAssociation;
   type SyncStatus = 'synced' | 'created' | 'updated' | 'deleted';
 
@@ -113,6 +108,7 @@ declare module '@nozbe/watermelondb' {
     readonly id: string;
     readonly syncStatus: SyncStatus;
     readonly collection: Collection<this>;
+    readonly collections: CollectionMap;
 
     update(recordUpdater: (object: this) => void): Promise<void>;
     prepareUpdate(recordUpdater: (object: this) => void): this;
@@ -172,12 +168,13 @@ declare module '@nozbe/watermelondb/decorators' {
 
 declare module '@nozbe/watermelondb/DatabaseProvider' {
   import { Database } from '@nozbe/watermelondb';
-  import { FC } from 'react';
+  import { Component } from 'react';
 
-  interface DatabaseProviderProps {
+  export interface DatabaseProviderProps {
     database: Database;
   }
-  const DatabaseProvider: FC<DatabaseProviderProps>;
-  export default DatabaseProvider;
-  export function withDatabase(component: any) : any;
+
+  export function withDatabase(component: Component): Component;
+
+  export default function DatabaseProvider(props: any): any;
 }
