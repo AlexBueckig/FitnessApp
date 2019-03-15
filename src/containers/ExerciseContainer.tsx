@@ -25,16 +25,11 @@ export class ExerciseContainer extends Component<IProps> {
   }
 
   render() {
-    return (
-      <ExerciseScreen
-        exercises={this.processExercises(this.props.exercises)}
-        isFetching={false}
-        onPress={this.onPress}
-      />
-    );
+    return <ExerciseScreen exercises={this.processExercises(this.props.exercises)} onPress={this.onPress} />;
   }
 
   private onPress = (id: string | undefined = undefined) => {
+    console.log(id);
     let type = 'Add';
     if (id) {
       type = 'Edit';
