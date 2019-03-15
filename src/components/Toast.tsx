@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Animated } from 'react-native';
-import { Text } from 'react-native-elements';
-
-import { Icon } from 'react-native-elements';
+import { Icon, Text } from 'react-native-elements';
 import styles from '../styles';
 
 interface IProps {
@@ -11,7 +9,7 @@ interface IProps {
   message: string;
 }
 
-class Toast extends Component<IProps> {
+class Toast extends PureComponent<IProps> {
   public state = {
     fadeInOut: new Animated.Value(0)
   };
