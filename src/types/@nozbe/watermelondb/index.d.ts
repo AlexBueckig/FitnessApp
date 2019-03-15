@@ -115,6 +115,7 @@ declare module '@nozbe/watermelondb' {
     markAsDeleted(): Promise<void>;
     destroyPermanently(): Promise<void>;
     observe(): Observable<this>;
+    subAction(subAction: any): Promise<void>;
   }
 
   interface Relation<T extends Model> {
@@ -164,17 +165,18 @@ declare module '@nozbe/watermelondb/decorators' {
   export function text(columnName: string): any;
   export function json(columnName: string, sanitizer: (json: any) => any): any;
   export function action (...args: any[]): any;
+  export function lazy (...args: any[]): any;
 }
 
 declare module '@nozbe/watermelondb/DatabaseProvider' {
   import { Database } from '@nozbe/watermelondb';
-  import { Component } from 'react';
+  import { ComponentClass } from 'react';
 
   export interface DatabaseProviderProps {
     database: Database;
   }
 
-  export function withDatabase(component: Component): Component;
+  export function withDatabase<P>(component: ComponentClass<P>): ComponentClass<P>;
 
   export default function DatabaseProvider(props: any): any;
 }
