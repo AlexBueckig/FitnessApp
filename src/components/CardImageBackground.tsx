@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { ImageBackground, ImageSourcePropType, ViewStyle } from 'react-native';
+import { ImageBackground, ImageSourcePropType, View, ViewStyle } from 'react-native';
 import Card from './Card';
 
 interface IProps {
@@ -16,9 +16,22 @@ export default class CardImageBackground extends PureComponent<IProps> {
     return (
       <ImageBackground
         source={this.props.image}
-        style={{ minWidth: 167, elevation: 1 }}
+        style={{ minWidth: 167, elevation: 1, position: 'relative' }}
         imageStyle={{ borderRadius, marginTop: 16 }}
       >
+        {/* Dark Image Overlay */}
+        <View
+          style={{
+            position: 'absolute',
+            backgroundColor: 'black',
+            opacity: 0.5,
+            top: 16,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            borderRadius
+          }}
+        />
         <Card
           title={this.props.title}
           style={this.props.style || {}}
