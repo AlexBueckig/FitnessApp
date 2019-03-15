@@ -57,14 +57,12 @@ export class WorkoutContainer extends Component<IProps> {
   };
 }
 
-const enhance = withObservables([], ({ database }: DatabaseProviderProps) => {
-  return {
-    workouts: database.collections
-      .get('workouts')
-      .query()
-      .observe()
-  };
-});
+const enhance = withObservables([], ({ database }: DatabaseProviderProps) => ({
+  workouts: database.collections
+    .get('workouts')
+    .query()
+    .observe()
+}));
 
 const EnhancedWorkoutContainer = withDatabase(enhance(WorkoutContainer));
 
