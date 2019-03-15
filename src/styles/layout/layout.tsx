@@ -6,7 +6,6 @@ const Screen = Dimensions.get('window');
 const layout = StyleSheet.create({
   main: {
     flex: 1,
-    // backgroundColor: '#f0f0f0'
     backgroundColor: '#EEEEEE'
   },
   container: {
@@ -34,10 +33,11 @@ const layout = StyleSheet.create({
   },
   addButtonPosition: {
     position: 'absolute',
-    bottom: 0,
-    right: 0,
-    height: 72,
-    width: 72
+    bottom: 16,
+    right: 16,
+    height: 56,
+    width: 56,
+    elevation: 1
   },
   addButton: {
     width: 56,
