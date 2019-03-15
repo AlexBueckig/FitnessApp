@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Dimensions, ImageBackground, View } from 'react-native';
 import { Text } from 'react-native-elements';
 
-const ImageQuoteCard = () => (
+interface IProps {}
+
+const ImageQuoteCard: FC<IProps> = props => (
   <ImageBackground
     source={require('../../res/images/athlet-ausbildung-ausrustungen-305239.jpg')}
     style={{ height: 200, width: Dimensions.get('window').width }}
