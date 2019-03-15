@@ -2,9 +2,9 @@ import { DatabaseProviderProps, withDatabase } from '@nozbe/watermelondb/Databas
 import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+import { Navigation, OptionsModalPresentationStyle } from 'react-native-navigation';
 import { compose } from 'recompose';
-import WorkoutAddScreen from '../screens/WorkoutEditScreen';
+import WorkoutEditScreen from '../screens/WorkoutEditScreen';
 import { iconsMap } from '../utils/AppIcons';
 import Day from '../watermelondb/models/Day';
 import Workout, { ISaveWorkoutParams } from '../watermelondb/models/Workout';
@@ -43,7 +43,15 @@ export class WorkoutEditContainer extends Component<IProps> {
   };
 
   render() {
-    return <WorkoutAddScreen workout={this.props.workout} saveWorkout={this.saveWorkout} days={this.props.days} />;
+    return (
+      <WorkoutEditScreen
+        workout={this.props.workout}
+        saveWorkout={this.saveWorkout}
+        days={this.props.days}
+        onPress={this.showDayModal}
+        onButtonPress={this.onButtonPress}
+      />
+    );
   }
 
   public navigationButtonPressed(id: { buttonId: string; componentId: string }) {
@@ -56,7 +64,8 @@ export class WorkoutEditContainer extends Component<IProps> {
             onPress: async () => {
               await this.props.workout.deleteEntry();
               Navigation.pop(id.componentId);
-            }
+            },
+            style: 'destructive'
           }
         ]);
         break;
@@ -64,6 +73,35 @@ export class WorkoutEditContainer extends Component<IProps> {
         break;
     }
   }
+
+  private showDayModal = () => {
+    Navigation.showModal({
+      component: {
+        name: 'DayAddModal',
+        passProps: {
+          id: this.props.workout!.id,
+          parentComponentId: this.props.componentId
+        },
+        options: {
+          layout: {
+            backgroundColor: 'rgba(0,0,0,0.7)'
+          },
+          modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext
+        }
+      }
+    });
+  };
+
+  private onButtonPress = (id: string) => {
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: 'DayScreen.Edit',
+        passProps: {
+          id
+        }
+      }
+    });
+  };
 }
 
 const enhance = compose(
