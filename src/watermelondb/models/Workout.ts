@@ -36,7 +36,7 @@ class Workout extends Model {
 
   @action async addDay({ description, days }: ISaveDayParams) {
     const daysCollection = this.collections.get<Day>('days');
-    await daysCollection.create(day => {
+    return await daysCollection.create(day => {
       day.workout.set(this);
       day.description = description;
       day.days = days;
