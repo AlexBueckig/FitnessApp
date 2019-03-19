@@ -15,9 +15,9 @@ import com.reactnativenavigation.react.ReactGateway;
 import java.util.Arrays;
 import java.util.List;
 
-import io.realm.react.RealmReactPackage;
 import com.horcrux.svg.SvgPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.nozbe.watermelondb.WatermelonDBPackage;
 
 public class MainApplication extends NavigationApplication {
 
@@ -41,9 +41,9 @@ public class MainApplication extends NavigationApplication {
         // Add additional packages you require here
         // No need to add RnnPackage and MainReactPackage
         return Arrays.<ReactPackage>asList(
-            new RealmReactPackage(),
             new SvgPackage(),
-            new VectorIconsPackage()
+            new VectorIconsPackage(),
+            new WatermelonDBPackage()
         );
     }
 

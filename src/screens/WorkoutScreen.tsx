@@ -1,76 +1,48 @@
 import React, { PureComponent } from 'react';
 import { FlatList, ListRenderItemInfo, View } from 'react-native';
-import { Divider, ListItem } from 'react-native-elements';
-import { Navigation } from 'react-native-navigation';
+import { Divider } from 'react-native-elements';
 import AddButton from '../components/AddButton';
 import { ListEmptyComponent } from '../components/ListComponents';
+import ListItem from '../components/ListComponents/ListItem';
 import styles from '../styles';
-import { IDeleteWorkout, IGetWorkouts, IWorkout, IWorkouts } from '../types/workoutTypes';
+import Workout from '../watermelondb/models/Workout';
 
 interface IProps {
-  workouts: IWorkouts;
-  getWorkouts: () => IGetWorkouts;
-  deleteWorkout: (id: number) => IDeleteWorkout;
-  componentId: string;
-  isFetching: boolean;
+  workouts: Workout[];
+  onPress: (id: string | undefined) => void;
+  onFabPress: () => void;
 }
 
 export default class WorkoutScreen extends PureComponent<IProps> {
-  public static options() {
-    return {
-      topBar: {
-        title: { text: 'Trainingspläne' }
-      }
-    };
-  }
-
-  constructor(props: IProps) {
-    super(props);
-    Navigation.events().bindComponent(this);
-  }
-
-  public componentDidAppear() {
-    this.props.getWorkouts();
-  }
-
-  public onPress(id: number) {
-    Navigation.push(this.props.componentId, {
-      component: {
-        name: 'WorkoutScreen.Add',
-        passProps: {
-          id
-        }
-      }
-    });
-  }
-
   public render() {
     return (
       <View style={styles.layout.main}>
         <FlatList
-          data={this.props.workouts.results}
+          data={this.props.workouts}
           ItemSeparatorComponent={Divider}
           keyExtractor={this.keyExtractor}
           ListEmptyComponent={ListEmptyComponent}
-          renderItem={this.renderItem.bind(this)}
+          renderItem={this.renderItem}
         />
-        <AddButton onPress={this.onPress.bind(this, 0)} />
+        {/* <AddButton onPress={this.onPress} /> */}
+        <AddButton onPress={this.onFabPress} />
       </View>
     );
   }
 
-  private renderItem({ item }: ListRenderItemInfo<IWorkout>) {
-    return (
-      <ListItem
-        key={item.id}
-        title={item.comment}
-        chevron={{ name: 'chevron-right', size: 26 }}
-        onPress={this.onPress.bind(this, item.id)}
-      />
-    );
-  }
+  private renderItem = ({ item }: ListRenderItemInfo<Workout>) => {
+    return <ListItem workout={item} onPress={this.onPress} />;
+  };
 
-  private keyExtractor(item: IWorkout) {
+  private onPress = (id: string | undefined = undefined) => {
+    this.props.onPress(id);
+  };
+
+  private onFabPress = () => {
+    this.props.onFabPress();
+  };
+
+  private keyExtractor(item: Workout) {
     return item.id.toString();
   }
 }

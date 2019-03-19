@@ -3,12 +3,12 @@ import React, { PureComponent } from 'react';
 import { View } from 'react-native';
 import { Button } from 'react-native-elements';
 import * as yup from 'yup';
-import { IExercise } from '../types/exerciseTypes';
+import { ISaveExerciseParams } from '../watermelondb/models/Exercise';
 import CategoryPicker from './FormComponents/CategoryPicker';
 import TextInput from './FormComponents/Input';
 import MultiPicker from './FormComponents/MultiPicker';
 
-type IProps = IExercise & { submit: (exercise: IExercise) => void };
+type IProps = ISaveExerciseParams & { submit: (exercise: ISaveExerciseParams) => void };
 
 const validationSchema = yup.object().shape({
   name: yup
@@ -89,7 +89,6 @@ export default class ExerciseForm extends PureComponent<IProps> {
     return (
       <Formik
         initialValues={{
-          id: this.props.id,
           name: this.props.name,
           category: this.props.category,
           description: this.props.description,
@@ -99,7 +98,7 @@ export default class ExerciseForm extends PureComponent<IProps> {
         enableReinitialize={true}
         validationSchema={validationSchema}
       >
-        {({ values, errors, touched, isSubmitting, handleSubmit }: FormikProps<IExercise>) => {
+        {({ values, errors, touched, isSubmitting, handleSubmit }: FormikProps<ISaveExerciseParams>) => {
           return (
             <View style={{ alignItems: 'center' }}>
               <TextInput
@@ -144,7 +143,7 @@ export default class ExerciseForm extends PureComponent<IProps> {
     );
   }
 
-  private handleSubmit = (values: IExercise, { setSubmitting }: FormikActions<IExercise>) => {
+  private handleSubmit = (values: ISaveExerciseParams, { setSubmitting }: FormikActions<ISaveExerciseParams>) => {
     setSubmitting(false);
     this.props.submit(values);
   };

@@ -1,59 +1,49 @@
-import React, { ComponentClass, Fragment } from 'react';
+import React, { FC } from 'react';
 import { Navigation } from 'react-native-navigation';
-import { Provider } from 'react-redux';
-import { Store } from 'redux';
+import DayAddModal from '../modals/DayAdd/DayAddModal';
+import DayAddExerciseModal from '../modals/DayAddExercise/DayAddExerciseModal';
+import WorkoutAddModal from '../modals/WorkoutAdd/WorkoutAddModal';
 import AchievementScreen from '../screens/AchievementScreen';
-import FeedScreen from '../screens/FeedScreen';
 import WorkoutMenuScreen from '../screens/WorkoutMenuScreen';
-import IStoreState from '../types';
-import DayAddContainer from './DayAddContainer';
-import DayContainer from './DayContainer';
+import DBProvider from '../watermelondb/DBProvider';
+import EnhancedDayEditContainer, { DayEditContainer } from './DayEditContainer';
 import ExerciseAddContainer from './ExerciseAddContainer';
-import ExerciseContainer from './ExerciseContainer';
-import FeedContainer from './FeedContainer';
-import ToastsContainer from './ToastsContainer';
-import WorkoutAddContainer from './WorkoutAddContainer';
-import WorkoutContainer from './WorkoutContainer';
+import EnhancedExerciseContainer, { ExerciseContainer } from './ExerciseContainer';
+import EnhancedExerciseEditContainer, { ExerciseEditContainer } from './ExerciseEditContainer';
+import HomeContainer from './HomeContainer';
+import EnhancedWorkoutContainer, { WorkoutContainer } from './WorkoutContainer';
+import EnhancedWorkoutEditContainer, { WorkoutEditContainer } from './WorkoutEditContainer';
 
-function WrappedComponent(Screen: ComponentClass<any>, store: Store<IStoreState>) {
-  return function inject(props: any) {
-    const EnhancedComponent = () => (
-      <Provider store={store}>
-        <Fragment>
-          <Screen {...props} />
-          <ToastsContainer />
-        </Fragment>
-      </Provider>
-    );
+const DBWrapper = (Screen: any) => {
+  const EnhancedComponent: FC<any> = props => (
+    <DBProvider>
+      <Screen {...props} />
+    </DBProvider>
+  );
 
-    return <EnhancedComponent />;
-  };
-}
+  return EnhancedComponent;
+};
 
-export const registerScreens = (store: Store<IStoreState>) => {
+export const registerScreens = () => {
   Navigation.registerComponent('WorkoutMenuScreen', () => WorkoutMenuScreen);
   Navigation.registerComponent('AchievementScreen', () => AchievementScreen);
-  Navigation.registerComponent('FeedScreen', () => WrappedComponent(FeedContainer, store), () => FeedScreen);
+  Navigation.registerComponent('FeedScreen', () => DBWrapper(HomeContainer), () => HomeContainer);
+  Navigation.registerComponent('WorkoutScreen', () => DBWrapper(EnhancedWorkoutContainer), () => WorkoutContainer);
   Navigation.registerComponent(
-    'WorkoutScreen',
-    () => WrappedComponent(WorkoutContainer, store),
-    () => WorkoutContainer
+    'WorkoutScreen.Edit',
+    () => DBWrapper(EnhancedWorkoutEditContainer),
+    () => WorkoutEditContainer
   );
+  Navigation.registerComponent('DayScreen', () => WorkoutMenuScreen);
+  Navigation.registerComponent('DayScreen.Edit', () => DBWrapper(EnhancedDayEditContainer), () => DayEditContainer);
+  Navigation.registerComponent('ExerciseScreen', () => DBWrapper(EnhancedExerciseContainer), () => ExerciseContainer);
   Navigation.registerComponent(
-    'WorkoutScreen.Add',
-    () => WrappedComponent(WorkoutAddContainer, store),
-    () => WorkoutAddContainer
+    'ExerciseScreen.Edit',
+    () => DBWrapper(EnhancedExerciseEditContainer),
+    () => ExerciseEditContainer
   );
-  Navigation.registerComponent('DayScreen', () => WrappedComponent(DayContainer, store), () => DayContainer);
-  Navigation.registerComponent('DayScreen.Add', () => WrappedComponent(DayAddContainer, store), () => DayAddContainer);
-  Navigation.registerComponent(
-    'ExerciseScreen',
-    () => WrappedComponent(ExerciseContainer, store),
-    () => ExerciseContainer
-  );
-  Navigation.registerComponent(
-    'ExerciseScreen.Add',
-    () => WrappedComponent(ExerciseAddContainer, store),
-    () => ExerciseAddContainer
-  );
+  Navigation.registerComponent('ExerciseScreen.Add', () => ExerciseAddContainer);
+  Navigation.registerComponent('DayAddModal', () => DBWrapper(DayAddModal), () => DayAddModal);
+  Navigation.registerComponent('WorkoutAddModal', () => WorkoutAddModal);
+  Navigation.registerComponent('DayAddExerciseModal', () => DBWrapper(DayAddExerciseModal), () => DayAddExerciseModal);
 };

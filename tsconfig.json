@@ -10,7 +10,9 @@
     "noEmit": true,
     "strict": true,
     "target": "esnext",
-    "importHelpers": true
+    "importHelpers": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false
   },
   "exclude": ["node_modules", "babel.config.js"]
 }

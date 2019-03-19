@@ -3,22 +3,11 @@
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 
+import 'es6-symbol/implement';
 import { Navigation } from 'react-native-navigation';
-import { applyMiddleware, createStore } from 'redux';
-import createSagaMiddleware from 'redux-saga';
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
-
-import realm from './src/api/realm/schemas';
 import { registerScreens } from './src/containers';
-import rootReducer from './src/redux/reducers';
-import mySaga from './src/redux/sagas';
 
-const sagaMiddleware = createSagaMiddleware();
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
-
-sagaMiddleware.run(mySaga);
-
-registerScreens(store);
+registerScreens();
 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setDefaultOptions({
