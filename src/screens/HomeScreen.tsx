@@ -1,15 +1,14 @@
 import React, { PureComponent } from 'react';
 import { Animated, FlatList } from 'react-native';
 import { Divider, ListItem, Text } from 'react-native-elements';
-import { Navigation } from 'react-native-navigation';
 import ImageQuoteCard from '../components/ImageQuoteCard';
 import styles from '../styles';
-import { IGetFeed, IPost } from '../types/feedTypes';
+import { IPost } from '../types/feedTypes';
+import Workout from '../watermelondb/models/Workout';
 
 interface IProps {
-  posts: IPost[];
+  workouts: Workout[];
   componentId?: string;
-  getPosts: () => IGetFeed;
 }
 
 interface IState {
@@ -18,30 +17,15 @@ interface IState {
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-export default class FeedScreen extends PureComponent<IProps, IState> {
-  public static options() {
-    return {
-      topBar: {
-        title: { text: 'Home' }
-      }
-    };
-  }
-
-  constructor(props: IProps) {
-    super(props);
-    Navigation.events().bindComponent(this);
-    this.state = { offsetY: new Animated.Value(0) };
-  }
-
-  public componentDidAppear() {
-    this.props.getPosts();
-  }
+export default class HomeScreen extends PureComponent<IProps, IState> {
+  state = { offsetY: new Animated.Value(0) };
 
   public render() {
+    const { workouts } = this.props;
     return (
       <AnimatedFlatList
         ListHeaderComponent={this.listHeaderComponent}
-        data={this.props.posts}
+        data={workouts}
         renderItem={(item: { item: IPost }) => {
           return (
             <ListItem
@@ -54,7 +38,7 @@ export default class FeedScreen extends PureComponent<IProps, IState> {
           );
         }}
         ItemSeparatorComponent={Divider}
-        keyExtractor={(item: IPost) => JSON.stringify(item)}
+        keyExtractor={(item: Workout) => `HomeScreen${item.id}`}
         stickyHeaderIndices={[0]}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.offsetY } } }], {
           useNativeDriver: true
