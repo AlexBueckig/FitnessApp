@@ -104,7 +104,7 @@ export class WorkoutEditContainer extends Component<IProps> {
   };
 }
 
-const enhance = compose(
+const enhance = compose<IProps, {}>(
   withObservables([], ({ database, id }: IProps & DatabaseProviderProps) => ({
     workout: database.collections.get<Workout>('workouts').findAndObserve(id)
   })),
@@ -113,5 +113,4 @@ const enhance = compose(
   }))
 );
 
-// @ts-ignore
 export default withDatabase(enhance(WorkoutEditContainer));
