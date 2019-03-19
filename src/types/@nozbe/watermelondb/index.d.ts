@@ -170,13 +170,14 @@ declare module '@nozbe/watermelondb/decorators' {
 
 declare module '@nozbe/watermelondb/DatabaseProvider' {
   import { Database } from '@nozbe/watermelondb';
-  import { ComponentClass } from 'react';
+  import { ComponentClass, FunctionComponent } from 'react';
 
   export interface DatabaseProviderProps {
     database: Database;
   }
 
   export function withDatabase<P>(component: ComponentClass<P>): ComponentClass<P>;
+  export function withDatabase<P>(component: FunctionComponent<P>): ComponentClass<P>;
 
   export default function DatabaseProvider(props: any): any;
 }
