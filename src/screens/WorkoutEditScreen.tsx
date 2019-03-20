@@ -11,12 +11,12 @@ interface IProps {
   saveWorkout: (workout: ISaveWorkoutParams) => void;
   workout: Workout;
   days: Day[];
-  onPress: () => void;
+  onDayAdd: () => void;
   onDayEdit: (id: string) => void;
   onDayDelete: (day: Day) => void;
 }
 
-const WorkoutEditScreen: FC<IProps> = ({ workout, days, saveWorkout, onPress, onDayEdit, onDayDelete }) => {
+const WorkoutEditScreen: FC<IProps> = ({ workout, days, saveWorkout, onDayAdd, onDayEdit, onDayDelete }) => {
   const handleSubmit = (values: ISaveWorkoutParams) => {
     saveWorkout(values);
   };
@@ -27,7 +27,7 @@ const WorkoutEditScreen: FC<IProps> = ({ workout, days, saveWorkout, onPress, on
         <WorkoutEditForm name={workout.name} active={workout.active} submit={handleSubmit} />
         <DayList onEdit={onDayEdit} onDelete={onDayDelete} days={days} />
       </ScrollView>
-      <AddButton onPress={onPress} />
+      <AddButton onPress={onDayAdd} />
     </View>
   );
 };

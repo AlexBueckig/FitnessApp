@@ -50,7 +50,7 @@ export class WorkoutEditContainer extends Component<IProps> {
         workout={this.props.workout}
         saveWorkout={this.saveWorkout}
         days={this.props.days}
-        onPress={this.showDayModal}
+        onDayAdd={this.showDayModal}
         onDayEdit={this.onDayEdit}
         onDayDelete={this.onDayDelete}
       />
