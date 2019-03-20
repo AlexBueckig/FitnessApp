@@ -1,13 +1,10 @@
-
 declare module '@nozbe/with-observables' {
-  import { ComponentClass } from 'react';
+  import { ComponentClass, FunctionComponent } from "react";
 
-  export type ComponentEnhancer = <Props>(component: ComponentClass<Props>) => ComponentClass<any, any>
+  type TriggerProps<P> = [keyof P] | [] | null;
+  type GetObservables<A, B> = (props: A) => B;
 
-  export interface WithObservables {
-    (observe: string[], enhancerFunction: (props: any) => any): ComponentEnhancer;
-  }
+  type ComponentEnhancer<P = {}> = (component: ComponentClass<P> | FunctionComponent<P>) => ComponentClass<P, any>
 
-  const withObservables: WithObservables;
-  export default withObservables;
+  export default function withObservables<PropsInput = {}, ObservablesInput={}>(triggerProps: TriggerProps<PropsInput>, getObservables: (props: PropsInput) => any): ComponentEnhancer<PropsInput>;
 }
