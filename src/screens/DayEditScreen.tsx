@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const DayEditScreen: FC<IProps> = ({ day, saveDay }) => {
-  return <DayAddForm description={(day && day.description) || ''} days={(day && day.days) || []} submit={saveDay} />;
+  return <DayAddForm description={day.description} days={day.days} submit={saveDay} />;
 };
 
 export default DayEditScreen;

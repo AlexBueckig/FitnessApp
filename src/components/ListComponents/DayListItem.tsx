@@ -10,26 +10,35 @@ import SetItem from './SetItem';
 interface IProps {
   day: Day;
   sets?: Set[];
-  onPress: (id: string) => void;
+  onEdit: (id: string) => void;
+  onDelete: (day: Day) => void;
 }
 
-const DayListItem: FC<IProps> = props => {
+const DayListItem: FC<IProps> = ({ day, onEdit, onDelete, sets = [] }) => {
+  const onDayEdit = () => {
+    onEdit(day.id);
+  };
+
+  const onDayDelete = () => {
+    onDelete(day);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={{ flex: 1, color: 'white' }}>
-          {props.day.description} - {props.day.days.map(weekday => weekday).join(', ')}
+          {day.description} - {day.days.map(weekday => weekday).join(', ')}
         </Text>
-        <Icon name="edit" iconStyle={{ color: 'white' }} onPress={() => props.onPress(props.day.id)} />
-        <Icon name="delete" iconStyle={{ color: 'white' }} onPress={() => props.day.deleteEntry()} />
+        <Icon name="edit" iconStyle={{ color: 'white' }} onPress={onDayEdit} />
+        <Icon name="delete" iconStyle={{ color: 'white' }} onPress={onDayDelete} />
       </View>
       <View style={styles.body}>
-        {props.sets!.length === 0 && (
+        {sets.length === 0 && (
           <View>
             <Text>Noch keine Übungen eingetragen</Text>
           </View>
         )}
-        {props.sets!.map(set => (
+        {sets.map(set => (
           <SetItem key={set.id} set={set} />
         ))}
         <View style={styles.addExercise}>
@@ -40,7 +49,7 @@ const DayListItem: FC<IProps> = props => {
                 component: {
                   name: 'DayAddExerciseModal',
                   passProps: {
-                    id: props.day.id
+                    id: day.id
                   },
                   options: {
                     layout: {

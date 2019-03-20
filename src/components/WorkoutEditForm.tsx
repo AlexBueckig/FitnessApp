@@ -12,7 +12,7 @@ const validationSchema = yup.object().shape({
 
 type IProps = ISaveWorkoutParams & { submit: (workout: ISaveWorkoutParams) => void };
 
-const WorkoutAddForm: FC<IProps> = props => {
+const WorkoutEditForm: FC<IProps> = props => {
   const { name, active } = props;
 
   const onSubmit = (values: ISaveWorkoutParams, { setSubmitting }: FormikActions<ISaveWorkoutParams>) => {
@@ -47,4 +47,4 @@ const WorkoutAddForm: FC<IProps> = props => {
   );
 };
 
-export default WorkoutAddForm;
+export default WorkoutEditForm;

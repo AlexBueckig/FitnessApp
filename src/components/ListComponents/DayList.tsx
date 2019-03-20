@@ -5,14 +5,15 @@ import DayListItem from './DayListItem';
 
 interface IProps {
   days: Day[];
-  onButtonPress: (id: string) => void;
+  onEdit: (id: string) => void;
+  onDelete: (day: Day) => void;
 }
 
-const DayList: FC<IProps> = props => {
+const DayList: FC<IProps> = ({ days, onEdit, onDelete }) => {
   return (
     <View style={styles.container}>
-      {props.days.map(day => (
-        <DayListItem onPress={props.onButtonPress} key={day.id} day={day} />
+      {days.map(day => (
+        <DayListItem onEdit={onEdit} onDelete={onDelete} key={day.id} day={day} />
       ))}
     </View>
   );

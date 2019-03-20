@@ -51,7 +51,8 @@ export class WorkoutEditContainer extends Component<IProps> {
         saveWorkout={this.saveWorkout}
         days={this.props.days}
         onPress={this.showDayModal}
-        onButtonPress={this.onButtonPress}
+        onDayEdit={this.onDayEdit}
+        onDayDelete={this.onDayDelete}
       />
     );
   }
@@ -81,7 +82,7 @@ export class WorkoutEditContainer extends Component<IProps> {
       component: {
         name: 'DayAddModal',
         passProps: {
-          id: this.props.workout!.id,
+          id: this.props.workout.id,
           parentComponentId: this.props.componentId
         },
         options: {
@@ -94,7 +95,7 @@ export class WorkoutEditContainer extends Component<IProps> {
     });
   };
 
-  private onButtonPress = (id: string) => {
+  private onDayEdit = (id: string) => {
     Navigation.push(this.props.componentId, {
       component: {
         name: 'DayScreen.Edit',
@@ -103,6 +104,10 @@ export class WorkoutEditContainer extends Component<IProps> {
         }
       }
     });
+  };
+
+  private onDayDelete = (day: Day) => {
+    day.deleteEntry();
   };
 }
 
