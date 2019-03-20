@@ -1,4 +1,5 @@
-import { DatabaseProviderProps, withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
+import { Database } from '@nozbe/watermelondb';
+import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
@@ -11,6 +12,7 @@ interface IProps {
   id: string;
   componentId: string;
   exercise: Exercise;
+  database?: Database;
 }
 
 export class ExerciseEditContainer extends Component<IProps> {
@@ -43,7 +45,7 @@ export class ExerciseEditContainer extends Component<IProps> {
     return <ExerciseAddScreen exercise={this.props.exercise} saveExercise={this.saveExercise} />;
   }
 
-  public navigationButtonPressed(id: { buttonId: string; componentId: string }) {
+  navigationButtonPressed(id: { buttonId: string; componentId: string }) {
     switch (id.buttonId) {
       case 'deleteExerciseButton':
         Alert.alert('Löschen bestätigen', 'Willst du diese Übung wirklich löschen?', [
@@ -63,8 +65,8 @@ export class ExerciseEditContainer extends Component<IProps> {
   }
 }
 
-const enhance = withObservables([], ({ database, id }: IProps & DatabaseProviderProps) => ({
-  exercise: database.collections.get<Exercise>('exercises').findAndObserve(id)
+const enhance = withObservables<IProps>([], ({ database, id }) => ({
+  exercise: database!.collections.get<Exercise>('exercises').findAndObserve(id)
 }));
 
 const EnhancedExerciseEditContainer = enhance(ExerciseEditContainer);

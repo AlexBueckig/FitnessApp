@@ -8,14 +8,17 @@ interface IProps {
   onPress: (id: string) => void;
 }
 
-const RawListItem: FC<IProps> = props => {
-  const { workout } = props;
+const RawListItem: FC<IProps> = ({ workout, onPress }) => {
+  const onListItemPress = () => {
+    onPress(workout.id);
+  };
+
   return (
     <ListItem
       key={workout.id}
       title={workout.name}
       chevron={{ name: 'chevron-right', size: 26 }}
-      onPress={props.onPress.bind(null, workout.id)}
+      onPress={onListItemPress}
     />
   );
 };

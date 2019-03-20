@@ -1,47 +1,47 @@
-import React, { PureComponent } from 'react';
+import React, { FC } from 'react';
 import { FlatList, ListRenderItemInfo, View } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 import AddButton from '../components/AddButton';
 import { ListEmptyComponent } from '../components/ListComponents';
 import styles from '../styles';
-import { IDay, IDays } from '../types/dayTypes';
+import Day from '../watermelondb/models/Day';
 
 interface IProps {
-  days: IDays;
+  days: Day[];
 }
 
-export default class DayScreen extends PureComponent<IProps> {
-  public render() {
-    return (
-      <View style={styles.layout.main}>
-        <FlatList
-          data={this.props.days.results}
-          ItemSeparatorComponent={Divider}
-          keyExtractor={this.keyExtractor}
-          ListEmptyComponent={ListEmptyComponent}
-          renderItem={this.renderItem.bind(this)}
-        />
-        <AddButton onPress={this.onPress} />
-      </View>
-    );
-  }
-
-  private onPress = () => {
+const DayScreen: FC<IProps> = ({ days }) => {
+  const onPress = () => {
     console.log('Test');
   };
 
-  private renderItem({ item }: ListRenderItemInfo<IDay>) {
+  const renderItem = ({ item }: ListRenderItemInfo<Day>) => {
     return (
       <ListItem
         key={item.id}
         title={item.description}
         chevron={{ name: 'chevron-right', size: 26 }}
-        onPress={this.onPress.bind(this, item.id)}
+        onPress={onPress}
       />
     );
-  }
+  };
 
-  private keyExtractor(item: IDay) {
+  const keyExtractor = (item: Day) => {
     return item.id.toString();
-  }
-}
+  };
+
+  return (
+    <View style={styles.layout.main}>
+      <FlatList
+        data={days}
+        ItemSeparatorComponent={Divider}
+        keyExtractor={keyExtractor}
+        ListEmptyComponent={ListEmptyComponent}
+        renderItem={renderItem}
+      />
+      <AddButton onPress={onPress} />
+    </View>
+  );
+};
+
+export default DayScreen;

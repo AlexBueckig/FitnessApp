@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { FC } from 'react';
 import { ImageBackground, ImageSourcePropType, View, ViewStyle } from 'react-native';
 import Card from './Card';
 
@@ -10,37 +10,31 @@ interface IProps {
   borderRadius?: number;
 }
 
-export default class CardImageBackground extends PureComponent<IProps> {
-  public render() {
-    const { borderRadius } = this.props;
-    return (
-      <ImageBackground
-        source={this.props.image}
-        style={{ minWidth: 167, elevation: 1, position: 'relative' }}
-        imageStyle={{ borderRadius, marginTop: 16 }}
-      >
-        {/* Dark Image Overlay */}
-        <View
-          style={{
-            position: 'absolute',
-            backgroundColor: 'black',
-            opacity: 0.5,
-            top: 16,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            borderRadius
-          }}
-        />
-        <Card
-          title={this.props.title}
-          style={this.props.style || {}}
-          onPress={this.props.onPress}
-          borderRadius={this.props.borderRadius}
-        >
-          {this.props.children}
-        </Card>
-      </ImageBackground>
-    );
-  }
-}
+const CardImageBackground: FC<IProps> = ({ children, image, title, onPress, borderRadius = 0, style = {} }) => {
+  return (
+    <ImageBackground
+      source={image}
+      style={{ minWidth: 167, elevation: 1, position: 'relative' }}
+      imageStyle={{ borderRadius, marginTop: 16 }}
+    >
+      {/* Dark Image Overlay */}
+      <View
+        style={{
+          position: 'absolute',
+          backgroundColor: 'black',
+          opacity: 0.5,
+          top: 16,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          borderRadius
+        }}
+      />
+      <Card title={title} style={style || {}} onPress={onPress} borderRadius={borderRadius}>
+        {children}
+      </Card>
+    </ImageBackground>
+  );
+};
+
+export default CardImageBackground;

@@ -1,6 +1,8 @@
-import { DatabaseProviderProps, withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
+import { Database } from '@nozbe/watermelondb';
+import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
+import { Alert } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import DayEditScreen from '../screens/DayEditScreen';
 import { iconsMap } from '../utils/AppIcons';
@@ -12,6 +14,7 @@ interface IProps {
   componentId: string;
   day: Day;
   exercises: Exercise[];
+  database?: Database;
 }
 
 export class DayEditContainer extends Component<IProps> {
@@ -36,6 +39,25 @@ export class DayEditContainer extends Component<IProps> {
     Navigation.events().bindComponent(this);
   }
 
+  navigationButtonPressed(id: { buttonId: string; componentId: string }) {
+    switch (id.buttonId) {
+      case 'deleteDayButton':
+        Alert.alert('Löschen bestätigen', 'Willst du diesen Tag wirklich löschen?', [
+          { text: 'Abbrechen', onPress: undefined, style: 'cancel' },
+          {
+            text: 'OK',
+            onPress: () => {
+              Navigation.pop(id.componentId);
+            },
+            style: 'destructive'
+          }
+        ]);
+        break;
+      default:
+        break;
+    }
+  }
+
   saveDay = async (values: ISaveDayParams) => {
     await this.props.day.updateEntry(values);
   };
@@ -45,9 +67,9 @@ export class DayEditContainer extends Component<IProps> {
   }
 }
 
-const enhance = withObservables([], ({ database, id }: IProps & DatabaseProviderProps) => ({
-  day: database.collections.get<Day>('days').findAndObserve(id),
-  exercises: database.collections
+const enhance = withObservables<IProps>([], ({ database, id }) => ({
+  day: database!.collections.get<Day>('days').findAndObserve(id),
+  exercises: database!.collections
     .get<Exercise>('exercises')
     .query()
     .observe()

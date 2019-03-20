@@ -1,10 +1,13 @@
 import React, { FC } from 'react';
-import { Dimensions, ImageBackground, View } from 'react-native';
+import { Dimensions, ImageBackground, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
 
-interface IProps {}
+interface IProps {
+  quote: string;
+  author: string;
+}
 
-const ImageQuoteCard: FC<IProps> = props => (
+const ImageQuoteCard: FC<IProps> = ({ quote, author }) => (
   <ImageBackground
     source={require('../../res/images/athlet-ausbildung-ausrustungen-305239.jpg')}
     style={{ height: 200, width: Dimensions.get('window').width }}
@@ -18,12 +21,15 @@ const ImageQuoteCard: FC<IProps> = props => (
         paddingHorizontal: 32
       }}
     >
-      <Text style={{ color: '#EEEEEE', fontSize: 22, lineHeight: 36, fontStyle: 'italic' }}>
-        "If you have dreams it is your responsibility to make them happen."
-      </Text>
-      <Text style={{ color: '#CCCCCC', alignSelf: 'flex-end', marginRight: 32 }}>- Bel Pesce</Text>
+      <Text style={styles.quote}>{`"${quote}"`}</Text>
+      <Text style={styles.author}>{`- ${author}`}</Text>
     </View>
   </ImageBackground>
 );
+
+const styles = StyleSheet.create({
+  author: { color: '#CCCCCC', alignSelf: 'flex-end', marginRight: 32 },
+  quote: { color: '#EEEEEE', fontSize: 22, lineHeight: 36, fontStyle: 'italic' }
+});
 
 export default ImageQuoteCard;

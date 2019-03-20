@@ -1,8 +1,10 @@
-import React, { PureComponent } from 'react';
+import React, { FC } from 'react';
 import { Text } from 'react-native';
 
-export default class AchievementScreen extends PureComponent {
-  public render() {
-    return <Text>Achievements</Text>;
-  }
-}
+interface IProps {}
+
+const AchievementScreen: FC<IProps> = props => {
+  return <Text>Achievements</Text>;
+};
+
+export default AchievementScreen;

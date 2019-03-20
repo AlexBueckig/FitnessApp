@@ -1,4 +1,5 @@
-import { DatabaseProviderProps, withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
+import { Database } from '@nozbe/watermelondb';
+import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
@@ -14,6 +15,7 @@ interface IProps {
   componentId: string;
   workout: Workout;
   days: Day[];
+  database: Database;
 }
 
 export class WorkoutEditContainer extends Component<IProps> {
@@ -105,10 +107,10 @@ export class WorkoutEditContainer extends Component<IProps> {
 }
 
 const enhance = compose<IProps, {}>(
-  withObservables([], ({ database, id }: IProps & DatabaseProviderProps) => ({
+  withObservables<IProps>([], ({ database, id }) => ({
     workout: database.collections.get<Workout>('workouts').findAndObserve(id)
   })),
-  withObservables(['workout'], ({ workout }: IProps & DatabaseProviderProps) => ({
+  withObservables<IProps>(['workout'], ({ workout }) => ({
     days: workout.days.observe()
   }))
 );

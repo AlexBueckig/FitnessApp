@@ -1,5 +1,5 @@
 import { Formik, FormikActions, FormikProps } from 'formik';
-import React, { PureComponent } from 'react';
+import React, { FC } from 'react';
 import { View } from 'react-native';
 import { Button } from 'react-native-elements';
 import * as yup from 'yup';
@@ -84,67 +84,67 @@ const muscleGroups = [
 
 const categories = ['Arme', 'Bauch', 'Beine', 'Brust', 'Rücken', 'Schultern', 'Waden'];
 
-export default class ExerciseForm extends PureComponent<IProps> {
-  public render() {
-    return (
-      <Formik
-        initialValues={{
-          name: this.props.name,
-          category: this.props.category,
-          description: this.props.description,
-          muscles: this.props.muscles
-        }}
-        onSubmit={this.handleSubmit}
-        enableReinitialize={true}
-        validationSchema={validationSchema}
-      >
-        {({ values, errors, touched, isSubmitting, handleSubmit }: FormikProps<ISaveExerciseParams>) => {
-          return (
-            <View style={{ alignItems: 'center' }}>
-              <TextInput
-                label="Name"
-                name="name"
-                placeholder="Name der Übung"
-                value={values.name}
-                error={touched.name && errors.name ? errors.name : undefined}
-              />
-              <TextInput
-                label="Beschreibung"
-                name="description"
-                placeholder="optional"
-                value={values.description || ''}
-                // error={touched.comment && errors.comment}
-              />
-              <CategoryPicker
-                title="Kategorie"
-                name="category"
-                categories={categories}
-                selectedValue={values.category || ''}
-                error={touched.category && errors.category ? errors.category : undefined}
-              />
-              <MultiPicker
-                items={muscleGroups}
-                name="muscles"
-                label="Muskelgruppe(n)"
-                selectedItems={Object.assign(values.muscles || [])}
-              />
-              <Button
-                title="Submit"
-                containerStyle={{ height: 40 }}
-                buttonStyle={{ backgroundColor: 'rgba(78, 116, 289, 1)' }}
-                titleStyle={{ color: 'white', marginHorizontal: 20 }}
-                disabled={isSubmitting}
-                onPress={handleSubmit}
-              />
-            </View>
-          );
-        }}
-      </Formik>
-    );
-  }
-
-  private handleSubmit = (values: ISaveExerciseParams, { setSubmitting }: FormikActions<ISaveExerciseParams>) => {
+const ExerciseForm: FC<IProps> = ({ submit, name, category, description, muscles }) => {
+  const onSubmit = (values: ISaveExerciseParams, { setSubmitting }: FormikActions<ISaveExerciseParams>) => {
     setSubmitting(false);
-    this.props.submit(values);
+    submit(values);
   };
-}
+
+  return (
+    <Formik
+      initialValues={{
+        name,
+        category,
+        description,
+        muscles
+      }}
+      onSubmit={onSubmit}
+      enableReinitialize={true}
+      validationSchema={validationSchema}
+    >
+      {({ values, errors, touched, isSubmitting, handleSubmit }: FormikProps<ISaveExerciseParams>) => {
+        return (
+          <View style={{ alignItems: 'center' }}>
+            <TextInput
+              label="Name"
+              name="name"
+              placeholder="Name der Übung"
+              value={values.name}
+              error={touched.name && errors.name ? errors.name : undefined}
+            />
+            <TextInput
+              label="Beschreibung"
+              name="description"
+              placeholder="optional"
+              value={values.description || ''}
+              // error={touched.comment && errors.comment}
+            />
+            <CategoryPicker
+              title="Kategorie"
+              name="category"
+              categories={categories}
+              selectedValue={values.category || ''}
+              error={touched.category && errors.category ? errors.category : undefined}
+            />
+            <MultiPicker
+              items={muscleGroups}
+              name="muscles"
+              label="Muskelgruppe(n)"
+              selectedItems={Object.assign(values.muscles || [])}
+            />
+            <Button
+              title="Submit"
+              containerStyle={{ height: 40 }}
+              buttonStyle={{ backgroundColor: 'rgba(78, 116, 289, 1)' }}
+              titleStyle={{ color: 'white', marginHorizontal: 20 }}
+              disabled={isSubmitting}
+              onPress={handleSubmit}
+            />
+          </View>
+        );
+      }}
+    </Formik>
+  );
+};
+
+export default ExerciseForm;

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { FC } from 'react';
 import { FlatList, ListRenderItemInfo, View } from 'react-native';
 import { Divider } from 'react-native-elements';
 import AddButton from '../components/AddButton';
@@ -13,36 +13,32 @@ interface IProps {
   onFabPress: () => void;
 }
 
-export default class WorkoutScreen extends PureComponent<IProps> {
-  public render() {
-    return (
-      <View style={styles.layout.main}>
-        <FlatList
-          data={this.props.workouts}
-          ItemSeparatorComponent={Divider}
-          keyExtractor={this.keyExtractor}
-          ListEmptyComponent={ListEmptyComponent}
-          renderItem={this.renderItem}
-        />
-        {/* <AddButton onPress={this.onPress} /> */}
-        <AddButton onPress={this.onFabPress} />
-      </View>
-    );
-  }
-
-  private renderItem = ({ item }: ListRenderItemInfo<Workout>) => {
-    return <ListItem workout={item} onPress={this.onPress} />;
+const WorkoutScreen: FC<IProps> = props => {
+  const renderItem = ({ item }: ListRenderItemInfo<Workout>) => {
+    return <ListItem workout={item} onPress={onPress} />;
   };
 
-  private onPress = (id: string | undefined = undefined) => {
-    this.props.onPress(id);
+  const onPress = (id: string | undefined = undefined) => {
+    props.onPress(id);
   };
 
-  private onFabPress = () => {
-    this.props.onFabPress();
-  };
-
-  private keyExtractor(item: Workout) {
+  const keyExtractor = (item: Workout) => {
     return item.id.toString();
-  }
-}
+  };
+
+  return (
+    <View style={styles.layout.main}>
+      <FlatList
+        data={props.workouts}
+        ItemSeparatorComponent={Divider}
+        keyExtractor={keyExtractor}
+        ListEmptyComponent={ListEmptyComponent}
+        renderItem={renderItem}
+      />
+      {/* <AddButton onPress={onPress} /> */}
+      <AddButton onPress={props.onFabPress} />
+    </View>
+  );
+};
+
+export default WorkoutScreen;

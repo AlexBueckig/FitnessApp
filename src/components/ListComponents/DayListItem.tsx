@@ -9,7 +9,7 @@ import SetItem from './SetItem';
 
 interface IProps {
   day: Day;
-  sets: Set[];
+  sets?: Set[];
   onPress: (id: string) => void;
 }
 
@@ -24,12 +24,12 @@ const DayListItem: FC<IProps> = props => {
         <Icon name="delete" iconStyle={{ color: 'white' }} onPress={() => props.day.deleteEntry()} />
       </View>
       <View style={styles.body}>
-        {props.sets.length === 0 && (
+        {props.sets!.length === 0 && (
           <View>
             <Text>Noch keine Übungen eingetragen</Text>
           </View>
         )}
-        {props.sets.map(set => (
+        {props.sets!.map(set => (
           <SetItem key={set.id} set={set} />
         ))}
         <View style={styles.addExercise}>
@@ -60,7 +60,7 @@ const DayListItem: FC<IProps> = props => {
   );
 };
 
-const enhance = withObservables(['day'], ({ day }: IProps) => ({ day: day.observe(), sets: day.sets.observe() }));
+const enhance = withObservables<IProps>(['day'], ({ day }) => ({ day: day.observe(), sets: day.sets.observe() }));
 
 const styles = StyleSheet.create({
   container: { margin: 16, marginTop: 0, borderWidth: 0, borderColor: 'grey', borderRadius: 3, elevation: 1 },
@@ -77,5 +77,4 @@ const styles = StyleSheet.create({
   addExercise: { alignItems: 'flex-end' }
 });
 
-// @ts-ignore
 export default enhance(DayListItem);

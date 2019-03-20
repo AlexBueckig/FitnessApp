@@ -1,3 +1,4 @@
+import { Database } from '@nozbe/watermelondb';
 import { DatabaseProviderProps, withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
@@ -10,6 +11,7 @@ interface IProps {
   id: string;
   workout?: Workout;
   parentComponentId: string;
+  database: Database;
 }
 
 export class DayAddModalContainer extends Component<IProps> {
@@ -23,8 +25,8 @@ export class DayAddModalContainer extends Component<IProps> {
   }
 }
 
-const enhance = withObservables(['id'], ({ id, database }: IProps & DatabaseProviderProps) => ({
+const enhance = withObservables<IProps>(['id'], ({ id, database }: IProps & DatabaseProviderProps) => ({
   workout: database.collections.get('workouts').findAndObserve(id!)
 }));
 
-export default withDatabase<IProps>(enhance(DayAddModalContainer));
+export default withDatabase(enhance(DayAddModalContainer));

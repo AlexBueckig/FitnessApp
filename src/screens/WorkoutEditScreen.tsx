@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { FC } from 'react';
 import { ScrollView, View } from 'react-native';
 import AddButton from '../components/AddButton';
 import DayList from '../components/ListComponents/DayList';
@@ -15,27 +15,24 @@ interface IProps {
   onButtonPress: (id: string) => void;
 }
 
-class WorkoutEditScreen extends PureComponent<IProps> {
-  public render() {
-    const { workout, days } = this.props;
-    return (
-      <View style={styles.layout.main}>
-        <ScrollView>
-          <WorkoutAddForm
-            name={(workout && workout.name) || ''}
-            active={(workout && workout.active) || false}
-            submit={this.handleSubmit}
-          />
-          <DayList onButtonPress={this.props.onButtonPress} days={days} />
-        </ScrollView>
-        <AddButton onPress={this.props.onPress} />
-      </View>
-    );
-  }
-
-  private handleSubmit = (values: ISaveWorkoutParams) => {
-    this.props.saveWorkout(values);
+const WorkoutEditScreen: FC<IProps> = ({ workout, days, saveWorkout, onPress, onButtonPress }) => {
+  const handleSubmit = (values: ISaveWorkoutParams) => {
+    saveWorkout(values);
   };
-}
+
+  return (
+    <View style={styles.layout.main}>
+      <ScrollView>
+        <WorkoutAddForm
+          name={(workout && workout.name) || ''}
+          active={(workout && workout.active) || false}
+          submit={handleSubmit}
+        />
+        <DayList onButtonPress={onButtonPress} days={days} />
+      </ScrollView>
+      <AddButton onPress={onPress} />
+    </View>
+  );
+};
 
 export default WorkoutEditScreen;

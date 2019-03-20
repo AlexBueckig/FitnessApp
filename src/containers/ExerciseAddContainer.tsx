@@ -39,10 +39,10 @@ export default class ExerciseAddContainer extends Component<IProps> {
   };
 
   render() {
-    return <ExerciseAddScreen exercise={this.props.exercise} saveExercise={this.saveExercise} />;
+    return <ExerciseAddScreen saveExercise={this.saveExercise} />;
   }
 
-  public navigationButtonPressed(id: { buttonId: string; componentId: string }) {
+  navigationButtonPressed(id: { buttonId: string; componentId: string }) {
     switch (id.buttonId) {
       case 'deleteExerciseButton':
         Alert.alert('Löschen bestätigen', 'Willst du diese Übung wirklich löschen?', [
