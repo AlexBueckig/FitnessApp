@@ -3,8 +3,8 @@ import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
 import { Navigation } from 'react-native-navigation';
-import ExerciseScreen from '../screens/ExerciseScreen';
 import Exercise from '../watermelondb/models/Exercise';
+import ExerciseScreen from './screens/ExerciseScreen';
 
 interface IProps {
   exercises: Exercise[];
@@ -31,7 +31,6 @@ export class ExerciseContainer extends Component<IProps> {
   }
 
   private onPress = (id: string | undefined = undefined) => {
-    console.log(id);
     let type = 'Add';
     if (id) {
       type = 'Edit';

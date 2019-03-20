@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import DayAddForm from '../components/DayAddForm';
-import Day, { ISaveDayParams } from '../watermelondb/models/Day';
-import Exercise from '../watermelondb/models/Exercise';
+import DayAddForm from '../../components/DayAddForm';
+import Day, { ISaveDayParams } from '../../watermelondb/models/Day';
+import Exercise from '../../watermelondb/models/Exercise';
 
 interface IProps {
   saveDay: (day: ISaveDayParams) => void;

@@ -3,14 +3,14 @@ import { Navigation } from 'react-native-navigation';
 import DayAddModal from '../modals/DayAdd/DayAddModal';
 import DayAddExerciseModal from '../modals/DayAddExercise/DayAddExerciseModal';
 import WorkoutAddModal from '../modals/WorkoutAdd/WorkoutAddModal';
-import AchievementScreen from '../screens/AchievementScreen';
-import WorkoutMenuScreen from '../screens/WorkoutMenuScreen';
 import DBProvider from '../watermelondb/DBProvider';
 import EnhancedDayEditContainer, { DayEditContainer } from './DayEditContainer';
 import ExerciseAddContainer from './ExerciseAddContainer';
 import EnhancedExerciseContainer, { ExerciseContainer } from './ExerciseContainer';
 import EnhancedExerciseEditContainer, { ExerciseEditContainer } from './ExerciseEditContainer';
 import HomeContainer from './HomeContainer';
+import AchievementScreen from './screens/AchievementScreen';
+import WorkoutMenuScreen from './screens/WorkoutMenuScreen';
 import EnhancedWorkoutContainer, { WorkoutContainer } from './WorkoutContainer';
 import EnhancedWorkoutEditContainer, { WorkoutEditContainer } from './WorkoutEditContainer';
 

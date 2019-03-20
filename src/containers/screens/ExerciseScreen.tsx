@@ -1,25 +1,29 @@
 import React, { FC } from 'react';
 import { SectionList, SectionListData, SectionListRenderItemInfo, View } from 'react-native';
 import { Divider, Text } from 'react-native-elements';
-import AddButton from '../components/AddButton';
-import { ListEmptyComponent } from '../components/ListComponents';
-import SectionListItem from '../components/ListComponents/SectionListItem';
-import styles from '../styles';
-import { IExerciseByCategory } from '../types/exerciseTypes';
-import Exercise from '../watermelondb/models/Exercise';
+import AddButton from '../../components/AddButton';
+import { ListEmptyComponent } from '../../components/ListComponents';
+import SectionListItem from '../../components/ListComponents/SectionListItem';
+import styles from '../../styles';
+import { IExerciseByCategory } from '../../types/exerciseTypes';
+import Exercise from '../../watermelondb/models/Exercise';
 
 interface IProps {
   exercises: Array<{ title: string; data: Exercise[] }>;
-  onPress: (id: string | undefined) => void;
+  onPress: (id?: string) => void;
 }
 
 const ExerciseScreen: FC<IProps> = props => {
-  const onPress = (id: string | undefined = undefined) => {
+  const onEdit = (id: string) => {
     props.onPress(id);
   };
 
+  const onAdd = () => {
+    props.onPress();
+  };
+
   const renderItem = ({ item }: SectionListRenderItemInfo<Exercise>) => {
-    return <SectionListItem exercise={item} onPress={onPress} />;
+    return <SectionListItem exercise={item} onPress={onEdit} />;
   };
 
   const renderSectionHeader = (info: { section: SectionListData<IExerciseByCategory> }) => {
@@ -46,7 +50,7 @@ const ExerciseScreen: FC<IProps> = props => {
         ListEmptyComponent={ListEmptyComponent}
         SectionSeparatorComponent={Divider}
       />
-      <AddButton onPress={onPress} />
+      <AddButton onPress={onAdd} />
     </View>
   );
 };

@@ -1,10 +1,10 @@
 import React, { FC, useState } from 'react';
 import { Animated, FlatList } from 'react-native';
 import { Divider, ListItem, Text } from 'react-native-elements';
-import ImageQuoteCard from '../components/ImageQuoteCard';
-import styles from '../styles';
-import { IPost } from '../types/feedTypes';
-import Workout from '../watermelondb/models/Workout';
+import ImageQuoteCard from '../../components/ImageQuoteCard';
+import styles from '../../styles';
+import { IPost } from '../../types/feedTypes';
+import Workout from '../../watermelondb/models/Workout';
 
 interface IProps {
   workouts: Workout[];

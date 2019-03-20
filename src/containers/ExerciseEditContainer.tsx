@@ -4,9 +4,9 @@ import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import ExerciseAddScreen from '../screens/ExerciseAddScreen';
 import { iconsMap } from '../utils/AppIcons';
 import Exercise, { ISaveExerciseParams } from '../watermelondb/models/Exercise';
+import ExerciseEditScreen from './screens/ExerciseEditScreen';
 
 interface IProps {
   id: string;
@@ -39,10 +39,15 @@ export class ExerciseEditContainer extends Component<IProps> {
 
   saveExercise = async (values: ISaveExerciseParams) => {
     await this.props.exercise.updateEntry(values);
+    Navigation.pop(this.props.componentId);
+  };
+
+  deleteExercise = async () => {
+    await this.props.exercise.deleteEntry();
   };
 
   render() {
-    return <ExerciseAddScreen exercise={this.props.exercise} saveExercise={this.saveExercise} />;
+    return <ExerciseEditScreen exercise={this.props.exercise} saveExercise={this.saveExercise} />;
   }
 
   navigationButtonPressed(id: { buttonId: string; componentId: string }) {
@@ -53,7 +58,7 @@ export class ExerciseEditContainer extends Component<IProps> {
           {
             text: 'OK',
             onPress: async () => {
-              await this.props.exercise.deleteEntry();
+              await this.deleteExercise();
               Navigation.pop(id.componentId);
             }
           }

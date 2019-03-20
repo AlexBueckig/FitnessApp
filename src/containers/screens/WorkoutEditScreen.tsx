@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { ScrollView, View } from 'react-native';
-import AddButton from '../components/AddButton';
-import DayList from '../components/ListComponents/DayList';
-import WorkoutEditForm from '../components/WorkoutEditForm';
-import styles from '../styles';
-import Day from '../watermelondb/models/Day';
-import Workout, { ISaveWorkoutParams } from '../watermelondb/models/Workout';
+import AddButton from '../../components/AddButton';
+import DayList from '../../components/ListComponents/DayList';
+import WorkoutEditForm from '../../components/WorkoutEditForm';
+import styles from '../../styles';
+import Day from '../../watermelondb/models/Day';
+import Workout, { ISaveWorkoutParams } from '../../watermelondb/models/Workout';
 
 interface IProps {
   saveWorkout: (workout: ISaveWorkoutParams) => void;

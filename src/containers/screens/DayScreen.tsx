@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { FlatList, ListRenderItemInfo, View } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
-import AddButton from '../components/AddButton';
-import { ListEmptyComponent } from '../components/ListComponents';
-import styles from '../styles';
-import Day from '../watermelondb/models/Day';
+import AddButton from '../../components/AddButton';
+import { ListEmptyComponent } from '../../components/ListComponents';
+import styles from '../../styles';
+import Day from '../../watermelondb/models/Day';
 
 interface IProps {
   days: Day[];

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
+import { Alert, ToastAndroid } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import ExerciseAddScreen from '../screens/ExerciseAddScreen';
 import { iconsMap } from '../utils/AppIcons';
 import { RootModel } from '../watermelondb';
 import { ISaveExerciseParams } from '../watermelondb/models/Exercise';
+import ExerciseAddScreen from './screens/ExerciseAddScreen';
 
 interface IProps {
   id: string;
@@ -34,12 +34,14 @@ export default class ExerciseAddContainer extends Component<IProps> {
     Navigation.events().bindComponent(this);
   }
 
-  saveExercise = async (values: ISaveExerciseParams) => {
+  addExercise = async (values: ISaveExerciseParams) => {
     await RootModel.createExercise(values.name, values.description, values.category, values.muscles);
+    ToastAndroid.show('Übung gespeichert!', ToastAndroid.SHORT);
+    Navigation.pop(this.props.componentId);
   };
 
   render() {
-    return <ExerciseAddScreen saveExercise={this.saveExercise} />;
+    return <ExerciseAddScreen addExercise={this.addExercise} />;
   }
 
   navigationButtonPressed(id: { buttonId: string; componentId: string }) {

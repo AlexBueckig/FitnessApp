@@ -5,10 +5,10 @@ import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { Navigation, OptionsModalPresentationStyle } from 'react-native-navigation';
 import { compose } from 'recompose';
-import WorkoutEditScreen from '../screens/WorkoutEditScreen';
 import { iconsMap } from '../utils/AppIcons';
 import Day from '../watermelondb/models/Day';
 import Workout, { ISaveWorkoutParams } from '../watermelondb/models/Workout';
+import WorkoutEditScreen from './screens/WorkoutEditScreen';
 
 interface IProps {
   id: string;

@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import { FlatList, ListRenderItemInfo, View } from 'react-native';
 import { Divider } from 'react-native-elements';
-import AddButton from '../components/AddButton';
-import { ListEmptyComponent } from '../components/ListComponents';
-import ListItem from '../components/ListComponents/ListItem';
-import styles from '../styles';
-import Workout from '../watermelondb/models/Workout';
+import AddButton from '../../components/AddButton';
+import { ListEmptyComponent } from '../../components/ListComponents';
+import ListItem from '../../components/ListComponents/ListItem';
+import styles from '../../styles';
+import Workout from '../../watermelondb/models/Workout';
 
 interface IProps {
   workouts: Workout[];

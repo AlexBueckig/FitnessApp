@@ -3,8 +3,8 @@ import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
 import { Navigation, OptionsModalPresentationStyle } from 'react-native-navigation';
-import WorkoutScreen from '../screens/WorkoutScreen';
 import Workout from '../watermelondb/models/Workout';
+import WorkoutScreen from './screens/WorkoutScreen';
 
 interface IProps {
   workouts: Workout[];

@@ -4,10 +4,10 @@ import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import DayEditScreen from '../screens/DayEditScreen';
 import { iconsMap } from '../utils/AppIcons';
 import Day, { ISaveDayParams } from '../watermelondb/models/Day';
 import Exercise from '../watermelondb/models/Exercise';
+import DayEditScreen from './screens/DayEditScreen';
 
 interface IProps {
   id: string;

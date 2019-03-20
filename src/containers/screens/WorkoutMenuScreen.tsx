@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { ScrollView, Text, View } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import CardImageBackground from '../components/CardImageBackground';
-import styles from '../styles';
+import CardImageBackground from '../../components/CardImageBackground';
+import styles from '../../styles';
 
 interface IProps {
   componentId: string;
@@ -18,9 +18,9 @@ export default class WorkoutMenuScreen extends PureComponent<IProps> {
   }
 
   private images = [
-    require('../../res/images/download2.jpg'),
-    require('../../res/images/ausrustung-crossfit-fitness-669578-2.jpg'),
-    require('../../res/images/anstrengung-ausbildung-beine-841125-2.jpg')
+    require('../../../res/images/download2.jpg'),
+    require('../../../res/images/ausrustung-crossfit-fitness-669578-2.jpg'),
+    require('../../../res/images/anstrengung-ausbildung-beine-841125-2.jpg')
   ];
 
   public onPress(target: string) {
