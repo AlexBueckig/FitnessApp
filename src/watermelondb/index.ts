@@ -8,7 +8,7 @@ import SetExercises from './models/SetExercises';
 import Workout from './models/Workout';
 import schema from './schema';
 
-const adapter = new SQLiteAdapter({ schema });
+const adapter = new SQLiteAdapter({ dbName: 'watermelon', schema });
 
 const database = new Database({
   adapter,
@@ -23,7 +23,7 @@ export class RootModel {
     muscles: number[] = []
   ) => {
     const exerciseCollection = await database.collections.get<Exercise>('exercises');
-    return await database.action(async () => {
+    return await database.action<Exercise>(async () => {
       const newExercise = await exerciseCollection.create(exercise => {
         exercise.name = name;
         exercise.category = category;
@@ -36,7 +36,7 @@ export class RootModel {
 
   static createWorkout = async (name: string, active: boolean = false) => {
     const workoutCollection = await database.collections.get<Workout>('workouts');
-    return await database.action(async () => {
+    return await database.action<Workout>(async () => {
       const newWorkout = await workoutCollection.create(workout => {
         workout.name = name;
         workout.active = active;
