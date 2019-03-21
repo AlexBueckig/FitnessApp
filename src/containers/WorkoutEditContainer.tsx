@@ -29,6 +29,12 @@ export class WorkoutEditContainer extends Component<IProps> {
             text: 'LÖSCHEN',
             color: 'white',
             icon: iconsMap.delete
+          },
+          {
+            id: 'editWorkoutButton',
+            text: 'BEARBEITEN',
+            color: 'white',
+            icon: iconsMap.edit
           }
         ]
       }
@@ -72,6 +78,9 @@ export class WorkoutEditContainer extends Component<IProps> {
           }
         ]);
         break;
+      case 'editWorkoutButton':
+        this.showWorkoutModal();
+        break;
       default:
         break;
     }
@@ -81,6 +90,24 @@ export class WorkoutEditContainer extends Component<IProps> {
     Navigation.showModal({
       component: {
         name: 'DayAddModal',
+        passProps: {
+          id: this.props.workout.id,
+          parentComponentId: this.props.componentId
+        },
+        options: {
+          layout: {
+            backgroundColor: 'rgba(0,0,0,0.7)'
+          },
+          modalPresentationStyle: OptionsModalPresentationStyle.overCurrentContext
+        }
+      }
+    });
+  };
+
+  private showWorkoutModal = () => {
+    Navigation.showModal({
+      component: {
+        name: 'WorkoutEditModal',
         passProps: {
           id: this.props.workout.id,
           parentComponentId: this.props.componentId
