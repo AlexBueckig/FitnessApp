@@ -3,17 +3,17 @@ import { Animated, FlatList } from 'react-native';
 import { Divider, ListItem, Text } from 'react-native-elements';
 import ImageQuoteCard from '../../components/ImageQuoteCard';
 import styles from '../../styles';
-import { IPost } from '../../types/feedTypes';
 import Workout from '../../watermelondb/models/Workout';
 
 interface IProps {
   workouts: Workout[];
+  quote: { text: string; author: string; backgroundUrl?: string };
   componentId?: string;
 }
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-const HomeScreen: FC<IProps> = ({ workouts }) => {
+const HomeScreen: FC<IProps> = ({ workouts, quote }) => {
   const [offsetY, setOffsetY] = useState(new Animated.Value(0));
 
   const listHeaderComponent = () => (
@@ -47,7 +47,7 @@ const HomeScreen: FC<IProps> = ({ workouts }) => {
           })
         }}
       >
-        <ImageQuoteCard quote="If you have dreams it is your responsibility to make them happen." author="Bel Pesce" />
+        <ImageQuoteCard {...quote} />
       </Animated.View>
       <Text style={{ padding: 16, backgroundColor: '#53D0A4', color: 'white', fontSize: 16 }}>
         Meine kommenden Workouts
@@ -59,10 +59,10 @@ const HomeScreen: FC<IProps> = ({ workouts }) => {
     <AnimatedFlatList
       ListHeaderComponent={listHeaderComponent}
       data={workouts}
-      renderItem={(item: { item: IPost }) => {
+      renderItem={(item: { item: Workout }) => {
         return (
           <ListItem
-            title={`Montag, ${item.item.key}. Januar`}
+            title={`Montag, ${item.item.id}. Januar`}
             subtitle="2er Split - Oberkörper"
             chevron={{ name: 'chevron-right', size: 26 }}
             titleStyle={styles.typography.listItemTitle}
@@ -71,6 +71,7 @@ const HomeScreen: FC<IProps> = ({ workouts }) => {
         );
       }}
       ItemSeparatorComponent={Divider}
+      ListEmptyComponent={() => <Text style={{ marginBottom: 2000 }}>Leer...</Text>}
       keyExtractor={(item: Workout) => `HomeScreen${item.id}`}
       stickyHeaderIndices={[0]}
       onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: offsetY } } }], {
