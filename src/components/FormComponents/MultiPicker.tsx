@@ -1,5 +1,5 @@
 import { Field, FieldProps } from 'formik';
-import React, { SFC } from 'react';
+import React, { FC } from 'react';
 import { View } from 'react-native';
 import { Text } from 'react-native-elements';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
@@ -17,12 +17,12 @@ interface IProps {
   items: IItem[];
 }
 
-const MultiPicker: SFC<IProps> = props => {
+const MultiPicker: FC<IProps> = props => {
   const { name, items, selectedItems, label } = props;
   return (
     <Field>
       {({ form }: FieldProps) => (
-        <View style={{ width: '90%' }}>
+        <View style={{ width: '100%' }}>
           <Text style={styles.typography.label}>{label}</Text>
           <SectionedMultiSelect
             items={items}

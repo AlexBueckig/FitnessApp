@@ -1,6 +1,5 @@
 import { Formik, FormikActions, FormikProps } from 'formik';
-import React, { FC } from 'react';
-import { View } from 'react-native';
+import React, { FC, Fragment } from 'react';
 import { Button } from 'react-native-elements';
 import * as yup from 'yup';
 import { ISaveWorkoutParams } from '../watermelondb/models/Workout';
@@ -32,7 +31,7 @@ const WorkoutEditForm: FC<IProps> = props => {
     >
       {({ values, isSubmitting, handleSubmit, errors, touched }: FormikProps<ISaveWorkoutParams>) => {
         return (
-          <View>
+          <Fragment>
             <TextInput
               label="name"
               name="name"
@@ -40,7 +39,7 @@ const WorkoutEditForm: FC<IProps> = props => {
               error={touched.name && errors.name ? errors.name : undefined}
             />
             <Button title="Submit" onPress={handleSubmit} disabled={isSubmitting} loading={isSubmitting} />
-          </View>
+          </Fragment>
         );
       }}
     </Formik>

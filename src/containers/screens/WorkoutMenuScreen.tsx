@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import CardImageBackground from '../../components/CardImageBackground';
+import Container from '../../components/Container';
 import styles from '../../styles';
 
 interface IProps {
@@ -33,8 +34,8 @@ export default class WorkoutMenuScreen extends PureComponent<IProps> {
 
   public render() {
     return (
-      <ScrollView style={styles.layout.main}>
-        <View style={styles.layout.container}>
+      <ScrollView>
+        <Container style={styles.layout.container}>
           <CardImageBackground
             title="Trainingspläne"
             onPress={this.onPress.bind(this, 'WorkoutScreen')}
@@ -59,7 +60,7 @@ export default class WorkoutMenuScreen extends PureComponent<IProps> {
           >
             <Text style={styles.typography.cardBody}>Lege deine eigenen Übungen an</Text>
           </CardImageBackground>
-        </View>
+        </Container>
       </ScrollView>
     );
   }

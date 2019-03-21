@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { ScrollView } from 'react-native';
+import Container from '../../components/Container';
 import ExerciseForm from '../../components/ExerciseForm';
 import { ISaveExerciseParams } from '../../watermelondb/models/Exercise';
 
@@ -13,9 +14,11 @@ const ExerciseAddScreen: FC<IProps> = ({ addExercise }) => {
   };
 
   return (
-    <ScrollView>
-      <ExerciseForm name="" category="" description="" muscles={[]} submit={submit} />
-    </ScrollView>
+    <Container>
+      <ScrollView>
+        <ExerciseForm name="" category="" description="" muscles={[]} submit={submit} />
+      </ScrollView>
+    </Container>
   );
 };
 

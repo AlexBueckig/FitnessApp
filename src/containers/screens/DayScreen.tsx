@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import { FlatList, ListRenderItemInfo, View } from 'react-native';
+import { FlatList, ListRenderItemInfo } from 'react-native';
 import { Divider, ListItem } from 'react-native-elements';
 import AddButton from '../../components/AddButton';
+import Container from '../../components/Container';
 import { ListEmptyComponent } from '../../components/ListComponents';
-import styles from '../../styles';
 import Day from '../../watermelondb/models/Day';
 
 interface IProps {
@@ -31,7 +31,7 @@ const DayScreen: FC<IProps> = ({ days }) => {
   };
 
   return (
-    <View style={styles.layout.main}>
+    <Container>
       <FlatList
         data={days}
         ItemSeparatorComponent={Divider}
@@ -40,7 +40,7 @@ const DayScreen: FC<IProps> = ({ days }) => {
         renderItem={renderItem}
       />
       <AddButton onPress={onPress} />
-    </View>
+    </Container>
   );
 };
 

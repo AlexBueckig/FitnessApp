@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
+import { Text } from 'react-native-elements';
 import AddButton from '../../components/AddButton';
+import Container from '../../components/Container';
 import DayList from '../../components/ListComponents/DayList';
-import WorkoutEditForm from '../../components/WorkoutEditForm';
-import styles from '../../styles';
 import Day from '../../watermelondb/models/Day';
 import Workout, { ISaveWorkoutParams } from '../../watermelondb/models/Workout';
 
@@ -17,18 +17,14 @@ interface IProps {
 }
 
 const WorkoutEditScreen: FC<IProps> = ({ workout, days, saveWorkout, onDayAdd, onDayEdit, onDayDelete }) => {
-  const handleSubmit = (values: ISaveWorkoutParams) => {
-    saveWorkout(values);
-  };
-
   return (
-    <View style={styles.layout.main}>
+    <Container>
       <ScrollView>
-        <WorkoutEditForm name={workout.name} active={workout.active} submit={handleSubmit} />
+        <Text style={{ marginTop: 8, fontSize: 20, textAlign: 'center' }}>{workout.name}</Text>
         <DayList onEdit={onDayEdit} onDelete={onDayDelete} days={days} />
       </ScrollView>
       <AddButton onPress={onDayAdd} />
-    </View>
+    </Container>
   );
 };
 

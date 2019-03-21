@@ -1,6 +1,5 @@
 import { Field, FieldProps } from 'formik';
 import React, { PureComponent } from 'react';
-import { View } from 'react-native';
 import { Input } from 'react-native-elements';
 import styles from '../../styles';
 
@@ -24,31 +23,29 @@ class TextInput extends PureComponent<IProps, IState> {
     return (
       <Field name={name}>
         {({ form }: FieldProps) => (
-          <View style={styles.layout.container}>
-            <Input
-              label={label}
-              labelStyle={[
-                styles.typography.label,
-                {
-                  marginBottom: -10
-                }
-              ]}
-              onChangeText={text => form.setFieldValue(name, text)}
-              onBlur={() => {
-                form.setTouched({ [name]: true });
-                this.onBlur();
-              }}
-              onFocus={this.onFocus}
-              placeholder={placeholder || label}
-              value={value}
-              inputStyle={{ fontSize: 16 }}
-              underlineColorAndroid={error ? 'red' : this.state.isFocused ? 'green' : 'grey'}
-              errorMessage={error}
-              errorStyle={{ fontSize: 12, marginTop: -8 }}
-              inputContainerStyle={{ borderBottomWidth: 0, marginHorizontal: -4 }}
-              containerStyle={{ marginBottom: 16, paddingHorizontal: 0 }}
-            />
-          </View>
+          <Input
+            label={label}
+            labelStyle={[
+              styles.typography.label,
+              {
+                marginBottom: -10
+              }
+            ]}
+            onChangeText={text => form.setFieldValue(name, text)}
+            onBlur={() => {
+              form.setTouched({ [name]: true });
+              this.onBlur();
+            }}
+            onFocus={this.onFocus}
+            placeholder={placeholder || label}
+            value={value}
+            inputStyle={{ fontSize: 16 }}
+            underlineColorAndroid={error ? 'red' : this.state.isFocused ? 'green' : 'grey'}
+            errorMessage={error}
+            errorStyle={{ fontSize: 12, marginTop: -8 }}
+            inputContainerStyle={{ borderBottomWidth: 0, marginHorizontal: -4 }}
+            containerStyle={{ marginBottom: 16, paddingHorizontal: 0 }}
+          />
         )}
       </Field>
     );
