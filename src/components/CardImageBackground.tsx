@@ -15,7 +15,7 @@ const CardImageBackground: FC<IProps> = ({ children, image, title, onPress, bord
     <ImageBackground
       source={image}
       style={{ minWidth: 167, elevation: 1, position: 'relative' }}
-      imageStyle={{ borderRadius, marginTop: 16 }}
+      imageStyle={{ borderRadius, marginBottom: 16 }}
     >
       {/* Dark Image Overlay */}
       <View
@@ -23,10 +23,10 @@ const CardImageBackground: FC<IProps> = ({ children, image, title, onPress, bord
           position: 'absolute',
           backgroundColor: 'black',
           opacity: 0.5,
-          top: 16,
+          top: 0,
           left: 0,
           right: 0,
-          bottom: 0,
+          bottom: 16,
           borderRadius
         }}
       />
