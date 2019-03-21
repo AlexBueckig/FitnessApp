@@ -60,6 +60,7 @@ export class DayEditContainer extends Component<IProps> {
 
   saveDay = async (values: ISaveDayParams) => {
     await this.props.day.updateEntry(values);
+    Navigation.pop(this.props.componentId);
   };
 
   render() {
