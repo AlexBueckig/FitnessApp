@@ -3,13 +3,19 @@ import { Dimensions, ImageBackground, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
 
 interface IProps {
-  quote: string;
+  text: string;
   author: string;
+  backgroundUrl?: string;
 }
 
-const ImageQuoteCard: FC<IProps> = ({ quote, author }) => (
+const ImageQuoteCard: FC<IProps> = ({
+  text,
+  author,
+  backgroundUrl = '../../res/images/athlet-ausbildung-ausrustungen-305239.jpg'
+}) => (
   <ImageBackground
     source={require('../../res/images/athlet-ausbildung-ausrustungen-305239.jpg')}
+    // source={{ uri: backgroundUrl }}
     style={{ height: 200, width: Dimensions.get('window').width }}
     resizeMode={'cover'}
   >
@@ -21,7 +27,7 @@ const ImageQuoteCard: FC<IProps> = ({ quote, author }) => (
         paddingHorizontal: 32
       }}
     >
-      <Text style={styles.quote}>{`"${quote}"`}</Text>
+      <Text style={styles.quote}>{`"${text}"`}</Text>
       <Text style={styles.author}>{`- ${author}`}</Text>
     </View>
   </ImageBackground>
