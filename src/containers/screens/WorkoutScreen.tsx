@@ -9,17 +9,13 @@ import Workout from '../../watermelondb/models/Workout';
 
 interface IProps {
   workouts: Workout[];
-  onPress: (id: string | undefined) => void;
-  onFabPress: () => void;
+  onEdit: (id: string) => void;
+  onAdd: () => void;
 }
 
-const WorkoutScreen: FC<IProps> = props => {
+const WorkoutScreen: FC<IProps> = ({ onEdit, onAdd, workouts }) => {
   const renderItem = ({ item }: ListRenderItemInfo<Workout>) => {
-    return <ListItem workout={item} onPress={onPress} />;
-  };
-
-  const onPress = (id: string | undefined = undefined) => {
-    props.onPress(id);
+    return <ListItem workout={item} onPress={onEdit} />;
   };
 
   const keyExtractor = (item: Workout) => {
@@ -29,14 +25,13 @@ const WorkoutScreen: FC<IProps> = props => {
   return (
     <View style={styles.layout.main}>
       <FlatList
-        data={props.workouts}
+        data={workouts}
         ItemSeparatorComponent={Divider}
         keyExtractor={keyExtractor}
         ListEmptyComponent={ListEmptyComponent}
         renderItem={renderItem}
       />
-      {/* <AddButton onPress={onPress} /> */}
-      <AddButton onPress={props.onFabPress} />
+      <AddButton onPress={onAdd} />
     </View>
   );
 };

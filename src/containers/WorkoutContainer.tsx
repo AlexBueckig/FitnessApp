@@ -27,13 +27,13 @@ export class WorkoutContainer extends Component<IProps> {
   }
 
   render() {
-    return <WorkoutScreen workouts={this.props.workouts} onPress={this.onPress} onFabPress={this.onFabPress} />;
+    return <WorkoutScreen workouts={this.props.workouts} onEdit={this.onEdit} onAdd={this.onAdd} />;
   }
 
-  private onPress = (id: string | undefined = undefined) => {
+  private onEdit = (id: string) => {
     Navigation.push(this.props.componentId, {
       component: {
-        name: `WorkoutScreen.${id ? 'Edit' : 'Add'}`,
+        name: 'WorkoutScreen.Edit',
         passProps: {
           id
         }
@@ -41,7 +41,7 @@ export class WorkoutContainer extends Component<IProps> {
     });
   };
 
-  private onFabPress = () => {
+  private onAdd = () => {
     Navigation.showModal({
       component: {
         name: 'WorkoutAddModal',
