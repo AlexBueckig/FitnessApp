@@ -12,11 +12,7 @@ interface IProps {
 
 const Card: FC<IProps> = ({ children, title, onPress, borderRadius = 0, style = {} }) => {
   return (
-    <TouchableHighlight
-      underlayColor={'transparent'}
-      style={[{ borderRadius, marginTop: 16 }, style]}
-      onPress={onPress}
-    >
+    <TouchableHighlight underlayColor={'transparent'} style={[{ borderRadius }, style]} onPress={onPress}>
       <View style={{ justifyContent: 'center', alignItems: 'center', minHeight: 167, borderRadius }}>
         {/* Card-Header */}
         <View
