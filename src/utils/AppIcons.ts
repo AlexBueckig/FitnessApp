@@ -6,6 +6,7 @@ const navIconSize = __DEV__ === false && Platform.OS === 'android' ? PixelRatio.
 const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons: { [key: string]: [number, string?] } = {
   delete: [30],
+  edit: [30],
   home: [navIconSize]
 };
 
