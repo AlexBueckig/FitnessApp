@@ -8,7 +8,9 @@
     "android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "build": "cd ./android && ./gradlew app:assembleRelease && ./gradlew installRelease",
     "clean": "react-native-clean-project",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "@nozbe/watermelondb": "^0.12.0",
@@ -17,7 +19,7 @@
     "es6-symbol": "^3.1.1",
     "formik": "^1.5.0",
     "react": "^16.8.4",
-    "react-native": "^0.59.1",
+    "react-native": "^0.60.0",
     "react-native-elements": "^1.0.0",
     "react-native-navigation": "^2.13.2",
     "react-native-sectioned-multi-select": "^0.6.4",
@@ -25,7 +27,8 @@
     "react-native-vector-icons": "^6.2.0",
     "recompose": "^0.30.0",
     "tslib": "^1.9.3",
-    "yup": "^0.27.0"
+    "yup": "^0.27.0",
+    "snyk": "^1.192.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.3.0",
@@ -67,5 +70,6 @@
     "modulePaths": [
       "<rootDir>"
     ]
-  }
+  },
+  "snyk": true
 }
