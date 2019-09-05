@@ -50,7 +50,7 @@ class HomeContainer extends Component<IProps, IState> {
   }
 }
 
-const enhance = withObservables<IProps>([], ({ database }) => ({
+const enhance = withObservables<IProps, {}>([], ({ database }) => ({
   days: database!.collections
     .get<Day>('days')
     .query(Q.on('workouts', 'active', true))

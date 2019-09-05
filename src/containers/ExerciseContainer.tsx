@@ -47,7 +47,7 @@ export class ExerciseContainer extends Component<IProps> {
   };
 }
 
-const enhance = withObservables<IProps>([], ({ database }) => ({
+const enhance = withObservables<IProps, {}>([], ({ database }) => ({
   exercises: database!.collections
     .get('exercises')
     .query()
