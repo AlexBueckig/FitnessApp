@@ -3,9 +3,13 @@
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 
+import daysjs from 'dayjs';
+import 'dayjs/locale/de';
 import 'es6-symbol/implement';
 import { Navigation } from 'react-native-navigation';
 import { registerScreens } from './src/containers';
+
+daysjs.locale('de');
 
 registerScreens();
 
