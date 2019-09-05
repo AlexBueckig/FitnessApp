@@ -5,18 +5,18 @@ import ExerciseForm from '../../components/ExerciseForm';
 import Exercise, { ISaveExerciseParams } from '../../watermelondb/models/Exercise';
 
 interface IProps {
-  saveExercise: (exercise: Exercise, params: ISaveExerciseParams) => void;
+  saveExercise: (params: ISaveExerciseParams) => void;
   exercise: Exercise;
 }
 
 const ExerciseEditScreen: FC<IProps> = ({ exercise, saveExercise }) => {
   const submit = async (params: ISaveExerciseParams) => {
-    await saveExercise(exercise, params);
+    await saveExercise(params);
   };
 
   return (
-    <Container>
-      <ScrollView>
+    <ScrollView>
+      <Container>
         <ExerciseForm
           name={(exercise && exercise.name) || ''}
           category={(exercise && exercise.category) || ''}
@@ -24,8 +24,8 @@ const ExerciseEditScreen: FC<IProps> = ({ exercise, saveExercise }) => {
           muscles={(exercise && exercise.muscles) || []}
           submit={submit}
         />
-      </ScrollView>
-    </Container>
+      </Container>
+    </ScrollView>
   );
 };
 

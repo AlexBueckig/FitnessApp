@@ -54,7 +54,7 @@ const DayAddExerciseForm: FC<IProps> = ({ submit, exercises }) => {
           <FieldArray name="exercises">
             {arrayHelpers => (
               <Fragment>
-                <Picker selectedValue={selectedCategory} onValueChange={onCategoryChange}>
+                <Picker selectedValue={selectedCategory} onValueChange={onCategoryChange} mode={'dialog'}>
                   {groupedExercises.map((category, index) => (
                     <Picker.Item key={`${index}${category.title}`} value={index} label={category.title} />
                   ))}

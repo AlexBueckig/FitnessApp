@@ -3,6 +3,7 @@ import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
 import { Navigation } from 'react-native-navigation';
+import { getExercisesByCategory } from '../utils/ListFunctions';
 import Exercise from '../watermelondb/models/Exercise';
 import ExerciseScreen from './screens/ExerciseScreen';
 
@@ -27,7 +28,7 @@ export class ExerciseContainer extends Component<IProps> {
   }
 
   render() {
-    return <ExerciseScreen exercises={this.processExercises(this.props.exercises)} onPress={this.onPress} />;
+    return <ExerciseScreen exercises={getExercisesByCategory(this.props.exercises)} onPress={this.onPress} />;
   }
 
   private onPress = (id: string | undefined = undefined) => {
@@ -44,24 +45,13 @@ export class ExerciseContainer extends Component<IProps> {
       }
     });
   };
-
-  private processExercises = (exercises: Exercise[]) => {
-    const processedExercises: { [key: string]: Exercise[] } = {};
-    exercises.map(exercise => {
-      if (!processedExercises[exercise.category]) {
-        processedExercises[exercise.category] = [];
-      }
-      processedExercises[exercise.category].push(exercise);
-    });
-    return Object.entries(processedExercises).map(([key, value]) => ({ title: key, data: value }));
-  };
 }
 
 const enhance = withObservables<IProps>([], ({ database }) => ({
   exercises: database!.collections
     .get('exercises')
     .query()
-    .observeWithColumns(['category'])
+    .observeWithColumns(['category', 'name'])
 }));
 
 const EnhancedExerciseContainer = withDatabase(enhance(ExerciseContainer));

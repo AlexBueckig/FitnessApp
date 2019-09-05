@@ -1,5 +1,6 @@
 import { Field, FieldProps } from 'formik';
 import React, { PureComponent } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import { Input } from 'react-native-elements';
 import styles from '../../styles';
 
@@ -9,6 +10,7 @@ interface IProps {
   label: string;
   placeholder?: string;
   error?: string;
+  style?: StyleProp<ViewStyle>;
 }
 
 interface IState {
@@ -18,7 +20,7 @@ interface IState {
 class TextInput extends PureComponent<IProps, IState> {
   public state = { isFocused: false };
   public render() {
-    const { label, error, value, placeholder, name } = this.props;
+    const { label, error, value, placeholder, name, style } = this.props;
 
     return (
       <Field name={name}>
@@ -44,7 +46,7 @@ class TextInput extends PureComponent<IProps, IState> {
             errorMessage={error}
             errorStyle={{ fontSize: 12, marginTop: -8 }}
             inputContainerStyle={{ borderBottomWidth: 0, marginHorizontal: -4 }}
-            containerStyle={{ marginBottom: 16, paddingHorizontal: 0 }}
+            containerStyle={[style, { marginBottom: 16, paddingHorizontal: 0 }]}
           />
         )}
       </Field>

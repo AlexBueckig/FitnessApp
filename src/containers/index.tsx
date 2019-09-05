@@ -5,6 +5,7 @@ import DayAddExerciseModal from '../modals/DayAddExercise/DayAddExerciseModal';
 import WorkoutAddModal from '../modals/WorkoutAdd/WorkoutAddModal';
 import WorkoutEditModal from '../modals/WorkoutEdit/WorkoutEditModal';
 import DBProvider from '../watermelondb/DBProvider';
+import EnhancedCurrentWorkoutDayContainer, { CurrentWorkoutDayContainer } from './CurrentWorkoutDayContainer';
 import EnhancedDayEditContainer, { DayEditContainer } from './DayEditContainer';
 import ExerciseAddContainer from './ExerciseAddContainer';
 import EnhancedExerciseContainer, { ExerciseContainer } from './ExerciseContainer';
@@ -29,6 +30,11 @@ export const registerScreens = () => {
   Navigation.registerComponent('WorkoutMenuScreen', () => WorkoutMenuScreen);
   Navigation.registerComponent('AchievementScreen', () => AchievementScreen);
   Navigation.registerComponent('FeedScreen', () => DBWrapper(HomeContainer), () => HomeContainer);
+  Navigation.registerComponent(
+    'CurrentWorkoutDayScreen',
+    () => DBWrapper(EnhancedCurrentWorkoutDayContainer),
+    () => CurrentWorkoutDayContainer
+  );
   Navigation.registerComponent('WorkoutScreen', () => DBWrapper(EnhancedWorkoutContainer), () => WorkoutContainer);
   Navigation.registerComponent(
     'WorkoutScreen.Edit',

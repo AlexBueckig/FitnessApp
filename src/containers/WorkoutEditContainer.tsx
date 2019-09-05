@@ -54,7 +54,6 @@ export class WorkoutEditContainer extends Component<IProps> {
     return (
       <WorkoutEditScreen
         workout={this.props.workout}
-        saveWorkout={this.saveWorkout}
         days={this.props.days}
         onDayAdd={this.showDayModal}
         onDayEdit={this.onDayEdit}

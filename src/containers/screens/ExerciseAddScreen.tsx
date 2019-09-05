@@ -14,11 +14,11 @@ const ExerciseAddScreen: FC<IProps> = ({ addExercise }) => {
   };
 
   return (
-    <Container>
-      <ScrollView>
+    <ScrollView>
+      <Container>
         <ExerciseForm name="" category="" description="" muscles={[]} submit={submit} />
-      </ScrollView>
-    </Container>
+      </Container>
+    </ScrollView>
   );
 };
 

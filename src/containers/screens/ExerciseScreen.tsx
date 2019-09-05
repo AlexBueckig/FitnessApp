@@ -5,8 +5,12 @@ import AddButton from '../../components/AddButton';
 import { ListEmptyComponent } from '../../components/ListComponents';
 import SectionListItem from '../../components/ListComponents/SectionListItem';
 import styles from '../../styles';
-import { IExerciseByCategory } from '../../types/exerciseTypes';
 import Exercise from '../../watermelondb/models/Exercise';
+
+interface IExerciseByCategory {
+  title: string;
+  data: Exercise[];
+}
 
 interface IProps {
   exercises: Array<{ title: string; data: Exercise[] }>;

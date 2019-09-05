@@ -11,17 +11,15 @@ interface IProps {
 }
 
 const DayScreen: FC<IProps> = ({ days }) => {
-  const onPress = () => {
-    console.log('Test');
-  };
-
   const renderItem = ({ item }: ListRenderItemInfo<Day>) => {
     return (
       <ListItem
         key={item.id}
         title={item.description}
         chevron={{ name: 'chevron-right', size: 26 }}
-        onPress={onPress}
+        onPress={() => {
+          return;
+        }}
       />
     );
   };
@@ -39,7 +37,11 @@ const DayScreen: FC<IProps> = ({ days }) => {
         ListEmptyComponent={ListEmptyComponent}
         renderItem={renderItem}
       />
-      <AddButton onPress={onPress} />
+      <AddButton
+        onPress={() => {
+          return;
+        }}
+      />
     </Container>
   );
 };

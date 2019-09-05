@@ -1,20 +1,23 @@
-import React, { FC, useState } from 'react';
-import { Animated, FlatList } from 'react-native';
-import { Divider, ListItem, Text } from 'react-native-elements';
+import React, { FC } from 'react';
+import { Animated, FlatList, ListRenderItemInfo } from 'react-native';
+import { Divider, Text } from 'react-native-elements';
 import ImageQuoteCard from '../../components/ImageQuoteCard';
-import styles from '../../styles';
-import Workout from '../../watermelondb/models/Workout';
+import HomeListItem from '../../components/ListComponents/HomeListItem';
+import Day from '../../watermelondb/models/Day';
 
 interface IProps {
-  workouts: Workout[];
-  quote: { text: string; author: string; backgroundUrl?: string };
-  componentId?: string;
+  weekdays: Array<{ weekday: string; day: Day }>;
+  onPress: (workoutId: string, dayId: string) => void;
 }
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-const HomeScreen: FC<IProps> = ({ workouts, quote }) => {
-  const [offsetY, setOffsetY] = useState(new Animated.Value(0));
+const HomeScreen: FC<IProps> = ({ weekdays, onPress }) => {
+  const offsetY = new Animated.Value(0);
+
+  const renderItem = ({ item: { day, weekday } }: ListRenderItemInfo<{ weekday: number; day: Day }>) => (
+    <HomeListItem day={day} weekday={weekday} onPress={onPress} />
+  );
 
   const listHeaderComponent = () => (
     <Animated.View
@@ -47,7 +50,7 @@ const HomeScreen: FC<IProps> = ({ workouts, quote }) => {
           })
         }}
       >
-        <ImageQuoteCard {...quote} />
+        <ImageQuoteCard />
       </Animated.View>
       <Text style={{ padding: 16, backgroundColor: '#53D0A4', color: 'white', fontSize: 16 }}>
         Meine kommenden Workouts
@@ -58,21 +61,11 @@ const HomeScreen: FC<IProps> = ({ workouts, quote }) => {
   return (
     <AnimatedFlatList
       ListHeaderComponent={listHeaderComponent}
-      data={workouts}
-      renderItem={(item: { item: Workout }) => {
-        return (
-          <ListItem
-            title={`Montag, ${item.item.id}. Januar`}
-            subtitle="2er Split - Oberkörper"
-            chevron={{ name: 'chevron-right', size: 26 }}
-            titleStyle={styles.typography.listItemTitle}
-            subtitleStyle={styles.typography.listItemSubtitle}
-          />
-        );
-      }}
+      data={weekdays}
+      renderItem={renderItem}
       ItemSeparatorComponent={Divider}
       ListEmptyComponent={() => <Text style={{ marginBottom: 2000 }}>Leer...</Text>}
-      keyExtractor={(item: Workout) => `HomeScreen${item.id}`}
+      keyExtractor={(item: { weekday: number; day: Day }) => `HomeScreen${item.weekday}${item.day.id}`}
       stickyHeaderIndices={[0]}
       onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: offsetY } } }], {
         useNativeDriver: true

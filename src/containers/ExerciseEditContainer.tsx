@@ -38,7 +38,10 @@ export class ExerciseEditContainer extends Component<IProps> {
   }
 
   saveExercise = async (values: ISaveExerciseParams) => {
-    await this.props.exercise.updateEntry(values);
+    const test = await this.props.exercise.updateEntry(values);
+    console.log(values);
+    console.log(test);
+
     Navigation.pop(this.props.componentId);
   };
 

@@ -1,5 +1,5 @@
 import { Field, FieldProps } from 'formik';
-import React, { Fragment, SFC } from 'react';
+import React, { FC, Fragment } from 'react';
 import { Picker, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import styles from '../../styles';
@@ -12,7 +12,7 @@ interface IProps {
   error?: string;
 }
 
-const CategoryPicker: SFC<IProps> = props => {
+const CategoryPicker: FC<IProps> = props => {
   const { error, categories, selectedValue, title, name } = props;
   return (
     <View style={styles.layout.container}>
@@ -20,7 +20,11 @@ const CategoryPicker: SFC<IProps> = props => {
         {({ form }: FieldProps) => (
           <Fragment>
             <Text style={styles.typography.label}>{title}</Text>
-            <Picker selectedValue={selectedValue} onValueChange={value => form.setFieldValue(name, value)}>
+            <Picker
+              mode={'dialog'}
+              selectedValue={selectedValue}
+              onValueChange={value => form.setFieldValue(name, value)}
+            >
               <Picker.Item label="---" value="" />
               {categories.map((category, index) => (
                 <Picker.Item key={`${index}${category}`} value={category} label={category} />

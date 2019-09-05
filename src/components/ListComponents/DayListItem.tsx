@@ -1,4 +1,5 @@
 import withObservables from '@nozbe/with-observables';
+import dayjs from 'dayjs';
 import React, { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
@@ -27,7 +28,14 @@ const DayListItem: FC<IProps> = ({ day, onEdit, onDelete, sets = [] }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={{ flex: 1, color: 'white' }}>
-          {day.description} - {day.days.map(weekday => weekday).join(', ')}
+          {day.description} -{' '}
+          {day.days
+            .map(weekday =>
+              dayjs()
+                .day(weekday)
+                .format('dddd')
+            )
+            .join(', ')}
         </Text>
         <Icon name="edit" iconStyle={{ color: 'white' }} onPress={onDayEdit} />
         <Icon name="delete" iconStyle={{ color: 'white' }} onPress={onDayDelete} />
@@ -72,7 +80,7 @@ const DayListItem: FC<IProps> = ({ day, onEdit, onDelete, sets = [] }) => {
 const enhance = withObservables<IProps>(['day'], ({ day }) => ({ day: day.observe(), sets: day.sets.observe() }));
 
 const styles = StyleSheet.create({
-  container: { margin: 16, marginTop: 0, borderWidth: 0, borderColor: 'grey', borderRadius: 3, elevation: 1 },
+  container: { marginBottom: 16, borderWidth: 0, borderColor: 'grey', borderRadius: 3, elevation: 1 },
   header: {
     height: 36,
     backgroundColor: 'red',

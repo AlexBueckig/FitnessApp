@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { Formik, FormikActions, FormikProps } from 'formik';
 import React, { FC } from 'react';
 import { View } from 'react-native';
@@ -9,21 +10,56 @@ import MultiPicker from './FormComponents/MultiPicker';
 
 type IProps = ISaveDayParams & { submit: (values: ISaveDayParams) => void };
 
-const items = [
-  { id: 0, name: 'Montag' },
-  { id: 1, name: 'Dienstag' },
-  { id: 2, name: 'Mittwoch' },
-  { id: 3, name: 'Donnerstag' },
-  { id: 4, name: 'Freitag' },
-  { id: 5, name: 'Samstag' },
-  { id: 6, name: 'Sonntag' }
-];
-
 const validationSchema = yup.object().shape({
   description: yup.string().required()
 });
 
 const DayAddForm: FC<IProps> = ({ days, description, submit }) => {
+  const items = [
+    {
+      id: 1,
+      name: dayjs()
+        .day(1)
+        .format('dddd')
+    },
+    {
+      id: 2,
+      name: dayjs()
+        .day(2)
+        .format('dddd')
+    },
+    {
+      id: 3,
+      name: dayjs()
+        .day(3)
+        .format('dddd')
+    },
+    {
+      id: 4,
+      name: dayjs()
+        .day(4)
+        .format('dddd')
+    },
+    {
+      id: 5,
+      name: dayjs()
+        .day(5)
+        .format('dddd')
+    },
+    {
+      id: 6,
+      name: dayjs()
+        .day(6)
+        .format('dddd')
+    },
+    {
+      id: 0,
+      name: dayjs()
+        .day(0)
+        .format('dddd')
+    }
+  ];
+
   const onSubmit = (values: ISaveDayParams, { setSubmitting }: FormikActions<ISaveDayParams>) => {
     setSubmitting(false);
     submit(values);
