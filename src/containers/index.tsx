@@ -1,10 +1,9 @@
-import React, { FC } from 'react';
 import { Navigation } from 'react-native-navigation';
 import DayAddModal from '../modals/DayAdd/DayAddModal';
 import DayAddExerciseModal from '../modals/DayAddExercise/DayAddExerciseModal';
 import WorkoutAddModal from '../modals/WorkoutAdd/WorkoutAddModal';
 import WorkoutEditModal from '../modals/WorkoutEdit/WorkoutEditModal';
-import DBProvider from '../watermelondb/DBProvider';
+import DBWrapper from '../watermelondb/DBProvider';
 import EnhancedCurrentWorkoutDayContainer, { CurrentWorkoutDayContainer } from './CurrentWorkoutDayContainer';
 import EnhancedDayEditContainer, { DayEditContainer } from './DayEditContainer';
 import ExerciseAddContainer from './ExerciseAddContainer';
@@ -12,19 +11,10 @@ import EnhancedExerciseContainer, { ExerciseContainer } from './ExerciseContaine
 import EnhancedExerciseEditContainer, { ExerciseEditContainer } from './ExerciseEditContainer';
 import HomeContainer from './HomeContainer';
 import AchievementScreen from './screens/AchievementScreen';
+import DayScreen from './screens/DayScreen';
 import WorkoutMenuScreen from './screens/WorkoutMenuScreen';
 import EnhancedWorkoutContainer, { WorkoutContainer } from './WorkoutContainer';
 import EnhancedWorkoutEditContainer, { WorkoutEditContainer } from './WorkoutEditContainer';
-
-const DBWrapper = (Screen: any) => {
-  const EnhancedComponent: FC<any> = props => (
-    <DBProvider>
-      <Screen {...props} />
-    </DBProvider>
-  );
-
-  return EnhancedComponent;
-};
 
 export const registerScreens = () => {
   Navigation.registerComponent('WorkoutMenuScreen', () => WorkoutMenuScreen);
@@ -41,7 +31,7 @@ export const registerScreens = () => {
     () => DBWrapper(EnhancedWorkoutEditContainer),
     () => WorkoutEditContainer
   );
-  Navigation.registerComponent('DayScreen', () => WorkoutMenuScreen);
+  Navigation.registerComponent('DayScreen', () => DayScreen);
   Navigation.registerComponent('DayScreen.Edit', () => DBWrapper(EnhancedDayEditContainer), () => DayEditContainer);
   Navigation.registerComponent('ExerciseScreen', () => DBWrapper(EnhancedExerciseContainer), () => ExerciseContainer);
   Navigation.registerComponent(

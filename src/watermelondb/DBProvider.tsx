@@ -1,7 +1,15 @@
-import DatabaseProvider from '@nozbe/watermelondb/DatabaseProvider';
+import DatabaseProviderComponent from '@nozbe/watermelondb/DatabaseProvider';
 import React, { FC } from 'react';
 import database from './';
 
-const DBProvider: FC = props => <DatabaseProvider database={database}>{props.children}</DatabaseProvider>;
+const DBWrapper = (Screen: any) => {
+  const EnhancedComponent: FC<any> = props => (
+    <DatabaseProviderComponent database={database}>
+      <Screen {...props} />
+    </DatabaseProviderComponent>
+  );
 
-export default DBProvider;
+  return EnhancedComponent;
+};
+
+export default DBWrapper;
