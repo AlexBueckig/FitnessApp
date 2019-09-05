@@ -12,7 +12,8 @@ const adapter = new SQLiteAdapter({ dbName: 'watermelon', schema });
 
 const database = new Database({
   adapter,
-  modelClasses: [Exercise, Workout, Day, Set, SetExercises]
+  modelClasses: [Exercise, Workout, Day, Set, SetExercises],
+  actionsEnabled: true
 });
 
 export class RootModel {
@@ -24,7 +25,7 @@ export class RootModel {
   ) => {
     const exerciseCollection = await database.collections.get<Exercise>('exercises');
     return await database.action<Exercise>(async () => {
-      const newExercise = await exerciseCollection.create(exercise => {
+      const newExercise = await exerciseCollection.create((exercise: Exercise) => {
         exercise.name = name;
         exercise.category = category;
         exercise.description = description;
@@ -37,7 +38,7 @@ export class RootModel {
   static createWorkout = async (name: string, active: boolean = false) => {
     const workoutCollection = await database.collections.get<Workout>('workouts');
     return await database.action<Workout>(async () => {
-      const newWorkout = await workoutCollection.create(workout => {
+      const newWorkout = await workoutCollection.create((workout: Workout) => {
         workout.name = name;
         workout.active = active;
       });
