@@ -63,7 +63,7 @@ const HomeScreen: FC<IProps> = ({ weekdays, onPress }) => {
       ListHeaderComponent={listHeaderComponent}
       data={weekdays}
       renderItem={renderItem}
-      ItemSeparatorComponent={Divider}
+      ItemSeparatorComponent={() => <Divider />}
       ListEmptyComponent={() => <Text style={{ marginBottom: 2000 }}>Leer...</Text>}
       keyExtractor={(item: { weekday: number; day: Day }) => `HomeScreen${item.weekday}${item.day.id}`}
       stickyHeaderIndices={[0]}

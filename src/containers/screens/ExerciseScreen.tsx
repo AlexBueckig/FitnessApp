@@ -48,11 +48,11 @@ const ExerciseScreen: FC<IProps> = props => {
       <SectionList
         sections={props.exercises}
         renderItem={renderItem}
-        ItemSeparatorComponent={Divider}
+        ItemSeparatorComponent={() => <Divider />}
         renderSectionHeader={renderSectionHeader}
         keyExtractor={keyExtractor}
         ListEmptyComponent={ListEmptyComponent}
-        SectionSeparatorComponent={Divider}
+        SectionSeparatorComponent={() => <Divider />}
       />
       <AddButton onPress={onAdd} />
     </View>
