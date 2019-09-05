@@ -1,5 +1,6 @@
 import { Model, Q, Query, Relation } from '@nozbe/watermelondb';
 import { action, children, field, lazy, relation } from '@nozbe/watermelondb/decorators';
+import { Associations } from '@nozbe/watermelondb/Model';
 import Day from './Day';
 import Exercise from './Exercise';
 import SetExercises from './SetExercises';
@@ -16,7 +17,7 @@ export interface IExerciseParams {
 class Set extends Model {
   static table = 'sets';
 
-  static associations = {
+  static associations: Associations = {
     days: { type: 'belongs_to', key: 'day_id' },
     set_exercises: { type: 'has_many', foreignKey: 'set_id' }
   };

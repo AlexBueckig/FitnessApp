@@ -1,5 +1,6 @@
 import { Model, Query } from '@nozbe/watermelondb';
 import { action, children, field, text } from '@nozbe/watermelondb/decorators';
+import { Associations } from '@nozbe/watermelondb/Model';
 import Day, { ISaveDayParams } from './Day';
 
 export interface ISaveWorkoutParams {
@@ -10,7 +11,7 @@ export interface ISaveWorkoutParams {
 class Workout extends Model {
   static table = 'workouts';
 
-  static associations = {
+  static associations: Associations = {
     days: { type: 'has_many', foreignKey: 'workout_id' }
   };
 
@@ -21,7 +22,7 @@ class Workout extends Model {
   active: boolean;
 
   @children('days')
-  days: Query<Day>;
+  days: Query<Day & Model>;
 
   @action async deleteEntry() {
     await this.destroyPermanently();
@@ -37,7 +38,7 @@ class Workout extends Model {
   @action async addDay({ description, days }: ISaveDayParams) {
     const daysCollection = this.collections.get<Day>('days');
     return await daysCollection.create(day => {
-      day.workout.set(this);
+      day.workout.set(this.asModel);
       day.description = description;
       day.days = days;
     });
