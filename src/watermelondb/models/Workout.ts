@@ -22,7 +22,7 @@ class Workout extends Model {
   active: boolean;
 
   @children('days')
-  days: Query<Day & Model>;
+  days: Query<Day>;
 
   @action async deleteEntry() {
     await this.destroyPermanently();
@@ -38,7 +38,7 @@ class Workout extends Model {
   @action async addDay({ description, days }: ISaveDayParams) {
     const daysCollection = this.collections.get<Day>('days');
     return await daysCollection.create(day => {
-      day.workout.set(this.asModel);
+      day.workout.set(this);
       day.description = description;
       day.days = days;
     });

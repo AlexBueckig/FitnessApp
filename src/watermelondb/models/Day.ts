@@ -27,7 +27,7 @@ class Day extends Model {
   workout: Relation<Workout>;
 
   @children('sets')
-  sets: Query<Set & Model>;
+  sets: Query<Set>;
 
   @action async deleteEntry() {
     await this.destroyPermanently();
