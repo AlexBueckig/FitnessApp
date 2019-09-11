@@ -39,11 +39,11 @@ export class CurrentWorkoutDayContainer extends PureComponent<IProps> {
 }
 
 const enhance = compose<IProps, {}>(
-  withObservables<IProps>(['workoutId', 'dayId'], ({ workoutId, dayId, database }) => ({
+  withObservables<IProps, {}>(['workoutId', 'dayId'], ({ workoutId, dayId, database }) => ({
     workout: database!.collections.get('workouts').findAndObserve(workoutId),
     day: database!.collections.get('days').findAndObserve(dayId)
   })),
-  withObservables<IProps>(['day'], ({ day }) => ({
+  withObservables<IProps, {}>(['day'], ({ day }) => ({
     sets: day!.sets
   }))
 );

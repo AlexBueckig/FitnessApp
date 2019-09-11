@@ -73,7 +73,7 @@ export class ExerciseEditContainer extends Component<IProps> {
   }
 }
 
-const enhance = withObservables<IProps>([], ({ database, id }) => ({
+const enhance = withObservables<IProps, {}>([], ({ database, id }) => ({
   exercise: database!.collections.get<Exercise>('exercises').findAndObserve(id)
 }));
 

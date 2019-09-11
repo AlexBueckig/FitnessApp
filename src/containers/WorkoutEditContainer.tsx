@@ -138,10 +138,10 @@ export class WorkoutEditContainer extends Component<IProps> {
 }
 
 const enhance = compose<IProps, {}>(
-  withObservables<IProps>([], ({ database, id }) => ({
+  withObservables<IProps, {}>([], ({ database, id }) => ({
     workout: database.collections.get<Workout>('workouts').findAndObserve(id)
   })),
-  withObservables<IProps>(['workout'], ({ workout }) => ({
+  withObservables<IProps, {}>(['workout'], ({ workout }) => ({
     days: workout.days.observe()
   }))
 );
