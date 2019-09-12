@@ -1,7 +1,7 @@
 import { appSchema, tableSchema } from '@nozbe/watermelondb';
 
 const schema = appSchema({
-  version: 13,
+  version: 15,
   tables: [
     tableSchema({
       name: 'workouts',
@@ -28,6 +28,15 @@ const schema = appSchema({
       name: 'day_exercises',
       columns: [
         { name: 'day_id', type: 'string', isIndexed: true },
+        { name: 'exercise_id', type: 'string', isIndexed: true }
+      ]
+    }),
+    tableSchema({
+      name: 'workoutlog',
+      columns: [
+        { name: 'reps', type: 'number' },
+        { name: 'weight', type: 'number' },
+        { name: 'training_day', type: 'string', isIndexed: true },
         { name: 'exercise_id', type: 'string', isIndexed: true }
       ]
     })

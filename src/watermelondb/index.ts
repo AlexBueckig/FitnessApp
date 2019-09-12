@@ -1,17 +1,17 @@
 import { Database } from '@nozbe/watermelondb';
 import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
-import React, { createContext } from 'react';
 import Day from './models/Day';
 import DayExercises from './models/DayExercises';
 import Exercise from './models/Exercise';
 import Workout from './models/Workout';
+import Workoutlog from './models/Workoutlog';
 import schema from './schema';
 
 const adapter = new SQLiteAdapter({ dbName: 'watermelon', schema });
 
 const database = new Database({
   adapter,
-  modelClasses: [Exercise, Workout, Day, DayExercises],
+  modelClasses: [Exercise, Workout, Day, DayExercises, Workoutlog],
   actionsEnabled: true
 });
 
@@ -44,10 +44,19 @@ export class RootModel {
       return newWorkout;
     }, 'Add Workout Action');
   };
+
+  static createLogEntry = async (reps: number, weight: number, exercise: Exercise, trainingDay: string) => {
+    const workoutLogCollection = await database.collections.get<Workoutlog>('workoutlog');
+    return await database.action<Workoutlog>(async () => {
+      const newLogEntry = await workoutLogCollection.create((log: Workoutlog) => {
+        log.reps = reps;
+        log.weight = weight;
+        log.exercise.set(exercise);
+        log.trainingDay = trainingDay;
+      });
+      return newLogEntry;
+    }, 'Add WorkoutLog Action');
+  };
 }
-
-const { Provider: ModelProvider, Consumer: ModelConsumer }: React.Context<typeof RootModel> = createContext(RootModel);
-
-export { ModelProvider, ModelConsumer };
 
 export default database;
