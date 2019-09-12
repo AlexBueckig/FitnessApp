@@ -1,7 +1,8 @@
-import { Model, Query, Relation } from '@nozbe/watermelondb';
-import { action, children, json, relation, text } from '@nozbe/watermelondb/decorators';
+import { Model, Q, Query, Relation } from '@nozbe/watermelondb';
+import { action, children, json, lazy, relation, text } from '@nozbe/watermelondb/decorators';
 import { Associations } from '@nozbe/watermelondb/Model';
-import Set, { ISaveSetParams } from './Set';
+import DayExercises from './DayExercises';
+import Exercise from './Exercise';
 import Workout from './Workout';
 
 export interface ISaveDayParams {
@@ -9,25 +10,32 @@ export interface ISaveDayParams {
   days: number[];
 }
 
+export interface IAddExerciseParams {
+  exerciseId: string;
+}
+
 class Day extends Model {
   static table = 'days';
 
   static associations: Associations = {
     workouts: { type: 'belongs_to', key: 'workout_id' },
-    sets: { type: 'has_many', foreignKey: 'day_id' }
+    day_exercises: { type: 'has_many', foreignKey: 'day_id' }
   };
 
   @text('description')
   description: string;
 
-  @json('days', (days: Day) => days)
+  @json('days', (days: number[]) => days)
   days: number[];
 
   @relation('workouts', 'workout_id')
   workout: Relation<Workout>;
 
-  @children('sets')
-  sets: Query<Set>;
+  @children('workout_exercises')
+  dayExercises: Query<DayExercises>;
+
+  @lazy
+  exercises = this.collections.get<Exercise>('exercises').query(Q.on('day_exercises', 'day_id', this.id));
 
   @action async deleteEntry() {
     await this.destroyPermanently();
@@ -40,14 +48,11 @@ class Day extends Model {
     });
   }
 
-  @action async addSet({ sets, exercises }: ISaveSetParams) {
-    const setsCollection = this.collections.get<Set>('sets');
-    return await setsCollection.create(set => {
-      set.day.set(this.asModel);
-      set.sets = sets;
-      for (const exercise of exercises) {
-        this.subAction(() => set.addExercise({ exerciseId: exercise }));
-      }
+  @action async addExercise({ exerciseId }: IAddExerciseParams) {
+    const dayExercisesCollection = this.collections.get<DayExercises>('day_exercises');
+    return await dayExercisesCollection.create(item => {
+      item.exerciseId = exerciseId;
+      item.dayId = this.id;
     });
   }
 }

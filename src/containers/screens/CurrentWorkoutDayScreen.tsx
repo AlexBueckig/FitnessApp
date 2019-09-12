@@ -1,19 +1,19 @@
 import React, { FC, Fragment } from 'react';
-import SetList from '../../components/SetList';
+import ExercisesList from '../../components/SetList';
 import Day from '../../watermelondb/models/Day';
-import Set from '../../watermelondb/models/Set';
+import Exercise from '../../watermelondb/models/Exercise';
 import Workout from '../../watermelondb/models/Workout';
 
 interface IProps {
   workout: Workout;
   day: Day;
-  sets: Set[];
+  exercises: Exercise[];
 }
 
-const CurrentWorkoutDayScreen: FC<IProps> = ({ workout, day, sets }) => {
+const CurrentWorkoutDayScreen: FC<IProps> = ({ workout, day, exercises }) => {
   return (
     <Fragment>
-      <SetList sets={sets} workout={workout} />
+      <ExercisesList exercises={exercises} workout={workout} />
     </Fragment>
   );
 };

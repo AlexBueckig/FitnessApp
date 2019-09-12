@@ -5,7 +5,7 @@ import React, { PureComponent } from 'react';
 import { Navigation } from 'react-native-navigation';
 import { compose } from 'recompose';
 import Day from '../watermelondb/models/Day';
-import Set from '../watermelondb/models/Set';
+import Exercise from '../watermelondb/models/Exercise';
 import Workout from '../watermelondb/models/Workout';
 import CurrentWorkoutDayScreen from './screens/CurrentWorkoutDayScreen';
 
@@ -15,7 +15,7 @@ interface IProps {
   dayId: string;
   workout?: Workout;
   day?: Day;
-  sets?: Set[];
+  exercises?: Exercise[];
   database?: Database;
 }
 
@@ -33,8 +33,8 @@ export class CurrentWorkoutDayContainer extends PureComponent<IProps> {
   }
 
   render() {
-    const { workout, day, sets } = this.props;
-    return <CurrentWorkoutDayScreen workout={workout!} day={day!} sets={sets!} />;
+    const { workout, day, exercises } = this.props;
+    return <CurrentWorkoutDayScreen workout={workout!} day={day!} exercises={exercises!} />;
   }
 }
 
@@ -44,7 +44,7 @@ const enhance = compose<IProps, {}>(
     day: database!.collections.get('days').findAndObserve(dayId)
   })),
   withObservables<IProps, {}>(['day'], ({ day }) => ({
-    sets: day!.sets
+    exercises: day!.exercises
   }))
 );
 

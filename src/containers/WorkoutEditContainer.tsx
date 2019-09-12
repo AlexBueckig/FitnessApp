@@ -22,7 +22,7 @@ export class WorkoutEditContainer extends Component<IProps> {
   public static options() {
     return {
       topBar: {
-        title: { text: 'Übung bearbeiten' },
+        title: { text: 'Trainingsplan' },
         rightButtons: [
           {
             id: 'deleteWorkoutButton',
@@ -51,10 +51,16 @@ export class WorkoutEditContainer extends Component<IProps> {
   };
 
   render() {
+    const { days, workout, componentId } = this.props;
+
+    Navigation.mergeOptions(componentId, {
+      topBar: { title: { text: `${workout!.name}` } }
+    });
+
     return (
       <WorkoutEditScreen
-        workout={this.props.workout}
-        days={this.props.days}
+        workout={workout}
+        days={days}
         onDayAdd={this.showDayModal}
         onDayEdit={this.onDayEdit}
         onDayDelete={this.onDayDelete}

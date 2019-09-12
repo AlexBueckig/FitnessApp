@@ -1,16 +1,15 @@
 import React, { FC, Fragment, useState } from 'react';
-import { Dimensions, FlatList, ListRenderItemInfo, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
-import Set from '../watermelondb/models/Set';
+import { Dimensions, FlatList, ListRenderItemInfo, NativeScrollEvent, NativeSyntheticEvent, Text } from 'react-native';
+import Exercise from '../watermelondb/models/Exercise';
 import Workout from '../watermelondb/models/Workout';
-import SetListItem from './ListComponents/SetListItem';
 import Pagination from './Pagination';
 
 interface IProps {
-  sets: Set[];
+  exercises: Exercise[];
   workout: Workout;
 }
 
-const SetList: FC<IProps> = ({ sets }) => {
+const ExercisesList: FC<IProps> = ({ exercises }) => {
   const [index, setIndex] = useState(0);
   const { width } = Dimensions.get('window');
 
@@ -23,19 +22,19 @@ const SetList: FC<IProps> = ({ sets }) => {
   return (
     <Fragment>
       <FlatList
-        data={sets}
-        renderItem={(item: ListRenderItemInfo<Set>) => <SetListItem set={item.item} />}
+        data={exercises}
+        renderItem={(item: ListRenderItemInfo<Exercise>) => <Text>{item.item.name}</Text>}
         horizontal={true}
         decelerationRate={0}
         snapToInterval={width} // your element width
         snapToAlignment={'center'}
-        keyExtractor={(item: Set) => item.id}
+        keyExtractor={(item: Exercise) => item.id}
         onScroll={onScroll}
         showsHorizontalScrollIndicator={false}
       />
-      <Pagination index={index} dots={sets.length} />
+      <Pagination index={index} dots={exercises.length} />
     </Fragment>
   );
 };
 
-export default SetList;
+export default ExercisesList;

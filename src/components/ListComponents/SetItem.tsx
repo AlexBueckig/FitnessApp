@@ -3,16 +3,15 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import Exercise from '../../watermelondb/models/Exercise';
-import Set from '../../watermelondb/models/Set';
 
 interface IProps {
-  set: Set;
+  exercise: Exercise;
   exercises?: Exercise[];
 }
 
 class SetItem extends PureComponent<IProps> {
   render() {
-    const { set, exercises } = this.props;
+    const { exercise, exercises } = this.props;
     return (
       <View style={styles.container}>
         {exercises!.map(exercise => (
@@ -38,5 +37,4 @@ const styles = StyleSheet.create({
   }
 });
 
-// @ts-ignore
 export default enhance(SetItem);

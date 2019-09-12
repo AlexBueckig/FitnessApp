@@ -1,7 +1,7 @@
 import { Model, Q } from '@nozbe/watermelondb';
 import { action, json, lazy, text } from '@nozbe/watermelondb/decorators';
 import { Associations } from '@nozbe/watermelondb/Model';
-import Set from './Set';
+import Day from './Day';
 
 export interface ISaveExerciseParams {
   name: string;
@@ -14,7 +14,7 @@ class Exercise extends Model {
   public static table = 'exercises';
 
   static associations: Associations = {
-    set_exercises: { type: 'has_many', foreignKey: 'exercise_id' }
+    day_exercises: { type: 'has_many', foreignKey: 'exercise_id' }
   };
 
   @text('name') name: string;
@@ -23,7 +23,7 @@ class Exercise extends Model {
   @json('muscles', (muscles: number[]) => muscles) muscles: number[];
 
   @lazy
-  sets = this.collections.get<Set>('sets').query(Q.on('set_exercises', 'exercise_id', this.id));
+  days = this.collections.get<Day>('days').query(Q.on('day_exercises', 'exercise_id', this.id));
 
   @action async deleteEntry() {
     await this.destroyPermanently();

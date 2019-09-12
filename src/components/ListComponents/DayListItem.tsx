@@ -4,18 +4,18 @@ import React, { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Navigation, OptionsModalPresentationStyle } from 'react-native-navigation';
+import { compose } from 'recompose';
 import Day from '../../watermelondb/models/Day';
-import Set from '../../watermelondb/models/Set';
-import SetItem from './SetItem';
+import Exercise from '../../watermelondb/models/Exercise';
 
 interface IProps {
   day: Day;
-  sets?: Set[];
+  exercises?: Exercise[];
   onEdit: (id: string) => void;
   onDelete: (day: Day) => void;
 }
 
-const DayListItem: FC<IProps> = ({ day, onEdit, onDelete, sets = [] }) => {
+const DayListItem: FC<IProps> = ({ day, onEdit, onDelete, exercises = [] }) => {
   const onDayEdit = () => {
     onEdit(day.id);
   };
@@ -23,6 +23,8 @@ const DayListItem: FC<IProps> = ({ day, onEdit, onDelete, sets = [] }) => {
   const onDayDelete = () => {
     onDelete(day);
   };
+
+  console.log(day, exercises);
 
   return (
     <View style={styles.container}>
@@ -37,17 +39,17 @@ const DayListItem: FC<IProps> = ({ day, onEdit, onDelete, sets = [] }) => {
             )
             .join(', ')}
         </Text>
-        <Icon name="edit" iconStyle={{ color: 'white' }} onPress={onDayEdit} />
-        <Icon name="delete" iconStyle={{ color: 'white' }} onPress={onDayDelete} />
+        <Icon name="edit" onPress={onDayEdit} />
+        <Icon name="delete" onPress={onDayDelete} />
       </View>
       <View style={styles.body}>
-        {sets.length === 0 && (
+        {exercises.length === 0 && (
           <View>
             <Text>Noch keine Übungen eingetragen</Text>
           </View>
         )}
-        {sets.map(set => (
-          <SetItem key={set.id} set={set} />
+        {exercises.map(exercise => (
+          <Text key={`DayListItem-${exercise.id}`}>{exercise.name}</Text>
         ))}
         <View style={styles.addExercise}>
           <Text
@@ -77,7 +79,14 @@ const DayListItem: FC<IProps> = ({ day, onEdit, onDelete, sets = [] }) => {
   );
 };
 
-const enhance = withObservables<IProps>(['day'], ({ day }) => ({ day: day.observe(), sets: day.sets.observe() }));
+const enhance = compose<IProps, IProps>(
+  withObservables<IProps, {}>(['day'], ({ day }) => ({
+    day: day.observe()
+  })),
+  withObservables<IProps, {}>(['day'], ({ day }) => ({
+    exercises: day.exercises.observe()
+  }))
+);
 
 const styles = StyleSheet.create({
   container: { marginBottom: 16, borderWidth: 0, borderColor: 'grey', borderRadius: 3, elevation: 1 },

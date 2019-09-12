@@ -2,9 +2,8 @@ import { Database } from '@nozbe/watermelondb';
 import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
 import React, { createContext } from 'react';
 import Day from './models/Day';
+import DayExercises from './models/DayExercises';
 import Exercise from './models/Exercise';
-import Set from './models/Set';
-import SetExercises from './models/SetExercises';
 import Workout from './models/Workout';
 import schema from './schema';
 
@@ -12,7 +11,7 @@ const adapter = new SQLiteAdapter({ dbName: 'watermelon', schema });
 
 const database = new Database({
   adapter,
-  modelClasses: [Exercise, Workout, Day, Set, SetExercises],
+  modelClasses: [Exercise, Workout, Day, DayExercises],
   actionsEnabled: true
 });
 

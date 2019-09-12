@@ -68,7 +68,7 @@ export class DayEditContainer extends Component<IProps> {
   }
 }
 
-const enhance = withObservables<IProps>([], ({ database, id }) => ({
+const enhance = withObservables<IProps, {}>([], ({ database, id }) => ({
   day: database!.collections.get<Day>('days').findAndObserve(id),
   exercises: database!.collections
     .get<Exercise>('exercises')

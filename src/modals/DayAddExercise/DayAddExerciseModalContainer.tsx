@@ -3,9 +3,8 @@ import { DatabaseProviderProps, withDatabase } from '@nozbe/watermelondb/Databas
 import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
 import DayAddExerciseForm from '../../components/DayAddExerciseForm';
-import Day from '../../watermelondb/models/Day';
+import Day, { IAddExerciseParams } from '../../watermelondb/models/Day';
 import Exercise from '../../watermelondb/models/Exercise';
-import { ISaveSetParams } from '../../watermelondb/models/Set';
 
 interface IProps {
   closeModal: () => void;
@@ -16,17 +15,17 @@ interface IProps {
 }
 
 export class DayAddExerciseModalContainer extends Component<IProps> {
-  saveSet = async (set: ISaveSetParams) => {
-    await this.props.day!.addSet(set);
+  addExercise = async (exercise: IAddExerciseParams) => {
+    await this.props.day!.addExercise(exercise);
     this.props.closeModal();
   };
 
   render() {
-    return <DayAddExerciseForm submit={this.saveSet} exercises={this.props.exercises!} />;
+    return <DayAddExerciseForm submit={this.addExercise} exercises={this.props.exercises!} />;
   }
 }
 
-const enhance = withObservables<IProps>(['id'], ({ id, database }: IProps & DatabaseProviderProps) => ({
+const enhance = withObservables<IProps, {}>(['id'], ({ id, database }: IProps & DatabaseProviderProps) => ({
   day: database.collections.get('days').findAndObserve(id!),
   exercises: database.collections
     .get('exercises')

@@ -26,7 +26,7 @@ const WorkoutScreen: FC<IProps> = ({ onEdit, onAdd, workouts }) => {
     <View style={styles.layout.main}>
       <FlatList
         data={workouts}
-        ItemSeparatorComponent={Divider}
+        ItemSeparatorComponent={() => <Divider />}
         keyExtractor={keyExtractor}
         ListEmptyComponent={ListEmptyComponent}
         renderItem={renderItem}
