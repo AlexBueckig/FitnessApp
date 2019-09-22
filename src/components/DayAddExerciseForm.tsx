@@ -48,11 +48,13 @@ const DayAddExerciseForm: FC<IProps> = ({ submit, exercises }) => {
     <Formik initialValues={{ exerciseId: '' }} onSubmit={onSubmit}>
       {({ handleSubmit }: FormikProps<IAddExerciseParams>) => (
         <View>
+          <Text>Kategorie:</Text>
           <Picker selectedValue={selectedCategory} onValueChange={onCategoryChange} mode={'dialog'}>
             {groupedExercises.map((category, index) => (
               <Picker.Item key={`${index}${category.title}`} value={index} label={category.title} />
             ))}
           </Picker>
+          <Text style={{ marginTop: 16 }}>Übung:</Text>
           <Picker selectedValue={selectedExercise} onValueChange={onExerciseChange}>
             {groupedExercises[selectedCategory].data.map((exercise, index) => (
               <Picker.Item key={exercise.id} value={index} label={exercise.name} />

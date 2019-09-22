@@ -8,6 +8,7 @@ import 'dayjs/locale/de';
 import 'es6-symbol/implement';
 import { Navigation } from 'react-native-navigation';
 import { registerScreens } from './src/containers';
+import { iconsMap } from './src/utils/AppIcons';
 
 daysjs.locale('de');
 
@@ -41,14 +42,18 @@ Navigation.events().registerAppLaunchedListener(() => {
                 {
                   component: {
                     name: 'FeedScreen',
-                    passProps: {
-                      text: 'This is tab 1'
-                    },
                     options: {
                       topBar: {
                         title: {
-                          text: 'Feed'
-                        }
+                          text: 'Home'
+                        },
+                        rightButtons: [
+                          {
+                            id: 'showWorkoutLogButton',
+                            color: 'white',
+                            icon: iconsMap['date-range']
+                          }
+                        ]
                       }
                     }
                   }
@@ -56,8 +61,8 @@ Navigation.events().registerAppLaunchedListener(() => {
               ],
               options: {
                 bottomTab: {
-                  text: 'Feed',
-                  icon: require('./res/images/one.png')
+                  text: 'Home',
+                  icon: require('./res/icons/home.png')
                 }
               }
             }
@@ -67,17 +72,14 @@ Navigation.events().registerAppLaunchedListener(() => {
               children: [
                 {
                   component: {
-                    name: 'WorkoutMenuScreen',
-                    passProps: {
-                      text: 'This is tab 2'
-                    }
+                    name: 'WorkoutMenuScreen'
                   }
                 }
               ],
               options: {
                 bottomTab: {
                   text: 'Workout',
-                  icon: require('./res/images/one.png')
+                  icon: require('./res/icons/weight-lifter.png')
                 }
               }
             }
@@ -96,8 +98,8 @@ Navigation.events().registerAppLaunchedListener(() => {
               ],
               options: {
                 bottomTab: {
-                  text: 'Erfolge',
-                  icon: require('./res/images/one.png')
+                  text: 'Statistik',
+                  icon: require('./res/icons/chart.png')
                 }
               }
             }

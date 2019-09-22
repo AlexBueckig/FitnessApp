@@ -39,8 +39,8 @@ const DayListItem: FC<IProps> = ({ day, onEdit, onDelete, exercises = [] }) => {
             )
             .join(', ')}
         </Text>
-        <Icon name="edit" onPress={onDayEdit} />
-        <Icon name="delete" onPress={onDayDelete} />
+        <Icon color="white" name="edit" onPress={onDayEdit} />
+        <Icon color="white" name="delete" onPress={onDayDelete} />
       </View>
       <View style={styles.body}>
         {exercises.length === 0 && (
@@ -49,7 +49,10 @@ const DayListItem: FC<IProps> = ({ day, onEdit, onDelete, exercises = [] }) => {
           </View>
         )}
         {exercises.map(exercise => (
-          <Text key={`DayListItem-${exercise.id}`}>{exercise.name}</Text>
+          <View key={`DayListItem-${exercise.id}`} style={{ flexDirection: 'row' }}>
+            <Text style={{ flex: 1, alignItems: 'center' }}>{exercise.name}</Text>
+            <Icon name="close" onPress={() => day.removeExercise({ exerciseId: exercise.id })} />
+          </View>
         ))}
         <View style={styles.addExercise}>
           <Text
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
   container: { marginBottom: 16, borderWidth: 0, borderColor: 'grey', borderRadius: 3, elevation: 1 },
   header: {
     height: 36,
-    backgroundColor: 'red',
+    backgroundColor: '#14C788',
     alignItems: 'center',
     flexDirection: 'row',
     padding: 8,

@@ -13,6 +13,7 @@ interface IProps {
   componentId: string;
   workoutId: string;
   dayId: string;
+  date?: string;
   workout?: Workout;
   day?: Day;
   exercises?: Exercise[];
@@ -32,9 +33,23 @@ export class CurrentWorkoutDayContainer extends PureComponent<IProps> {
     });
   }
 
+  onPress = (exerciseId: string) => {
+    Navigation.push(this.props.componentId, {
+      component: { name: 'CurrentWorkoutExerciseScreen', passProps: { exerciseId, date: this.props.date } }
+    });
+  };
+
   render() {
-    const { workout, day, exercises } = this.props;
-    return <CurrentWorkoutDayScreen workout={workout!} day={day!} exercises={exercises!} />;
+    const { workout, day, exercises, date } = this.props;
+    return (
+      <CurrentWorkoutDayScreen
+        workout={workout!}
+        day={day!}
+        exercises={exercises!}
+        onPress={this.onPress}
+        date={date!}
+      />
+    );
   }
 }
 

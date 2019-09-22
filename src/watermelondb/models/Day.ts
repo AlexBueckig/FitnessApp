@@ -55,6 +55,19 @@ class Day extends Model {
       item.dayId = this.id;
     });
   }
+
+  @action async removeExercise({ exerciseId }: IAddExerciseParams) {
+    const dayExercisesCollection = this.collections.get<DayExercises>('day_exercises');
+    const dayExercise = await dayExercisesCollection
+      .query(Q.and(Q.where('day_id', this.id), Q.where('exercise_id', exerciseId)))
+      .fetch();
+
+    if (dayExercise.length > 0) {
+      return await dayExercise[0].destroyPermanently();
+    } else {
+      return;
+    }
+  }
 }
 
 export default Day;

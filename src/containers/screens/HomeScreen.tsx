@@ -7,7 +7,7 @@ import Day from '../../watermelondb/models/Day';
 
 interface IProps {
   weekdays: Array<{ weekday: string; day: Day }>;
-  onPress: (workoutId: string, dayId: string) => void;
+  onPress: (workoutId: string, dayId: string, date: string) => void;
 }
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);

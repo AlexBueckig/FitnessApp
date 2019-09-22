@@ -41,6 +41,13 @@ export class ExerciseContainer extends Component<IProps> {
         name: `ExerciseScreen.${type}`,
         passProps: {
           id
+        },
+        options: {
+          topBar: {
+            title: {
+              text: 'Log'
+            }
+          }
         }
       }
     });

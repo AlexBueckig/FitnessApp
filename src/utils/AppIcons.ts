@@ -7,7 +7,8 @@ const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 const icons: { [key: string]: [number, string?] } = {
   delete: [30],
   edit: [30],
-  home: [navIconSize]
+  home: [navIconSize],
+  'date-range': [30]
 };
 
 const iconsMap: { [key: string]: ImageSource } = {};

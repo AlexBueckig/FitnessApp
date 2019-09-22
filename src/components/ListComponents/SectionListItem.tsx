@@ -18,6 +18,6 @@ const RawSectionListItem: FC<IProps> = ({ exercise, onPress }) => {
   );
 };
 
-export default withObservables(['exercise'], ({ exercise }: any) => ({ exercise: exercise.observe() }))(
+export default withObservables<IProps, {}>(['exercise'], ({ exercise }) => ({ exercise: exercise.observe() }))(
   RawSectionListItem
 );

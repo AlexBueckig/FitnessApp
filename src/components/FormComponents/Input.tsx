@@ -1,6 +1,6 @@
 import { Field, FieldProps } from 'formik';
 import React, { PureComponent } from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { KeyboardType, StyleProp, ViewStyle } from 'react-native';
 import { Input } from 'react-native-elements';
 import styles from '../../styles';
 
@@ -8,6 +8,7 @@ interface IProps {
   value: string;
   name: string;
   label: string;
+  keyboardType?: KeyboardType;
   placeholder?: string;
   error?: string;
   style?: StyleProp<ViewStyle>;
@@ -20,7 +21,7 @@ interface IState {
 class TextInput extends PureComponent<IProps, IState> {
   public state = { isFocused: false };
   public render() {
-    const { label, error, value, placeholder, name, style } = this.props;
+    const { label, error, value, placeholder, name, style, keyboardType } = this.props;
 
     return (
       <Field name={name}>
@@ -47,6 +48,7 @@ class TextInput extends PureComponent<IProps, IState> {
             errorStyle={{ fontSize: 12, marginTop: -8 }}
             inputContainerStyle={{ borderBottomWidth: 0, marginHorizontal: -4 }}
             containerStyle={[style, { marginBottom: 16, paddingHorizontal: 0 }]}
+            keyboardType={keyboardType || 'default'}
           />
         )}
       </Field>

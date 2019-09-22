@@ -46,6 +46,7 @@ export class RootModel {
   };
 
   static createLogEntry = async (reps: number, weight: number, exercise: Exercise, trainingDay: string) => {
+    console.log(reps, weight);
     const workoutLogCollection = await database.collections.get<Workoutlog>('workoutlog');
     return await database.action<Workoutlog>(async () => {
       const newLogEntry = await workoutLogCollection.create((log: Workoutlog) => {

@@ -3,6 +3,7 @@ import { withDatabase } from '@nozbe/watermelondb/DatabaseProvider';
 import withObservables from '@nozbe/with-observables';
 import React, { Component } from 'react';
 import { Navigation } from 'react-native-navigation';
+import { iconsMap } from '../utils/AppIcons';
 import { getDaysByWeekday } from '../utils/ListFunctions';
 import Day from '../watermelondb/models/Day';
 import Workout from '../watermelondb/models/Workout';
@@ -24,11 +25,7 @@ interface IState {
 
 class HomeContainer extends Component<IProps, IState> {
   public static options() {
-    return {
-      topBar: {
-        title: { text: 'Home' }
-      }
-    };
+    return {};
   }
 
   constructor(props: IProps) {
@@ -36,9 +33,38 @@ class HomeContainer extends Component<IProps, IState> {
     Navigation.events().bindComponent(this);
   }
 
-  onPress = (workoutId: string, dayId: string) => {
+  componentDidAppear() {
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        title: { text: 'Home' },
+        rightButtons: [
+          {
+            id: 'showWorkoutLogButton',
+            color: 'white',
+            icon: iconsMap['date-range']
+          }
+        ]
+      }
+    });
+  }
+
+  navigationButtonPressed(id: { buttonId: string; componentId: string }) {
+    switch (id.buttonId) {
+      case 'showWorkoutLogButton':
+        Navigation.push(this.props.componentId, {
+          component: {
+            name: 'WorkoutLogScreen'
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  onPress = (workoutId: string, dayId: string, date: string) => {
     Navigation.push(this.props.componentId, {
-      component: { name: 'CurrentWorkoutDayScreen', passProps: { workoutId, dayId } }
+      component: { name: 'CurrentWorkoutDayScreen', passProps: { workoutId, dayId, date } }
     });
   };
 

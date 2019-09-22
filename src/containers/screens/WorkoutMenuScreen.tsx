@@ -44,14 +44,14 @@ export default class WorkoutMenuScreen extends PureComponent<IProps> {
           >
             <Text style={styles.typography.cardBody}>Füge Tagespläne zu Trainingsplänen zusammen</Text>
           </CardImageBackground>
-          <CardImageBackground
+          {/*           <CardImageBackground
             title="Tagespläne"
             onPress={this.onPress.bind(this, 'DayScreen')}
             image={this.images[1]}
             borderRadius={2}
           >
             <Text style={styles.typography.cardBody}>Erstelle einzelne, individuelle Tagespläne</Text>
-          </CardImageBackground>
+          </CardImageBackground> */}
           <CardImageBackground
             title="Übungen"
             onPress={this.onPress.bind(this, 'ExerciseScreen')}

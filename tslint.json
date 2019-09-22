@@ -19,5 +19,6 @@
     "variable-name": false,
     "max-classes-per-file": false,
     "member-access": false
-  }
+  },
+  "linterOptions": { "exclude": ["node_modules"] }
 }
