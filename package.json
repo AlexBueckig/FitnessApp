@@ -12,7 +12,7 @@
     "tsc": "tsc"
   },
   "dependencies": {
-    "@nozbe/watermelondb": "^0.14.1",
+    "@nozbe/watermelondb": "^0.15.1",
     "@nozbe/with-observables": "^1.0.2",
     "@react-native-community/async-storage": "^1.2.1",
     "dayjs": "^1.8.11",
