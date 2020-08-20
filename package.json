@@ -28,7 +28,7 @@
     "react-native-vector-icons": "^6.2.0",
     "recompose": "^0.30.0",
     "tslib": "^1.9.3",
-    "yup": "^0.27.0"
+    "yup": "^0.28.2"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.3.0",
